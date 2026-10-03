@@ -25,6 +25,8 @@ mawzun-project/
 │   │   ├── page.tsx          # الصفحة الوحيدة: AuditWorkspace
 │   │   └── api/audit/
 │   │       └── route.ts      # POST /api/audit (ربط نموذج Workers AI)
+│   │   └── api/explain/
+│   │       └── route.ts      # POST /api/explain (شرح الحكم عبر Meta، بسرّ Worker)
 │   ├── components/
 │   │   ├── audit/            # مساحة العمل: AuditWorkspace، Hero، الأقسام الخمسة، parts
 │   │   ├── layout/           # AppShell, TopBar, SearchModal, SettingsModal
@@ -66,7 +68,10 @@ mawzun-project/
 ### `src/components/`
 - **`audit/`** — مساحة العمل والقسم الواحد: `Hero` (المقدمة الداكنة الاستعراضية، لا منطق
   فيها — مجرد روابط مرساة)، `AuditWorkspace`, `InputSection`, `ConstraintsSection`,
-  `PipelineSection`, `VerdictSection`, `LedgerSection`, و`parts.tsx` بالأساس المشترك.
+  `PipelineSection`, `VerdictSection`, `Explainer` (زر شرح الحكم), `LedgerSection`,
+  و`parts.tsx` بالأساس المشترك.
+- **`explain/`** (في `lib/`) — بناء طلب الشرح وتحليل رد النموذج (نقيّ وقابل للاختبار):
+  الاستشهادات مغلقة على قيود الواقعة، وما خالفها يرفض الرد كله.
 - **`layout/`** — الهيكل الثابت المشترك (`AppShell`, `TopBar`) والنوافذ (`SearchModal`, `SettingsModal`).
 - **`ui/`** — عنصر أساسي محايد متبقٍّ (`Icon`). الألواح والرقائق في مساحة العمل مبنيّة في
   `components/audit/parts.tsx`.

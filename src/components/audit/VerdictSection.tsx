@@ -18,6 +18,7 @@ import { cx } from "@/lib/cx";
 import { t } from "@/lib/typography";
 import type { AuditResult } from "@/lib/audit/types";
 import { CodeChip, FINDING_LABEL, FINDING_TONE, InsetPanel, StatusChip, WorkflowCard } from "./parts";
+import { Explainer } from "./Explainer";
 
 const VERDICTS: { id: AuditResult["verdict"]; label: string; latin: string }[] = [
   { id: "faithful", label: "مطابق", latin: "Matched" },
@@ -194,9 +195,14 @@ export function VerdictSection() {
             </ul>
           )}
 
+          <Explainer
+            verdict={result.verdict}
+            verdictLabel={VERDICTS.find((v) => v.id === result.verdict)?.label ?? result.verdict}
+            findings={decisive}
+          />
+
           <div className="flex flex-col gap-space-xs rounded-lg border border-outline-variant bg-surface-container-low p-space-md">
-            <span className={cx(t.label, "font-semibold text-on-surface")}>قرار المراجع البشري</span>
-            <textarea
+            <span className={cx(t.label, "font-semibold text-on-surface")}>قرار المراجع البشري</span>            <textarea
               dir="rtl"
               rows={3}
               value={audit.reviewerDecision}
