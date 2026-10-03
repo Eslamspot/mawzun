@@ -19,13 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
----
-
-Note on scope: this licence covers the code and documentation of this
-repository. The scientific package «المرجعية والحزمة العلمية والبيانات» that
-ships here as `islamic_ai_hackathon.pdf` is the challenge organiser's material
-and is not covered by this licence; it is redistributed unmodified, and every
-constraint in the engine that was imported from it carries its origin field
-naming the section it came from. Third-party dependencies keep their own
-licences — see `docs/reference/sources-and-licences.md`.
