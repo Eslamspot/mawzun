@@ -83,4 +83,4 @@ git switch -c feat/audit-layer-2
 
 > لا تخلط تغييرات غير مترابطة في نفس الفرع أو الالتزام.
 
-القواعد الكاملة المُلزمة في [`AGENTS.md`](https://github.com/Asrar-7r/mawzun-project/blob/main/AGENTS.md).
+القواعد الكاملة المُلزمة في [`AGENTS.md`](https://github.com/Eslamspot/mawzun/blob/main/AGENTS.md).

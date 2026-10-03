@@ -15,14 +15,14 @@ order: 1
 | Git | أي إصدار حديث | لإدارة الفروع والوسوم |
 
 > **تحذير:** هذا المستودع **Bun فقط**. استخدام `npm` أو `yarn` أو `pnpm` ممنوع،
-> وحارس `preinstall` في [`scripts/ensure-bun.mjs`](https://github.com/Asrar-7r/mawzun-project/blob/main/scripts/ensure-bun.mjs)
+> وحارس `preinstall` في [`scripts/ensure-bun.mjs`](https://github.com/Eslamspot/mawzun/blob/main/scripts/ensure-bun.mjs)
 > يُوقف أي عملية تثبيت تبدأ من مدير حزم آخر.
 
 ## الخطوات
 
 ```bash
 # 1. استنساخ المستودع
-git clone https://github.com/Asrar-7r/mawzun-project.git
+git clone https://github.com/Eslamspot/mawzun.git
 cd mawzun-project
 
 # 2. تثبيت الاعتماديات بـ Bun

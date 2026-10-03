@@ -36,4 +36,4 @@ order: 1
 ## المراجع
 
 - تكوين الترحيل: الوسم `pre-chore-bun-migration-2026-10-01`، واللقطة في `archive/20261001/package-lock.json`.
-- [قواعد المشروع](https://github.com/Asrar-7r/mawzun-project/blob/main/AGENTS.md).
+- [قواعد المشروع](https://github.com/Eslamspot/mawzun/blob/main/AGENTS.md).

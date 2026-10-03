@@ -6,7 +6,7 @@ order: 3
 
 # نظام التصميم
 
-نظام التصميم مطبَّق بالكامل كرموز (tokens) في [`src/app/globals.css`](https://github.com/Asrar-7r/mawzun-project/blob/main/src/app/globals.css)
+نظام التصميم مطبَّق بالكامل كرموز (tokens) في [`src/app/globals.css`](https://github.com/Eslamspot/mawzun/blob/main/src/app/globals.css)
 داخل كتلة `@theme` (اصطلاح Tailwind v4). الأصل المرجعي في `stitch_mawzun/mawzun_semantic_guard/DESIGN.md`.
 
 > **قاعدة ذهبية:** لا تُكتب قيم لون أو مقاس مباشرة في المكوّنات؛ استخدم دائماً أصناف الرموز
@@ -53,7 +53,7 @@ order: 3
 الخطوط: **IBM Plex Sans Arabic** للنصوص (عبر `next/font/google`)، و**JetBrains Mono** للقياس
 عن بُعد (المعرّفات والبصمات وأكواد الطبقات).
 
-الأدوار الطباعية موحّدة في [`src/lib/typography.ts`](https://github.com/Asrar-7r/mawzun-project/blob/main/src/lib/typography.ts)
+الأدوار الطباعية موحّدة في [`src/lib/typography.ts`](https://github.com/Eslamspot/mawzun/blob/main/src/lib/typography.ts)
 كخريطة `t`، تجمع عائلة الخط مع مقياس الحجم والارتفاع:
 
 | الدور | الصنف | الحجم / الارتفاع |

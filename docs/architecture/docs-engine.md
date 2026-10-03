@@ -13,7 +13,7 @@ order: 5
 > **تغيّر معماري:** كان هناك مركز توثيق يُعرض داخل التطبيق على المسار `/docs` عبر محرّك في
 > `src/lib/docs/` يقرأ هذه الملفات ويولّدها ساكنًا. أُزيل ذلك المركز مع مسارات المراحل، لمّا
 > صارت الواجهة صفحة واحدة. لم يبقَ من محرّك التوثيق إلا **ملفات Markdown نفسها** وسكربت الفحص
-> [`scripts/check-docs.mjs`](https://github.com/Asrar-7r/mawzun-project/blob/main/scripts/check-docs.mjs).
+> [`scripts/check-docs.mjs`](https://github.com/Eslamspot/mawzun/blob/main/scripts/check-docs.mjs).
 
 ## الأقسام
 

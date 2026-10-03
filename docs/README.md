@@ -57,4 +57,4 @@ order: 0
 2. **فرع `main` محمي** — كل تغيير غير توثيقي يبدأ من فرع مستقل.
 3. **وسم وأرشفة قبل أي تعديل أو حذف** — راجع [الاصطلاحات](/docs/reference/conventions).
 
-القواعد الكاملة والمُلزمة موجودة في [`AGENTS.md`](https://github.com/Asrar-7r/mawzun-project/blob/main/AGENTS.md).
+القواعد الكاملة والمُلزمة موجودة في [`AGENTS.md`](https://github.com/Eslamspot/mawzun/blob/main/AGENTS.md).
