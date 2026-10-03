@@ -1,0 +1,197 @@
+{
+  "dossier_date": "2026-10-03",
+  "count": 13,
+  "sources": [
+    {
+      "id": "SRC-TOPICS",
+      "name_ar": "المستودع الدعوي الرقمي",
+      "name_en": "Dawah Center",
+      "url": "https://dawa.center",
+      "access": "web",
+      "status": "verified",
+      "official": true,
+      "used_for": [
+        "الموضوعات الدعوية",
+        "الدعوة حسب البلدان والأديان واللغات والفئات"
+      ],
+      "verified_notes": "HTTP 200 · العنوان الرسمي: «Dawah_center - مكتبة الملفات الدعوية» · تنبيه: النطاق www.dawa.center يفشل بشهادة SSL — استخدم dawa.center بلا www"
+    },
+    {
+      "id": "SRC-BAYYINAT",
+      "name_ar": "بينات: أسئلة وأجوبة عن الإسلام",
+      "name_en": "Bayyinat",
+      "url": "https://dawa.center/file/7937",
+      "access": "web",
+      "status": "verified",
+      "official": true,
+      "used_for": [
+        "الحلول الحوارية في الشبهات",
+        "الأسئلة المتكررة عن الإسلام"
+      ],
+      "verified_notes": "HTTP 200 · عنوان الصفحة الفعلي: «بينات: أسئلة وأجوبة عن الإسلام» — مطابق لما تسمّيه الوثيقة"
+    },
+    {
+      "id": "SRC-QURAN",
+      "name_ar": "الموسوعة القرآنية — قورآنبيديا",
+      "name_en": "Quranpedia",
+      "url": "https://quranpedia.net",
+      "access": "web",
+      "status": "verified",
+      "official": true,
+      "used_for": [
+        "النص القرآني بالرسم المعتمد",
+        "الترجمات المعتمدة",
+        "معلومات السور",
+        "التفسير"
+      ],
+      "verified_notes": "HTTP 200 · المسارات المفحوصة: /mushafs «فهرس سور القرآن الكريم» · /ayahs «تفسير القرآن الكريم» · /translations «ترجمات القرآن الكريم» · /surah-info «معلومات سور القرآن الكريم»"
+    },
+    {
+      "id": "SRC-QURAN-KFG",
+      "name_ar": "مجمع الملك فهد لطباعة المصحف الشريف",
+      "name_en": "King Fahd Complex",
+      "url": "https://qurancomplex.gov.sa",
+      "access": "web",
+      "status": "unverified_from_env",
+      "official": true,
+      "used_for": [
+        "طبعة المصحف المعتمدة",
+        "الترجمات المعتمدة لكل لغة"
+      ],
+      "verified_notes": "⚠️ لم نتمكن من التحقق: مهلة اتصال من بيئة الاختبار (قد تكون قيد شبكي/جغرافي). الوثيقة تسمّيه مصدرًا معتمدًا للترجمات — يلزم تحقق الفريق من اتصال عادي"
+    },
+    {
+      "id": "SRC-TERMS",
+      "name_ar": "موسوعة الجمهرة — مفردات المحتوى الإسلامي",
+      "name_en": "Islamic Content — Al-Jamhara",
+      "url": "https://islamic-content.com/dictionary",
+      "access": "web",
+      "status": "verified",
+      "official": true,
+      "used_for": [
+        "المصطلحات الشرعية",
+        "مسارد الترجمة",
+        "أقسام الأحكام",
+        "تعريف المفردات"
+      ],
+      "verified_notes": "HTTP 200 · الأقسام والأعداد مقروءة من الصفحة الحيّة مباشرةً: القرآن وعلومه 1,238 · الحديث الشريف 2,577 · العقيدة 1,230 · الفقه الإسلامي 3,764 · أصول الفقه 3,258 · التربية والسلوك 1,906 · الدعوة والاحتساب 864 · السيرة 7 · المجموع 14,844"
+    },
+    {
+      "id": "SRC-HADITH",
+      "name_ar": "الدرر السنية — الحديث",
+      "name_en": "Dorar.net — Hadith",
+      "url": "https://dorar.net/hadith",
+      "access": "web + json_api",
+      "status": "verified",
+      "official": true,
+      "used_for": [
+        "تخريج الحديث",
+        "درجة الثبوت",
+        "نص النقل"
+      ],
+      "endpoint": "https://dorar.net/dorar_api.json?skey={query}",
+      "verified_notes": "HTTP 200 للصفحة وللواجهة · الواجهة أعادت JSON حقيقيًا (15 حديثًا في استعلام واحد) · الحقول: الحديث · الراوي · المحدث · المصدر · الصفحة أو الرقم · خلاصة حكم المحدث",
+      "sample_output": "mawzoon_hadith_sample.json"
+    },
+    {
+      "id": "SRC-TAFSIR",
+      "name_ar": "موسوعة التفسير — الدرر السنية",
+      "name_en": "Dorar.net — Tafsir",
+      "url": "https://dorar.net/tafseer",
+      "access": "web",
+      "status": "verified",
+      "official": true,
+      "used_for": [
+        "شرح الآية",
+        "تمييز كلام المفسر عن النص القرآني"
+      ],
+      "verified_notes": "HTTP 200 · عنوان الصفحة: «موسوعة التفسير»"
+    },
+    {
+      "id": "SRC-AQEEDA",
+      "name_ar": "الموسوعة العقدية — الدرر السنية",
+      "name_en": "Dorar.net — Aqeeda",
+      "url": "https://dorar.net/aqeeda",
+      "access": "web",
+      "status": "verified",
+      "official": true,
+      "used_for": [
+        "مسائل الاعتقاد",
+        "التعريف بالإسلام"
+      ],
+      "verified_notes": "HTTP 200 · عنوان الصفحة: «الموسوعة العقدية»"
+    },
+    {
+      "id": "SRC-FEQH",
+      "name_ar": "الموسوعة الفقهية — الدرر السنية",
+      "name_en": "Dorar.net — Fiqh",
+      "url": "https://dorar.net/feqhia",
+      "access": "web",
+      "status": "verified",
+      "official": true,
+      "used_for": [
+        "الفقه العام على المذاهب الأربعة"
+      ],
+      "verified_notes": "HTTP 200 · عنوان الصفحة: «الموسوعة الفقهية»"
+    },
+    {
+      "id": "SRC-SEERAH",
+      "name_ar": "الموسوعة التاريخية — الدرر السنية",
+      "name_en": "Dorar.net — History",
+      "url": "https://dorar.net/history",
+      "access": "web",
+      "status": "verified",
+      "official": true,
+      "used_for": [
+        "السيرة والتاريخ",
+        "تمييز الثابت من المحتاج إلى احتراز"
+      ],
+      "verified_notes": "HTTP 200 · عنوان الصفحة: «الموسوعة التاريخية»"
+    },
+    {
+      "id": "SRC-SHAMELA",
+      "name_ar": "المكتبة الشاملة",
+      "name_en": "Shamela",
+      "url": "https://shamela.ws",
+      "access": "web",
+      "status": "verified",
+      "official": true,
+      "used_for": [
+        "الطبعات المعتمدة لكتب السنة",
+        "توثيق النقول"
+      ],
+      "verified_notes": "HTTP 200 · تذكرها الوثيقة صراحةً للطبعات المعتمدة لكتب السنة النبوية"
+    },
+    {
+      "id": "SRC-SUNNAH",
+      "name_ar": "سنّة دوت كوم — واجهة المطوّرين",
+      "name_en": "Sunnah.com API",
+      "url": "https://sunnah.com/developers",
+      "access": "rest_api_key",
+      "status": "verified",
+      "official": false,
+      "used_for": [
+        "مطابقة النص بالصحيحين",
+        "أرقام الأحاديث"
+      ],
+      "verified_notes": "HTTP 200 · إضافة من الفريق (لا تذكرها الوثيقة) · تحتاج مفتاحًا يُطلب عبر GitHub"
+    },
+    {
+      "id": "REF-DOC",
+      "name_ar": "وثيقة المرجعية والحزمة العلمية والبيانات",
+      "name_en": "Official Reference Document",
+      "url": "مرفق التحدي — المرجعية والحزمة العلمية والبيانات",
+      "access": "document",
+      "status": "approved_reference",
+      "official": true,
+      "used_for": [
+        "المعيار العلمي الملزم (8 بنود)",
+        "المستويات أ–د",
+        "قواعد استخدام المجالات",
+        "قاموس المصطلحات الأساسية (10 مصطلحات)",
+        "حالات اختبار سلامة المحتوى (13 حالة)"
+      ],
+      "verified_notes": "نُصّت الوثيقة كاملة (8 صفحات) وقُوبل كل منقول معها حرفيًا"
+    }
+  ]
+}

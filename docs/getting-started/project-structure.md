@@ -13,11 +13,15 @@ mawzun-project/
 ├── scripts/
 │   ├── ensure-bun.mjs        # حارس يمنع npm/yarn/pnpm
 │   ├── check-docs.mjs        # فحص التوثيق (docs:check)
+│   ├── check-knowledge.mjs   # فحص قاعدة المعرفة (knowledge:check)
 │   └── engine-check.ts       # التحقق السلوكي من المحرك (engine:check)
+├── data/
+│   ├── benchmark/            # مدونة القياس: corpus + results
+│   └── knowledge/            # الحزمة العلمية المورّدة: 31 قيدًا + مخطط الحكم + 15 حالة + المعيار + 13 مصدرًا
 ├── src/
 │   ├── app/                  # App Router
 │   │   ├── globals.css       # رموز التصميم (@theme) ونمط الجذر
-│   │   ├── layout.tsx        # الجذر: RTL + الخطوط + AppShell + AuditProvider
+│   │   ├── layout.tsx        # الجذر: RTL + الخطوط + ThemeProvider + AppShell + AuditProvider
 │   │   ├── page.tsx          # الصفحة الوحيدة: AuditWorkspace
 │   │   └── api/audit/
 │   │       └── route.ts      # POST /api/audit (ربط نموذج Workers AI)

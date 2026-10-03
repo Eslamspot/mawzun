@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mawzoon.local/schemas/verdict.schema.json",
+  "title": "Mawzoon Verdict — مخرج نموذج التحقق",
+  "description": "مخطط مخرج المحرّك. مطابق لحقل الردّ في api_contract_mawzoon.md. يُستخدم للـ structured output ولمنع المخرجات الناقصة.",
+  "type": "object",
+  "required": ["id", "verdict", "reason", "constraints_used"],
+  "additionalProperties": false,
+  "properties": {
+    "id": { "type": "string", "description": "معرّف الطلب" },
+    "verdict": {
+      "enum": ["pass", "needs_fix", "stop"],
+      "description": "pass=مطابق · needs_fix=يحتاج تعديل · stop=وقف وتحويل"
+    },
+    "summary": { "type": "string", "maxLength": 200 },
+    "reason": { "type": "string", "minLength": 1, "description": "السبب — إلزامي في كل حكم" },
+    "location": {
+      "type": ["object", "null"],
+      "required": ["line", "word"],
+      "properties": {
+        "line": { "type": "integer", "minimum": 1 },
+        "word": { "type": "integer", "minimum": 1 }
+      },
+      "additionalProperties": false
+    },
+    "evidence": {
+      "type": ["object", "null"],
+      "required": ["source_name", "entry", "rule"],
+      "properties": {
+        "source_name": { "type": "string", "minLength": 1 },
+        "entry": { "type": "string", "minLength": 1, "description": "معرّف القيد + وصفه" },
+        "rule": { "type": "string", "minLength": 1, "description": "قاعدة الاستخدام بنصها" }
+      },
+      "additionalProperties": false
+    },
+    "suggestion": {
+      "type": ["string", "null"],
+      "description": "إلزامي في needs_fix · ممنوع في pass و stop"
+    },
+    "constraints_used": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "pattern": "^(TRM|RUL|ISN|NUM)-|^UNMAPPED$" },
+      "description": "معرّفات القيود المستند إليها — لا حكم بلا قيد"
+    },
+    "stop": {
+      "type": ["object", "null"],
+      "required": ["reason", "unknown_constraint", "required_question", "referral"],
+      "properties": {
+        "reason": { "type": "string" },
+        "unknown_constraint": { "type": "string", "description": "القيد المفقود أو الموسوم UNMAPPED" },
+        "required_question": { "type": "string", "description": "السؤال المطلوب طرحه" },
+        "referral": { "type": "string", "description": "الجهة المؤهلة المحال إليها" }
+      },
+      "additionalProperties": false
+    },
+    "constraints": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["kind", "label", "value", "ok"],
+        "properties": {
+          "kind": { "enum": ["term", "ruling", "condition", "isnad", "number"] },
+          "label": { "type": "string" },
+          "value": { "type": "string" },
+          "ok": { "type": "boolean" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "notes": { "type": "string" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "verdict": { "const": "pass" } } },
+      "then": {
+        "properties": { "suggestion": { "type": "null" } },
+        "not": { "required": ["stop"] }
+      }
+    },
+    {
+      "if": { "properties": { "verdict": { "const": "needs_fix" } } },
+      "then": {
+        "required": ["location", "evidence", "suggestion"],
+        "properties": { "suggestion": { "type": "string", "minLength": 1 } },
+        "not": { "required": ["stop"] }
+      }
+    },
+    {
+      "if": { "properties": { "verdict": { "const": "stop" } } },
+      "then": {
+        "required": ["stop"],
+        "properties": {
+          "suggestion": { "type": "null" },
+          "evidence": { "type": "null" }
+        }
+      }
+    }
+  ]
+}
