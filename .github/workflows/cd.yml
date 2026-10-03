@@ -1,0 +1,56 @@
+name: CD
+
+# Ship `main` to Cloudflare Workers on every push. The build runs through
+# OpenNext (`bun run build:worker`) and deploys the bundle in `.open-next/`.
+#
+# Required repository secrets (Settings → Secrets and variables → Actions):
+#   CLOUDFLARE_API_TOKEN  — API token with Workers Scripts:Edit + Workers AI:Run
+#   CLOUDFLARE_ACCOUNT_ID — the account that owns the workers.dev subdomain
+#
+# The `AI` binding in wrangler.jsonc travels with the deployment, so the
+# semantic layer stays live. Runs after CI passes on the same commit.
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: cd-main
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment:
+      name: production
+      url: https://mawzun-project.eslamspot.workers.dev
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.2
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build Worker bundle
+        run: bun run build:worker
+
+      - name: Deploy to Cloudflare Workers
+        run: bunx wrangler deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      - name: Smoke test the live deployment
+        run: |
+          curl -sf -o /dev/null https://mawzun-project.eslamspot.workers.dev/
+          curl -sf -X POST https://mawzun-project.eslamspot.workers.dev/api/audit \
+            -H 'Content-Type: application/json' \
+            -d '{"sourceText":"لا يجوز بيع الطعام قبل قبضه.","derivedText":"Selling food before possession is not recommended.","workType":"translate","contentLevel":"B","targetLanguage":"en"}' \
+            | grep -q '"ok":true'
