@@ -1,4 +1,4 @@
-export type ClassValue = string | false | null | undefined;
+type ClassValue = string | false | null | undefined;
 
 /**
  * Tiny class-name joiner. Falsy values are dropped so callers can write

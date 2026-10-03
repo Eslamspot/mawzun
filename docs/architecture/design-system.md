@@ -16,84 +16,90 @@ order: 3
 
 كل لون معرّف كمتغيّر `--color-*`، فيصبح صنفاً جاهزاً في Tailwind.
 
-### الألوان الأساسية
+### الأدوار الأساسية
 
 | الدور | الرمز | الاستخدام |
 | --- | --- | --- |
-| Primary | `#005c55` / `bg-primary` | الحالات المتحقّقة، درجات الدقة، الإجراءات الأساسية |
-| Primary container | `#0f766e` / `bg-primary-container` | خلفيات مميّزة عالية الثقة |
-| Primary fixed | `#9cf2e8` / `bg-primary-fixed` | لمحات فاتحة للشعارات والرقائق |
-| Secondary | `#545f73` / `bg-secondary` | النصوص البنيوية والعناوين الثانوية |
-| Tertiary (تحذير) | `#863b00` / `bg-tertiary` | الانحرافات الدلالية والتحذيرات التي تحتاج تدقيقاً بشرياً |
+| Primary | `#091426` / `bg-primary` | شرائط الأوامر، القسم النشط، الخواتيم |
+| Primary container | `#1e293b` / `bg-primary-container` | خلفيات مميّزة عالية الثقة |
+| Secondary | `#0058be` / `bg-secondary` | التنفيذ والقياس الحيّ: البؤر وحالة التشغيل |
+| Tertiary | `#00301f` / `bg-tertiary` | حالة «متحقّق/موثّق» (الرقاقة الخضراء `tertiary-fixed`) |
 | Error | `#ba1a1a` / `bg-error` | مخالفة القيود المعتمدة |
+| Outline variant | `#c5c6cd` / `border-outline-variant` | الحدود الشعرية والفواصل |
 
-### الأسطح والحدود
+### الأسطح
 
 | الرمز | القيمة | الاستخدام |
 | --- | --- | --- |
 | `surface` | `#f8f9ff` | الخلفية العامة للتطبيق |
 | `surface-container-lowest` | `#ffffff` | سطح البطاقات (الأبيض النقي) |
 | `surface-container-low` | `#eff4ff` | أسطح ثانوية خفيفة |
-| `surface-container-high` | `#dce9ff` | حالات التحويم والحدود |
+| `surface-container` | `#e5eeff` | خلفيات الرقائق والعناصر المحايدة |
+| `surface-container-high` | `#dce9ff` | حالات التحويم والحدود السميكة |
 | `on-surface` | `#0b1c30` | النص الأساسي |
-| `on-surface-variant` | `#3e4947` | النص الثانوي |
-| `outline` / `outline-variant` | `#6e7977` / `#bdc9c6` | الحدود والفواصل |
+| `on-surface-variant` | `#45474c` | النص الثانوي |
+| `outline` / `outline-variant` | `#75777d` / `#c5c6cd` | الحدود والفواصل |
 
-### المعاني الوظيفية (من DESIGN.md)
+### المعاني الوظيفية (خرائط في `parts.tsx`)
 
-- **موزون / سليم:** نص `#047857`، خلفية `#ECFDF5`.
-- **تنبيه دلالي:** نص `#B45309`، خلفية `#FFFBEB`.
-- **مخالف للضوابط:** نص `#BE123C`، خلفية `#FFF1F2`.
+حالات الوقائع والحكم تُترجم إلى ألوان عبر خرائط مركزية لا عبر قيم مبعثرة:
+
+- **متحقّق / محفوظ (`verified`):** خلفية `tertiary-fixed/40` ونص `on-tertiary-fixed-variant`.
+- **يحتاج تعديل (`revision`):** خلفية `secondary-fixed` ونص `on-secondary-fixed-variant`.
+- **انزياح / وقف (`escalate`):** خلفية `error-container` ونص `on-error-container`.
 
 ## الطباعة
 
-الخطوط: **IBM Plex Sans Arabic** للنصوص (عبر `next/font/google`)، و**JetBrains Mono** للكود.
+الخطوط: **IBM Plex Sans Arabic** للنصوص (عبر `next/font/google`)، و**JetBrains Mono** للقياس
+عن بُعد (المعرّفات والبصمات وأكواد الطبقات).
 
 الأدوار الطباعية موحّدة في [`src/lib/typography.ts`](https://github.com/Asrar-7r/mawzun-project/blob/main/src/lib/typography.ts)
 كخريطة `t`، تجمع عائلة الخط مع مقياس الحجم والارتفاع:
 
 | الدور | الصنف | الحجم / الارتفاع |
 | --- | --- | --- |
-| `t.h1` | `font-headline-xl text-headline-xl` | 32px / 44px |
-| `t.h2` | `font-headline-lg text-headline-lg` | 24px / 34px |
-| `t.h3` | `font-headline-sm text-headline-sm` | 18px / 26px |
-| `t.bodyLg` | `font-body-lg text-body-lg` | 16px / 26px |
-| `t.body` | `font-body-md text-body-md` | 14px / 22px |
+| `t.display` | `font-display-lg text-display-lg` | 30px / 38px |
+| `t.h2` | `font-headline-lg text-headline-lg` | 22px / 28px |
+| `t.h3` | `font-headline-md text-headline-md` | 18px / 24px |
+| `t.h4` | `font-headline-sm text-headline-sm` | 15px / 20px |
+| `t.bodyLg` | `font-body-lg text-body-lg` | 15px / 24px |
+| `t.body` | `font-body-md text-body-md` | 13px / 20px |
 | `t.bodySm` | `font-body-sm text-body-sm` | 12px / 18px |
-| `t.label` | `font-label-md text-label-md` | 13px / 18px |
-| `t.labelSm` | `font-label-sm text-label-sm` | 11px / 16px |
-| `t.code` | `font-code-sm text-code-sm` | 12px / 18px (JetBrains Mono) |
+| `t.label` | `font-label-lg text-label-lg` | 13px / 18px |
+| `t.labelSm` | `font-label-md text-label-md` | 11px / 16px |
+| `t.codeMd` | `font-code-md text-code-md` | 12px / 18px (JetBrains Mono) |
+| `t.code` | `font-code-sm text-code-sm` | 10px / 14px (JetBrains Mono) |
 
 ```tsx
 import { t } from "@/lib/typography";
-<h1 className={t.h1}>عنوان</h1>
+<h2 className={t.h2}>عنوان</h2>
 ```
 
 ## المسافات
 
-مقياس مخصّص: `space-xs` (0.25rem)، `space-sm` (0.5rem)، `space-md` (1rem)،
-`space-lg` (1.5rem)، `space-xl` (2.5rem)، بالإضافة إلى `gutter` (1.5rem) و`margin` (2rem).
-تُستخدم كأصناف مثل `p-space-md`, `gap-space-sm`.
+مقياس مخصّص: `space-xs` (0.25rem)، `space-sm` (0.5rem)، `space-md` (0.75rem)،
+`space-lg` (1.25rem)، `space-xl` (2rem)، بالإضافة إلى `gutter` (1rem) و`gutter-desktop`
+(1.5rem) و`margin` (1rem) و`margin-desktop` (2rem). تُستخدم كأصناف مثل `p-space-md`, `gap-space-sm`.
 
 ## أنصاف الأقطار
 
-من `0.25rem` (sm) إلى `full`، مع اصطلاح: `rounded-lg` (8px) للعناصر التفاعلية،
-`rounded-xl` (1rem) لبطاقات، `rounded-2xl` للبوابات البارزة، `rounded-full` للرقائق.
+من `radius-xs` (0.125rem) إلى `radius-xl` (0.75rem)، مع اصطلاح «الدقة اللينة»: لا أنصاف أقطار
+كبيرة تُذيب شبكة بيانات. البطاقات والألواح تستخدم `rounded`/`rounded-lg`، والرقائق `rounded`.
 
 ## الارتفاع والعمق
 
-تسلسل هرمي بالطبقات اللونية والحدود الرقيقة لا بالظلال العميقة:
+تسلسل هرمي بالطبقات اللونية والحدود الشعرية (1px) لا بالظلال:
 
 | المستوى | الوصف |
 | --- | --- |
 | Level 0 | القماش الأساسي `#f8f9ff` (مسطّح) |
-| Level 1 | بطاقة بيضاء بحدّ رقيق وظل محيط خفيف جداً ([Card](/docs/architecture/components#card)) |
+| Level 1 | بطاقة بيضاء بحدّ شعري داخل مساحة العمل |
 | Level 2 | لوحات مرتفعة بحدّ أوضح |
-| Level 3 | النوافذ واللوائح المنسدلة بخلفية معتمة وضباب خلفي |
+| Level 3 | النوافذ واللوائح (عبر `backdrop-blur`) |
 
 ## الشبكة والاستجابة
 
-- حاوية المحتوى عبر [`PageShell`](/docs/architecture/components#pageshell) بعرض أقصى `6xl` أو `7xl`.
-- **سطح المكتب (≥1200px):** شريط جانبي ثابت (256px) + قماش مرن.
-- **التابلت (768–1199px):** تصطفّ اللوحات في مفتّشات تبويبية.
-- **الجوال (<768px):** الشريط الجانبي درج منسدل، وأشرطة الإجراء تلتصق بالأسفل.
+- حاوية المحتوى بعرض أقصى `7xl` عبر `mx-auto` داخل مساحة العمل.
+- **سطح المكتب:** شريط علوي ثابت (64px) وقماش مرن؛ روابط الأقسام تظهر في الشريط.
+- **الجوال:** تختفي روابط الأقسام من الشريط، ويُتصفّح عبر شريط المراحل القابل للتمرير أفقيًا
+  وأزرار القفز، والألواح تصطفّ عموديًا.

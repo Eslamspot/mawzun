@@ -17,6 +17,11 @@ order: 3
 | `start` | `bun run start` | تشغيل نسخة الإنتاج بعد البناء |
 | `lint` | `bun run lint` | فحص الكود بـ ESLint |
 | `docs:check` | `bun run docs:check` | فحص التوثيق: ترويسات، ترتيب، وروابط داخلية |
+| `engine:check` | `bun run engine:check` | تحقق سلوكي من محرك الفحص (انزياح، سند، حكم، سجل) |
+| `build:worker` | `bun run build:worker` | بناء Worker لنشر Cloudflare (OpenNext) |
+| `preview` | `bun run preview` | معاينة Worker محليًا |
+| `deploy` | `bun run deploy` | نشر Worker على Cloudflare |
+| `cf-typegen` | `bun run cf-typegen` | توليد أنواع Cloudflare (`wrangler types`) |
 | `preinstall` | يُنفَّذ تلقائياً | حارس Bun-only (لا يُشغَّل يدوياً) |
 
 ## أوامر إدارة الاعتماديات
@@ -36,10 +41,12 @@ bunx <tool>            # تشغيل أداة لمرة واحدة (بديل npx)
 ```bash
 bun run lint           # يجب أن يمرّ بلا أخطاء
 bun run docs:check     # يجب أن يمرّ بلا ترويسات ناقصة ولا روابط مكسورة
-bun run build          # يجب أن يكتمل البناء
+bun run engine:check   # يجب أن تمرّ كل حالات المحرك
 ```
 
 هذا مطابق للخطوة السادسة في [سير العمل الإلزامي](/docs/reference/conventions#سير-العمل-الإلزامي).
+
+> `bun run build` و`bun run build:worker` يملكهما مسار البناء، ولا يلزم تشغيلهما لتغيير توثيقي.
 
 ## أوامر مستحسنة
 

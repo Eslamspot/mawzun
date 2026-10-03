@@ -32,8 +32,9 @@ bun install
 bun dev
 ```
 
-ثم افتح [http://localhost:3000](http://localhost:3000) في المتصفح. سيُعيدك التطبيق تلقائياً
-إلى المرحلة الأولى `/01-input` (انظر `src/app/page.tsx`).
+ثم افتح [http://localhost:3000](http://localhost:3000) في المتصفح. تعرض الصفحة الجذرية `/`
+**مساحة العمل كاملة في صفحة واحدة**: خمسة أقسام مرقّمة (`#step-1` … `#step-5`) بلا مسارات
+مراحل ولا شريط جانبي. انظر [التوجيه والأقسام](/docs/architecture/routing-and-stages).
 
 ## كيف يفرض المشروع Bun؟
 
@@ -43,11 +44,12 @@ bun dev
 
 ## بعد التثبيت
 
-التحقق من سلامة البيئة:
+التحقق من سلامة البيئة والمنطق:
 
 ```bash
-bun run lint     # فحص ESLint على كامل الكود
-bun run build    # بناء الإنتاج للتحقق من عدم وجود أخطاء
+bun run lint         # فحص ESLint على كامل الكود
+bun run docs:check   # سلامة التوثيق: ترويسات + ترتيب + روابط
+bun run engine:check # تحقق سلوكي من محرك الفحص
 ```
 
 راجع [الأوامر والسكربتات](/docs/getting-started/scripts) لبقية الأوامر، و
@@ -57,7 +59,7 @@ bun run build    # بناء الإنتاج للتحقق من عدم وجود أ�
 
 1. اطّلع على [بنية المشروع](/docs/getting-started/project-structure).
 2. اقرأ [الاصطلاحات البرمجية](/docs/reference/conventions) قبل كتابة أي كود.
-3. راجع [سير عمل التدقيق](/docs/workflow/audit-pipeline) لفهم منطق المراحل.
+3. راجع [مسار التدقيق](/docs/workflow/audit-pipeline) لفهم منطق الفحص.
 
 ## استكشاف الأخطاء
 

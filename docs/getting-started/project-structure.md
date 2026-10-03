@@ -11,47 +11,65 @@ mawzun-project/
 ├── docs/                     # ← هذا التوثيق (مصدر الحقيقة)
 ├── public/                   # الأصول الثابتة
 ├── scripts/
-│   └── ensure-bun.mjs        # حارس يمنع npm/yarn/pnpm
+│   ├── ensure-bun.mjs        # حارس يمنع npm/yarn/pnpm
+│   ├── check-docs.mjs        # فحص التوثيق (docs:check)
+│   └── engine-check.ts       # التحقق السلوكي من المحرك (engine:check)
 ├── src/
-│   ├── app/                  # App Router: الصفحات والتنسيقات
+│   ├── app/                  # App Router
 │   │   ├── globals.css       # رموز التصميم (@theme) ونمط الجذر
-│   │   ├── layout.tsx        # الجذر: RTL + الخطوط + AppShell
-│   │   ├── page.tsx          # يحوّل تلقائياً إلى المرحلة 01
-│   │   ├── 01-input/
-│   │   ├── 02-analysis/
-│   │   ├── 03-constraints/
-│   │   ├── 04-transformation/
-│   │   └── docs/             # ← مركز التوثيق داخل التطبيق
+│   │   ├── layout.tsx        # الجذر: RTL + الخطوط + AppShell + AuditProvider
+│   │   ├── page.tsx          # الصفحة الوحيدة: AuditWorkspace
+│   │   └── api/audit/
+│   │       └── route.ts      # POST /api/audit (ربط نموذج Workers AI)
 │   ├── components/
-│   │   ├── layout/           # AppShell, Sidebar, TopBar
-│   │   ├── stages/           # مكوّنات المراحل الوظيفية
-│   │   ├── docs/             # مكوّنات مركز التوثيق
-│   │   └── ui/               # مكوّنات واجهة أساسية قابلة لإعادة الاستخدام
+│   │   ├── audit/            # مساحة العمل: AuditWorkspace، الأقسام الخمسة، parts
+│   │   ├── layout/           # AppShell, TopBar, SearchModal, SettingsModal
+│   │   └── ui/               # Icon (العناصر الأساسية المتبقية)
+│   ├── context/
+│   │   ├── AuditContext.tsx  # حالة الفحص والسجل والتحقق
+│   │   └── ToastContext.tsx  # الإشعارات العابرة
 │   └── lib/
+│       ├── audit/            # محرّك الفحص ثلاثي الطبقات
+│       │   ├── constraint-bank.ts     # القيود الخمس وأصولها
+│       │   ├── ruling-strength.ts     # جدول قوة الحكم
+│       │   ├── layer1-deterministic.ts
+│       │   ├── layer2-lexical.ts
+│       │   ├── layer3-semantic.ts
+│       │   ├── verdict.ts             # الحكم ثلاثي الحالات
+│       │   ├── record.ts              # السجل المختوم
+│       │   ├── normalize.ts           # مفتاح المقارنة العربية
+│       │   ├── layer-context.ts
+│       │   ├── types.ts
+│       │   └── index.ts               # runAudit
 │       ├── cx.ts             # دمج أسماء أصناف Tailwind
-│       ├── stages.ts         # مصدر حقيقة المراحل والتنقّل
-│       ├── typography.ts     # أدوار الطباعة
-│       └── docs/             # محرّك التوثيق (قراءة/تحليل/فهرسة)
+│       ├── stages.ts         # مصدر حقيقة الأقسام الخمسة
+│       └── typography.ts     # أدوار الطباعة
 ├── stitch_mawzun/            # مراجع التصميم الأصلية (Stitch) + DESIGN.md
 ├── archive/                  # نسخ ما قبل التعديل (وفق قواعد المشروع)
 ├── AGENTS.md                 # القواعد الإلزامية
+├── wrangler.jsonc            # تكوين Cloudflare (ربط AI)
 └── bun.lock                  # ملف القفل المرجعي
 ```
 
 ## المجلدات المحورية
 
 ### `src/app/`
-يعتمد على **App Router** في Next.js 16. كل مجلد يمثّل مساراً، وكل `page.tsx` يصدّر مكوّناً
-افتراضياً. التنسيقات العامة ورموز التصميم في [globals.css](/docs/architecture/design-system).
+يعتمد على **App Router** في Next.js 16، لكن لا مسارات مراحل: `page.tsx` تُصيّر مساحة العمل
+كاملة، و`layout.tsx` يمرّر الحالة ويغلّف بالهيكل. المسار الوحيد على الخادم هو `api/audit`.
+التنسيقات العامة ورموز التصميم في [globals.css](/docs/architecture/design-system).
 
 ### `src/components/`
-- **`layout/`** — الهيكل الثابت المشترك بين كل الصفحات.
-- **`stages/`** — المكوّنات المرتبطة بمنطق كل مرحلة تدقيق.
-- **`ui/`** — عناصر أساسية محايدة (`Card`, `Badge`, `Icon`, `ProgressBar`, `PageShell`).
+- **`audit/`** — مساحة العمل والقسم الواحد: `AuditWorkspace`, `InputSection`, `ConstraintsSection`,
+  `PipelineSection`, `VerdictSection`, `LedgerSection`, و`parts.tsx` بالأساس المشترك.
+- **`layout/`** — الهيكل الثابت المشترك (`AppShell`, `TopBar`) والنوافذ (`SearchModal`, `SettingsModal`).
+- **`ui/`** — عنصر أساسي محايد متبقٍّ (`Icon`). الألواح والرقائق في مساحة العمل مبنيّة في
+  `components/audit/parts.tsx`.
 
 ### `src/lib/`
-منطق مشترك بلا واجهة. **`stages.ts`** هو مصدر الحقيقة الوحيد للمراحل، يستهلكه كل من
-الشريط الجانبي ومسار التنقّل. راجع [التوجيه والمراحل](/docs/architecture/routing-and-stages).
+- **`audit/`** — المحرك كله: بنك القيود، جدول قوة الحكم، الطبقات 1–3، الحكم، السجل، والموحّد.
+  نقطة الدخول `runAudit`. راجع [مسار التدقيق](/docs/workflow/audit-pipeline).
+- **`stages.ts`** — مصدر الحقيقة الوحيد للأقسام الخمسة ومراسيها، يستهلكه الشريط العلوي وشريط
+  المراحل والبحث. راجع [التوجيه والأقسام](/docs/architecture/routing-and-stages).
 
 ### `stitch_mawzun/`
 مراجع التصميم الأصلية المُصدَّرة من Stitch، وتحتوي `mawzun_semantic_guard/DESIGN.md`

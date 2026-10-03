@@ -1,0 +1,250 @@
+"use client";
+
+/**
+ * Shared primitives for the audit workspace.
+ *
+ * The design language this file encodes, from DESIGN.md and the reference
+ * markup (stitch-new/code.html):
+ * - depth is tonal: flat panels carry a 1px hairline border plus the very
+ *   light `shadow-sm` the reference puts on every card;
+ * - colour is reserved for state (verified / needs revision / stop & escalate),
+ *   not decoration;
+ * - telemetry (ids, hashes, layer codes) is always monospaced;
+ * - figures are tabular, because every screen here is a ledger.
+ */
+
+import type { ReactNode } from "react";
+import { cx } from "@/lib/cx";
+import { t } from "@/lib/typography";
+import { Icon } from "@/components/ui/Icon";
+import { STAGES } from "@/lib/stages";
+import type { Finding } from "@/lib/audit/types";
+
+/** A numbered workflow section: the unit the whole design is built from. */
+export function WorkflowCard({
+  number,
+  title,
+  subtitle,
+  aside,
+  id,
+  children,
+}: {
+  number: number;
+  title: string;
+  subtitle: string;
+  aside?: ReactNode;
+  id: string;
+  children: ReactNode;
+}) {
+  return (
+    <section
+      id={id}
+      className="scroll-mt-24 rounded-xl border border-outline-variant bg-surface-container-lowest p-space-xl shadow-sm flex flex-col gap-space-lg"
+    >
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-space-sm pb-space-md">
+        <div className="flex items-center gap-space-md">
+          <div
+            className={cx(
+              t.codeMd,
+              "flex h-7 w-7 shrink-0 items-center justify-center rounded-xs bg-primary text-on-primary",
+            )}
+          >
+            {number}
+          </div>
+          <div className="flex flex-col">
+            <h2 className={cx(t.h2, "text-on-surface")}>{title}</h2>
+            <p className={cx(t.bodySm, "text-on-surface-variant")}>{subtitle}</p>
+          </div>
+        </div>
+        {aside}
+      </div>
+      {children}
+    </section>
+  );
+}
+
+/** Telemetry chip: monospaced and tonally filled (the reference draws no rule). */
+export function CodeChip({ children, className }: { children: ReactNode; className?: string }) {
+  return (
+    <span
+      className={cx(
+        t.code,
+        "inline-flex items-center gap-space-xs rounded-xs bg-surface-container px-space-sm py-0.5 text-on-surface-variant",
+        className,
+      )}
+    >
+      {children}
+    </span>
+  );
+}
+
+export type SemanticTone = "verified" | "revision" | "escalate" | "neutral";
+
+const TONE: Record<SemanticTone, string> = {
+  // Verified / matched
+  verified: "bg-tertiary-fixed/40 text-on-tertiary-fixed-variant",
+  // Needs revision / inconclusive
+  revision: "bg-secondary-fixed text-on-secondary-fixed-variant",
+  // Stop & escalate
+  escalate: "bg-error-container text-on-error-container",
+  neutral: "bg-surface-container text-on-surface-variant",
+};
+
+export function StatusChip({
+  tone = "neutral",
+  children,
+  icon,
+  className,
+}: {
+  tone?: SemanticTone;
+  children: ReactNode;
+  icon?: string;
+  className?: string;
+}) {
+  return (
+    <span
+      className={cx(
+        t.labelSm,
+        "inline-flex items-center gap-space-xs rounded-xs px-space-sm py-0.5 font-medium",
+        TONE[tone],
+        className,
+      )}
+    >
+      {icon && <Icon name={icon} className="text-[14px]" />}
+      {children}
+    </span>
+  );
+}
+
+/** A labelled value row used across the verdict, certificate and pipeline. */
+export function KeyValue({
+  label,
+  value,
+  mono = false,
+  tone,
+}: {
+  label: string;
+  value: ReactNode;
+  mono?: boolean;
+  tone?: SemanticTone;
+}) {
+  return (
+    <div className="flex items-start justify-between gap-space-md py-1">
+      <span className={cx(t.bodySm, "shrink-0 text-on-surface-variant")}>{label}</span>
+      <span
+        className={cx(
+          mono ? t.code : t.bodySm,
+          "text-right",
+          tone === "escalate" ? "text-error" : tone === "revision" ? "text-secondary" : "text-on-surface",
+        )}
+      >
+        {value}
+      </span>
+    </div>
+  );
+}
+
+export const FINDING_TONE: Record<Finding["cls"], SemanticTone> = {
+  preserved: "verified",
+  shifted: "escalate",
+  missing: "revision",
+};
+
+export const FINDING_LABEL: Record<Finding["cls"], string> = {
+  preserved: "محفوظ",
+  shifted: "منزاح",
+  missing: "مفقود",
+};
+
+/** The stepper: numbered pills joined by direction arrows. */
+export function Stepper({ activeId }: { activeId: string }) {
+  return (
+    <nav aria-label="مراحل سير العمل" className="flex items-center overflow-x-auto gap-space-xs py-1">
+      {STAGES.map((stage, index) => {
+        const isActive = stage.id === activeId;
+        const isDone = index < STAGES.findIndex((s) => s.id === activeId);
+        return (
+          <span key={stage.id} className="flex items-center gap-space-xs">
+            {index > 0 && (
+              <span aria-hidden="true" className={cx(t.code, "select-none text-outline-variant")}>
+                ←
+              </span>
+            )}
+            <a
+              href={`#${stage.id}`}
+              aria-current={isActive ? "true" : undefined}
+              className={cx(
+                "flex items-center gap-space-xs rounded-xs px-space-md py-1.5 transition-colors whitespace-nowrap",
+                isActive
+                  ? "bg-primary text-on-primary"
+                  : isDone
+                    ? "bg-tertiary-fixed/30 text-on-tertiary-fixed-variant hover:bg-tertiary-fixed/50"
+                    : "bg-surface-container text-on-surface hover:bg-surface-container-high",
+              )}
+            >
+              <span className={cx(t.code, isActive ? "opacity-80" : "text-on-surface-variant")}>
+                {stage.ordinal}
+              </span>
+              <span className={cx(t.label, "whitespace-nowrap")}>{stage.title}</span>
+            </a>
+          </span>
+        );
+      })}
+    </nav>
+  );
+}
+
+/**
+ * The derived text with every located finding highlighted.
+ *
+ * Overlapping findings are resolved by first-wins on start offset, because two
+ * panes of the same span in two colours would tell the reader nothing.
+ */
+export function HighlightedText({ text, findings }: { text: string; findings: readonly Finding[] }) {
+  const parts = (() => {
+    const located = findings.filter((f) => f.end > f.start).sort((a, b) => a.start - b.start);
+    const out: ReactNode[] = [];
+    let cursor = 0;
+
+    for (const f of located) {
+      if (f.start < cursor) continue;
+      out.push(text.slice(cursor, f.start));
+      out.push(
+        <mark
+          key={`${f.start}-${f.end}`}
+          className={cx(
+            "rounded-xs border-b",
+            f.cls === "shifted"
+              ? "bg-error-container/60 border-error text-on-surface"
+              : "bg-tertiary-fixed/50 border-tertiary-fixed-dim text-on-surface",
+          )}
+        >
+          {text.slice(f.start, f.end)}
+        </mark>,
+      );
+      cursor = f.end;
+    }
+    out.push(text.slice(cursor));
+    return out;
+  })();
+
+  return (
+    <p dir="auto" className={cx(t.bodyLg, "leading-relaxed text-on-surface")}>
+      {parts}
+    </p>
+  );
+}
+
+/** A recessed panel: the design's "inset verification trace". */
+export function InsetPanel({ children, className }: { children: ReactNode; className?: string }) {
+  return (
+    <div
+      className={cx(
+        "rounded-xs border border-outline-variant bg-surface-container-low p-space-sm",
+        className,
+      )}
+    >
+      {children}
+    </div>
+  );
+}

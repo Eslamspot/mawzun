@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect, useMemo } from "react";
-import { useRouter } from "next/navigation";
 import { Icon } from "@/components/ui/Icon";
 import { cx } from "@/lib/cx";
 import { t } from "@/lib/typography";
@@ -24,7 +23,6 @@ export function SearchModal({
   isOpen: boolean;
   onClose: () => void;
 }) {
-  const router = useRouter();
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -47,13 +45,13 @@ export function SearchModal({
     // Stages
     STAGES.forEach((stage) => {
       list.push({
-        id: `stage-${stage.slug}`,
+        id: `stage-${stage.id}`,
         category: "المراحل",
         title: `${stage.ordinal}. ${stage.title}`,
-        subtitle: `الانتقال المباشر إلى شاشة /${stage.slug}`,
+        subtitle: `الانتقال المباشر إلى قسم «${stage.title}»`,
         icon: stage.icon,
         action: () => {
-          router.push(`/${stage.slug}`);
+          document.getElementById(stage.id)?.scrollIntoView({ behavior: "smooth", block: "start" });
           onClose();
         },
       });
@@ -68,7 +66,7 @@ export function SearchModal({
         subtitle: constraint.rule,
         icon: "rule_folder",
         action: () => {
-          router.push("/02-constraints");
+          document.getElementById("step-2")?.scrollIntoView({ behavior: "smooth", block: "start" });
           onClose();
         },
       });
@@ -102,14 +100,14 @@ export function SearchModal({
         subtitle: m.subtitle,
         icon: "balance",
         action: () => {
-          router.push("/02-constraints");
+          document.getElementById("step-2")?.scrollIntoView({ behavior: "smooth", block: "start" });
           onClose();
         },
       });
     });
 
     return list;
-  }, [onClose, router]);
+  }, [onClose]);
 
   // Filter items by query
   const filtered = useMemo(() => {

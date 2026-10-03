@@ -1,7 +1,9 @@
-import { redirect } from "next/navigation";
-import { FIRST_STAGE, stageHref } from "@/lib/stages";
+import { AuditWorkspace } from "@/components/audit/AuditWorkspace";
 
-/** The workflow always starts at stage 01. */
+/**
+ * The whole workflow lives on one page: the design is a single scrolling
+ * workspace with a numbered section per stage and an anchor-based stepper.
+ */
 export default function Home() {
-  redirect(stageHref(FIRST_STAGE.slug));
+  return <AuditWorkspace />;
 }

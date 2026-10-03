@@ -1,34 +1,38 @@
 ---
-title: التوجيه والمراحل
-description: كيف يعمل App Router في موزون، وكيف يُشتق التنقّل بين المراحل من مصدر حقيقة واحد.
+title: التوجيه والأقسام
+description: كيف تعمل الصفحة الواحدة في موزون، وكيف تُشتق الأقسام الخمسة ومراسيها من مصدر حقيقة واحد.
 order: 2
 ---
 
-# التوجيه والمراحل
+# التوجيه والأقسام
 
 ## التوجيه (App Router)
 
-يعتمد المشروع على App Router في Next.js 16:
+يعتمد المشروع على App Router في Next.js 16، لكن التنقّل اليوم لا يعتمد على مسارات مراحل:
 
-- كل مجلد تحت `src/app/` يمثّل مقطع مسار، وملف `page.tsx` يجعل المقطع قابلاً للزيارة.
-- `layout.tsx` الجذري يُغلّف كل الصفحات بـ [`AppShell`](/docs/architecture/components#appshell).
-- الصفحة الجذرية `src/app/page.tsx` تُطلق `redirect()` إلى المرحلة الأولى.
+- `src/app/page.tsx` هي الصفحة الوحيدة، وتُصيّر `AuditWorkspace` — وهي مساحة العمل كاملة.
+- `layout.tsx` الجذري يُغلّف كل الصفحات بـ [`AppShell`](/docs/architecture/components#appshell)
+  (شريط علوي فقط، بلا شريط جانبي) ويمرّر حالة الفحص عبر `AuditProvider`.
+- `src/app/api/audit/route.ts` هو مسار الخادم الوحيد: `POST /api/audit`، يربط الطبقة الدلالية
+  بنموذج Cloudflare Workers AI.
 
-> **اصطلاح Next.js 16:** وسيطات `params` تُمرّر كـ **Promise** وتُفكّ بـ `await`،
-> كما في نوع الصفحة `PageProps<'/docs/[...slug]'>`.
+لا توجد مسارات مثل `/01-input` أو `/06-results`، ولا يوجد مركز توثيق `/docs` داخل التطبيق.
 
-## مصدر الحقيقة للمراحل: `src/lib/stages.ts`
+> **اصطلاح Next.js 16:** تُقرأ وسائط المسار كـ **Promise** وتُفكّ بـ `await`، كما في نوع
+> الصفحة `LayoutProps<'/'>`.
 
-ملف واحد يعرّف المراحل الست في مصفوفة `STAGES` ثابتة (`readonly`)، ويوفّر دوال مساعدة:
+## مصدر الحقيقة للأقسام: `src/lib/stages.ts`
+
+ملف واحد يُعرّف الأقسام الخمسة في مصفوفة `STAGES` ثابتة (`readonly`)، ولكل قسم معرّف قسم
+(`id`) هو مرساته، وترتيب، وعنوان، وأيقونتان:
 
 ```ts
-export const STAGES = [
-  { slug: "01-input",         ordinal: "01", title: "إدخال النص", icon: "edit_note",   doneIcon: "check_circle" },
-  { slug: "02-analysis",      ordinal: "02", title: "التحليل",    icon: "analytics",   doneIcon: "check_circle" },
-  { slug: "03-constraints",   ordinal: "03", title: "القيود",     icon: "rule_folder", doneIcon: "check_circle" },
-  { slug: "04-transformation",ordinal: "04", title: "التحويل",    icon: "transform",   doneIcon: "check_circle" },
-  { slug: "05-audit",         ordinal: "05", title: "الفحص",      icon: "fact_check",  doneIcon: "check_circle" },
-  { slug: "06-results",       ordinal: "06", title: "النتيجة",    icon: "verified",    doneIcon: "verified" },
+export const STAGES: readonly Stage[] = [
+  { id: "step-1", ordinal: "01", title: "الإدخال والتوصيف", icon: "edit_note", doneIcon: "check_circle" },
+  { id: "step-2", ordinal: "02", title: "القيود المعتمدة", icon: "rule_folder", doneIcon: "check_circle" },
+  { id: "step-3", ordinal: "03", title: "الفحص ثلاثي الطبقات", icon: "fact_check", doneIcon: "check_circle" },
+  { id: "step-4", ordinal: "04", title: "الحكم التقريري", icon: "gavel", doneIcon: "check_circle" },
+  { id: "step-5", ordinal: "05", title: "الشهادة والسجل", icon: "verified", doneIcon: "verified" },
 ] as const;
 ```
 
@@ -36,36 +40,36 @@ export const STAGES = [
 
 | الدالة | الوظيفة |
 | --- | --- |
-| `stageHref(slug)` | يبني مسار المرحلة، مثال: `/01-input` |
-| `stageFromPath(pathname)` | يستخرج المرحلة الحالية من المسار، ويُسقط للأولى عند عدم التطابق |
-| `stageStatus(stage, current)` | يعيد `done` أو `active` أو `pending` نسبةً للمرحلة الحالية |
-| `previousStage(current)` | المرحلة السابقة، أو `null` في البداية |
-| `nextStage(current)` | المرحلة التالية، أو `null` في النهاية |
-| `FIRST_STAGE` / `LAST_STAGE` | أطراف المسار |
+| `stageHref(id)` | يبني مرساة القسم، مثال: `#step-1` |
+| `stageIndex(id)` | ترتيب القسم بين الخمسة، أو `-1` عند عدم التطابق |
+| `FIRST_STAGE` / `LAST_STAGE` | طرفا المسار |
 
 ### من يستهلكها؟
 
-- [`Sidebar`](/docs/architecture/components#sidebar) — يبني القائمة ويحسب حالة كل مرحلة.
-- [`TopBar`](/docs/architecture/components#topbar) — يبني مسار التنقّل (breadcrumb).
-- [`StageNav`](/docs/architecture/components#stagenav) — يشتق أزرار الأمام/الخلف تلقائياً.
+- [`Stepper`](/docs/architecture/components#stepper) — يبني شريط المراحل ويحسب الحالة النشطة.
+- [`TopBar`](/docs/architecture/components#topbar) — يبني روابط التنقّل إلى المراسي.
+- `SearchModal` — يدرج الأقسام الخمسة في نتائج البحث.
 
-لأن الجميع يقرأ من نفس المصفوفة، فإضافة مرحلة واحدة تنعكس فوراً على الواجهات الثلاث.
+ولأن الجميع يقرأ من نفس المصفوفة، فإضافة قسم واحد تنعكس فورًا على الواجهات كلها.
 
-## إضافة مرحلة جديدة
+## الأقسام الخمسة
 
-1. أضف عنصراً إلى `STAGES` بالترتيب الصحيح (مع `slug`, `ordinal`, `title`, `icon`, `doneIcon`).
-2. أنشئ المجلد `src/app/<slug>/page.tsx` وصفحته.
-3. لا حاجة لتعديل التنقّل — يُحدَّث تلقائياً.
+| # | المرساة | القسم | المكوّن |
+| --- | --- | --- | --- |
+| 01 | `#step-1` | الإدخال والتوصيف | [`InputSection`](/docs/architecture/components#inputsection) |
+| 02 | `#step-2` | القيود المعتمدة | [`ConstraintsSection`](/docs/architecture/components#constraintssection) |
+| 03 | `#step-3` | الفحص ثلاثي الطبقات | [`PipelineSection`](/docs/architecture/components#pipelinesection) |
+| 04 | `#step-4` | الحكم التقريري | [`VerdictSection`](/docs/architecture/components#verdictsection) |
+| 05 | `#step-5` | الشهادة والسجل | [`LedgerSection`](/docs/architecture/components#ledgersection) |
 
-> حالة المرحلة الحالية: المراحل `01`–`04` لها صفحات منفَّذة، و`05-audit` و`06-results`
-> معرّفتان في مصدر الحقيقة وتنتظران التنفيذ. راجع [سير العمل](/docs/workflow/audit-pipeline).
+`AuditWorkspace` يزرع الأقسام الخمسة بالترتيب داخل حاوية واحدة، ويعرض فوقها شريط جلسة يحمل
+`Stepper`. يُبرز القسم النشط عبر `IntersectionObserver` لا عبر مستمع تمرير.
 
-## مركز التوثيق `/docs`
+## إضافة قسم جديد
 
-مركز التوثيق مسار مستقلّ:
-- `/docs` — صفحة الهبوط.
-- `/docs/[...slug]` — يعرض ملفاً محدداً من `docs/`، مع `generateStaticParams` لتوليد كل الصفحات ساكنًا.
-- يقرأ المحتوى من ملفات Markdown عبر محرّك في `src/lib/docs/`.
+1. أضف عنصرًا إلى `STAGES` بالترتيب الصحيح (`id`, `ordinal`, `title`, `icon`, `doneIcon`).
+2. أنشئ مكوّن القسم، واستدعِه في `AuditWorkspace` بوسم يحمل `id={stage.id}`.
+3. لا حاجة لتعديل التنقّل — يُحدَّث تلقائيًا من المصفوفة.
 
 راجع [بنية المشروع](/docs/getting-started/project-structure) لموقع هذه الملفات، و
-[محرك التوثيق](/docs/architecture/docs-engine) لتفصيل الفهرسة والتوليد الساكن.
+[محرك التوثيق](/docs/architecture/docs-engine) لتفصيل كتابة التوثيق وفحصه.

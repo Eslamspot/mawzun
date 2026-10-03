@@ -36,7 +36,7 @@ export function StatusPill({ active }: { active: boolean }) {
 
 ## تسمية الملفات والرموز
 
-- المكوّنات: `PascalCase.tsx` (`StageNav.tsx`).
+- المكوّنات: `PascalCase.tsx` (`AuditWorkspace.tsx`).
 - الأدوات والمنطق: `camelCase.ts` (`stages.ts`, `typography.ts`).
 - الأنواع: `PascalCase`؛ الثوابت: `UPPER_SNAKE_CASE`.
 
@@ -68,7 +68,7 @@ git switch --detach <tag>         # استعادة كاملة
   `feat`, `fix`, `chore`, `refactor`, `docs`.
 
 ```bash
-git switch -c feat/add-analysis-stage
+git switch -c feat/audit-layer-2
 ```
 
 ## سير العمل الإلزامي

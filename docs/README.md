@@ -6,11 +6,12 @@ order: 0
 
 # توثيق موزون
 
-مرحباً بك في مركز توثيق **موزون | طبقة الأمان الدلالي**. هذه الوثائق هي المصدر الرسمي
-المعتمد لفهم معمارية النظام الدلالي، ونظام التصميم، وسير عمل التدقيق الشرعي، وقواعد المساهمة.
+مرحباً بك في مركز توثيق **موزون | مقياس أمانة النقل**. هذه الوثائق هي المصدر الرسمي
+المعتمد لفهم معمارية الصفحة الواحدة، ومحرك الفحص ثلاثي الطبقات، والحكم المختوم القابل
+لإعادة التشغيل، وقواعد المساهمة.
 
-> محتوى هذا المجلد (`docs/`) هو **مصدر الحقيقة الوحيد** للتوثيق. يُعرض نفس المحتوى داخل
-> التطبيق عبر مركز التوثيق على المسار [`/docs`](/docs)، ويُقرأ أيضاً مباشرة على GitHub.
+> محتوى هذا المجلد (`docs/`) هو **مصدر الحقيقة الوحيد** للتوثيق. تُقرأ الملفات مباشرة على
+> GitHub؛ ولا يوجد مركز توثيق داخل التطبيق (`/docs`) بعد الآن — أُزيل مع مسارات المراحل.
 
 ## من أين أبدأ؟
 
@@ -19,13 +20,14 @@ order: 0
 | مطوّراً جديداً يشغّل المشروع أول مرة | [التركيب والتشغيل](/docs/getting-started/installation) |
 | تبحث عن خريطة المجلدات والملفات | [بنية المشروع](/docs/getting-started/project-structure) |
 | تريد معرفة الأوامر المتاحة | [الأوامر والسكربتات](/docs/getting-started/scripts) |
-| مهتماً بمعمارية النظام الدلالي | [النظرة المعمارية العامة](/docs/architecture/overview) |
+| مهتماً بالمعمارية العامة | [النظرة المعمارية العامة](/docs/architecture/overview) |
 | تريد مراجعة نظام التصميم والرموز | [نظام التصميم](/docs/architecture/design-system) |
-| تريد فهم التوجيه ومنطق المراحل | [التوجيه والمراحل](/docs/architecture/routing-and-stages) |
+| تريد فهم الصفحة الواحدة والأقسام المرقّمة | [التوجيه والأقسام](/docs/architecture/routing-and-stages) |
 | تريد كتالوج المكوّنات وواجهاتها | [المكوّنات](/docs/architecture/components) |
-| تريد توثيق صفحة جديدة أو فهم مركز التوثيق | [محرك التوثيق](/docs/architecture/docs-engine) |
-| تريد فهم مسار التدقيق الستّي | [مسار التدقيق الدلالي](/docs/workflow/audit-pipeline) |
-| تريد فلسفة الضبط الدلالي | [مبدأ الحماية الدلالية](/docs/workflow/semantic-guard) |
+| تريد فهم توثيق Markdown وفحص `docs:check` | [محرك التوثيق](/docs/architecture/docs-engine) |
+| تريد فهم ما الذي يقيسه موزون وحدوده | [فحص أمانة النقل](/docs/workflow/fidelity-audit) |
+| تريد تفصيل مسار الفحص خطوة بخطوة | [مسار التدقيق](/docs/workflow/audit-pipeline) |
+| تريد فلسفة الضبط ومنع الانزياح | [مبدأ الحماية الدلالية](/docs/workflow/semantic-guard) |
 | تكتب كوداً وتريد الاصطلاحات الملزمة | [الاصطلاحات البرمجية](/docs/reference/conventions) |
 | تبحث عن معنى مصطلح عربي/إنجليزي | [المسرد](/docs/reference/glossary) |
 
@@ -34,10 +36,10 @@ order: 0
 - **البداية السريعة (`getting-started/`)** — [التركيب والتشغيل](/docs/getting-started/installation)،
   [بنية المشروع](/docs/getting-started/project-structure)، [الأوامر والسكربتات](/docs/getting-started/scripts).
 - **المعمارية (`architecture/`)** — [النظرة العامة](/docs/architecture/overview)،
-  [التوجيه والمراحل](/docs/architecture/routing-and-stages)، [نظام التصميم](/docs/architecture/design-system)،
+  [التوجيه والأقسام](/docs/architecture/routing-and-stages)، [نظام التصميم](/docs/architecture/design-system)،
   [المكوّنات](/docs/architecture/components)، [محرك التوثيق](/docs/architecture/docs-engine).
-- **سير العمل (`workflow/`)** — [مسار التدقيق الدلالي](/docs/workflow/audit-pipeline)،
-  و[مبدأ الحماية الدلالية](/docs/workflow/semantic-guard).
+- **سير العمل (`workflow/`)** — [فحص أمانة النقل](/docs/workflow/fidelity-audit)،
+  [مسار التدقيق](/docs/workflow/audit-pipeline)، [مبدأ الحماية الدلالية](/docs/workflow/semantic-guard).
 - **المراجع (`reference/`)** — [الاصطلاحات البرمجية](/docs/reference/conventions)،
   و[المسرد ثنائي اللغة](/docs/reference/glossary).
 - **سجلات القرارات (`adr/`)** — [Bun حصراً](/docs/adr/0001-bun-only)،
