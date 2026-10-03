@@ -1,87 +1,116 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# موزون | مقياس أمانة النقل
 
-**موزون (Mawzun)** is a **fidelity-of-transmission meter**: it measures whether the Sharia meaning of an original text survives a translation, a summary or a paraphrase. It does not issue fatwas, does not favour a madhhab, and does not rule on the soundness of an opinion.
+قد تكون الترجمة سليمة نحواً وبلاغة، ومع ذلك تخون المعنى: نهيٌ شرعي ملزم يُنقل بلفظ «غير مستحسن»
+فيمرّ من كل مدقّق لغوي، لأن اللغة لم تخطئ — بل غيّر النقل **قوة الحكم** من حظر إلى مجرد أولوية.
+يقيس **موزون** («Mawzun») هذا الانزياح بين نص شرعي أصلي ونص مشتق منه (ترجمة / تلخيص / إعادة
+صياغة): يُعيد حكمًا واحدًا بثلاث حالات — **مطابق**، أو **يحتاج تعديل**، أو **وقف وتحويل** — مرفقًا
+بالسبب والموضع والدليل، ثم يختم التشغيل في سجل «SHA-256» يعيد إنتاج الحكم نفسه عند إعادة تشغيله.
 
-## Package manager: Bun only
+## ما هو موزون وما ليس هو
 
-This repository is **Bun-only**. `npm`, `yarn` and `pnpm` are not used or supported here:
+- **هو** مقياس أمانة نقل: يقارن المعنى الشرعي بين الأصل والمشتق، ويُعلن صراحةً ما لم يفحصه.
+- **هو** أداة قرار للمراجع البشري: تُوجّه نظره إلى الموضع الذي يستحق وقته، ولا تُلغي قراره.
+- **ليس** مفتيًا، ولا يُرجّح مذهبًا، ولا يحكم على صحة رأي، ولا يقول حلالًا أو حرامًا.
+- **ليس** مدقّقًا لغويًا ولا نحويًا: سلامة اللغة عنده شرط لازم لا كافٍ.
 
-- the reference lockfile is [`bun.lock`](./bun.lock) (there is no `package-lock.json`, `yarn.lock` or `pnpm-lock.yaml`);
-- `package.json` pins the toolchain with `"packageManager": "bun@1.4.2"`;
-- the `preinstall` guard at [`scripts/ensure-bun.mjs`](./scripts/ensure-bun.mjs) refuses to install dependencies when the command comes from `npm`, `yarn` or `pnpm`.
+## البدء السريع
 
-```bash
-bun install        # install dependencies
-bun add <pkg>      # add a dependency
-bun add -d <pkg>   # add a dev dependency
-bun remove <pkg>   # remove a dependency
-bunx <tool>        # run a one-off tool (instead of npx)
-bun run lint       # run a script
-```
-
-## Getting Started
-
-Install the dependencies with Bun, then run the development server:
+المستودع **«bun» فقط**. يمنع حارس «preinstall» في «scripts/ensure-bun.mjs» التثبيت إن بدأ من «npm»
+أو «yarn» أو «pnpm»، وملف القفل المرجعي هو «bun.lock» وحده.
 
 ```bash
-bun install
-bun dev
+bun install   # تثبيت الاعتماديات من «bun.lock»
+bun dev       # خادم التطوير على المنفذ 3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result. The whole workflow is a **single page at `/`** with five anchored sections (`#step-1` … `#step-5`); there are no per-stage routes and no sidebar.
+ثم افتح «http://localhost:3000». الواجهة كلها **صفحة واحدة** على المسار «/» فيها خمسة أقسام
+مرقّمة («#step-1» … «#step-5»)، ولا مسارات مراحل ولا شريط جانبي.
 
-The audit engine lives in `src/lib/audit/` and runs the three check layers in order, then a fixed verdict rule, and seals the run into a reproducible SHA-256 record.
+## كيف تُشغّل الفحص
 
-### Other scripts
+1. في القسم «#step-1» الصق **النص الأصلي** و**النص المشتق**، أو اضغط «حمّل مثال الانزياح» لتجربة
+   المثال الجاهز.
+2. اختر **نوع العمل** («translate» / «summarize» / «paraphrase») و**مستوى المحتوى** (أ · ب · ج · د)
+   و**اللغة الهدف** («en» / «fr»).
+3. اضغط «نفّذ الفحص ثلاثي الطبقات».
+
+والمسار الوحيد على الخادم هو «POST /api/audit» في «src/app/api/audit/route.ts»، وهو الموصول إلى
+«Cloudflare Workers AI» عبر رابط «AI» المعلَن في «wrangler.jsonc» (بلا مفتاح «API»). ويجرّب
+الطريق سلسلة من نموذجين — «@cf/google/gemma-4-26b-a4b-it» ثم
+«@cf/meta/llama-3.3-70b-instruct-fp8-fast» — بمحاولتين لكل نموذج وفاصل زمني بينهما. وإذا غاب الرابط
+أو فشلت كل النماذج، لا يفشل التشغيل صامتًا ولا يمرّ نجاحًا: تُعلَن الطبقة الدلالية غائبة، ويظهر
+ذلك في السجل وفي قائمة «ما لم يُفحص في هذا التشغيل». راجع
+[التشغيل والحدود](docs/getting-started/operation-and-limits.md) لتفصيل المسار والمثال الكامل.
+
+## البناء والنشر على «Cloudflare Workers»
 
 ```bash
-bun run build        # production build
-bun run start        # serve the production build
-bun run lint         # ESLint over the codebase
-bun run docs:check   # documentation integrity: front-matter, ordering, internal links
-bun run engine:check # behavioural assertions over the audit engine
+bun run build:worker          # بناء Worker بـ «OpenNext»
+bunx wrangler versions upload # رفع نسخة معاينة برابط، دون تحريك الزيارات الحية
+bun run deploy                # ترقية النسخة إلى الموقع الحي
+bun run preview               # بناء ومعاينة الـ Worker محليًا
 ```
 
-## Project layout
+وهناك نسخة منشورة من المنصّة على «[mawzun-project.hoysamax.workers.dev](https://mawzun-project.hoysamax.workers.dev/)».
+ولأن النشر ترقيةٌ بأمر «bun run deploy»، فقد تسبق النسخة المنشورةُ هذا الفرعَ حتى تُرقّى نسخة جديدة.
 
-- `src/app/` — App Router: `layout.tsx`, `page.tsx` (the single-page workspace), `globals.css` (design tokens), and `api/audit/route.ts` (`POST /api/audit`)
-- `src/components/audit/` — `AuditWorkspace`, the five section components, and the shared primitives (`parts.tsx`)
-- `src/components/layout/` — `AppShell`, `TopBar`, `SearchModal`, `SettingsModal`
-- `src/components/ui/` — `Icon` (the remaining neutral UI primitive)
-- `src/context/` — `AuditContext` (run state + sealed record) and `ToastContext`
-- `src/lib/audit/` — the engine: constraint bank, ruling-force table, layers 1–3, verdict, sealed record, Arabic normalizer
-- `src/lib/` — `stages.ts` (the five sections), `typography.ts`, `cx.ts`
-- `stitch_mawzun/` — original design references
-- `archive/` — pre-change file snapshots, kept per the project rules
-- `AGENTS.md` — mandatory project rules (Bun-only, tags/archive, branch policy)
+## مراحل سير العمل الخمس
 
-## Documentation
+| # | القسم | المرساة | الوظيفة |
+| --- | --- | --- | --- |
+| 01 | الإدخال والتوصيف | «#step-1» | استلام النصين ونوع العمل ومستوى المحتوى واللغة الهدف |
+| 02 | القيود المعتمدة | «#step-2» | عرض بنك القيود المستورد من الحزمة العلمية وأصله |
+| 03 | الفحص ثلاثي الطبقات | «#step-3» | تشغيل الطبقات الثلاث وإبراز مواضع الانزياح |
+| 04 | الحكم التقريري | «#step-4» | حكم واحد بثلاث حالات مع السبب والموضع والدليل |
+| 05 | الشهادة والسجل | «#step-5» | بصمة السجل والتحقق من قابليته لإعادة التشغيل |
 
-The full documentation lives in [`docs/`](./docs) and is read on GitHub (there is no in-app
-documentation centre; the `/docs` route was removed with the stage routes). Start from
-[`docs/README.md`](./docs/README.md) for the complete map of the docs.
+## المعمارية في سطور
 
-- `docs/getting-started/` — installation, project structure and scripts
-- `docs/architecture/` — overview, routing & sections, design system, components, docs engine
-- `docs/workflow/` — fidelity audit, the audit pipeline and the semantic-guard principle
-- `docs/reference/` — code conventions and the bilingual glossary
-- `docs/adr/` — architecture decision records
+- **المنصّة:** «Next.js 16» («App Router») مع «React 19» و«Tailwind CSS 4»، مبنية لـ
+  «Cloudflare Workers» عبر «OpenNext». مدير الحزم «bun» فقط.
+- **الواجهة:** صفحة واحدة «src/app/page.tsx» تُصيّر مساحة العمل «src/components/audit/AuditWorkspace.tsx»؛
+  الحالة في «src/context/AuditContext.tsx»، ومصدر حقيقة الأقسام «src/lib/stages.ts».
+- **المحرّك:** كله في «src/lib/audit/»، نقيّ (لا شبكة ولا تخزين ولا ساعة إلا ما يمرَّر إليه)، يشغّل
+  ثلاث طبقات ثم قاعدة حكم حتمية ثم يختم السجل.
+- **الطبقات:** «L1» الحتمية (أرقام وإحالات ودرجة ثبوت)، «L2» المعجمية (مصطلح وقوة حكم وشرط، بحثًا
+  في جداول)، «L3» الدلالية (نموذج يُنتج وقائع لا أحكامًا، وكل اقتباس متحقَّق منه حرفيًا).
 
-Validate the docs with `bun run docs:check` (front-matter, ordering and internal links).
+## التحقق من المحرك
 
-## Learn More
+```bash
+bun run engine:check
+```
 
-To learn more about Next.js, take a look at the following resources:
+النتيجة الفعلية: **«28/28 checks passed»** ثم «engine check passed» — ثمانية سيناريوهات، منها
+مستويات المحتوى الأربعة، وسيناريو يفشل فيه نموذج مدسوس اُخترع فيه موضع، وسيناريو إعادة تشغيل يثبت
+أن **حذف الانزياح يغيّر الحكم**. ولفحص سلامة التوثيق:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+bun run docs:check
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## الحدود في سطور
 
-## Deploy on Vercel
+النظام يُعلن ما لا يفحصه بدل أن يمرّ صامتًا:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- مطابقة النص القرآني حرفًا بحرف **غير مفعّلة** (تحتاج ربط النص العثماني المعتمد).
+- مصطلح تنص الحزمة على قاعدته دون قائمة مقابلات معتمدة يُسجَّل **ملاحظة تغطية** لا نتيجة.
+- لفظ حكمي لا يعرفه جدول السياسة **لا يُصنَّف**، ويُرفع للمراجعة البشرية.
+- الطبقة الدلالية تجيب **ثلاثة أسئلة فقط**، وقد تغفل انزياحًا لم تُسأل عنه.
+- الطبقة الدلالية احتمالية، والطبقتان «L1» و«L2» حتميتان؛ والسجل يثبّت معرّف النموذج وبصمة
+  قالب الطلب، والبصمة تثبت السلامة والنسبة والترتيب لا صحة الحكم الشرعي.
 
-Vercel detects Bun through the `packageManager` field and the committed `bun.lock`, so builds run on Bun there as well.
+التفصيل الكامل في [التشغيل والحدود](docs/getting-started/operation-and-limits.md).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## المصادر والحزمة العلمية
+
+لا شيء في موزون من رأي النظام: بنك القيود وقوة الحكم مستوردان من حزمة **«المرجعية والحزمة العلمية
+والبيانات»**، ولكل قيد حقل «origin» يشير إلى موضعه من الحزمة. وسجل المصادر والأدوات والتراخيص في
+[«sources-and-licences»](docs/reference/sources-and-licences.md).
+
+## التوثيق
+
+التوثيق كله ملفات «Markdown» في «docs/» تُقرأ على «GitHub». ابدأ من خريطة التوثيق في
+«docs/README.md»، أو انتقل مباشرةً إلى
+[التشغيل والحدود](docs/getting-started/operation-and-limits.md) و
+[فحص أمانة النقل](docs/workflow/fidelity-audit.md) و[مسار التدقيق](docs/workflow/audit-pipeline.md).

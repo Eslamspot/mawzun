@@ -3,8 +3,8 @@
 /**
  * Shared primitives for the audit workspace.
  *
- * The design language this file encodes, from DESIGN.md and the reference
- * markup (stitch-new/code.html):
+ * The design language this file encodes, from the export checked in at
+ * stitch_mawzun/mawzun_semantic_verification_system/ (DESIGN.md and code.html):
  * - depth is tonal: flat panels carry a 1px hairline border plus the very
  *   light `shadow-sm` the reference puts on every card;
  * - colour is reserved for state (verified / needs revision / stop & escalate),

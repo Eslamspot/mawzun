@@ -17,7 +17,8 @@ import { fileURLToPath } from "node:url";
 const REPO_ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const DOCS_ROOT = path.join(REPO_ROOT, "docs");
 
-/** Sections must match `SECTIONS` in `src/lib/docs/registry.ts`. */
+/** Sections are the `##` headings; the order of files under each section is
+ *  set by the page front-matter's `order` field. */
 const SECTIONS = ["getting-started", "architecture", "workflow", "reference", "adr"];
 
 /** Minimal front-matter reader — same flat `key: value` contract as the app. */

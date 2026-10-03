@@ -2,8 +2,9 @@
 
 /* ------------------------------------------------------------------
    Mawzun — design tokens
-   Ported from the Stitch export
-   (stitch-new/DESIGN.md + stitch-new/code.html).
+   Ported from the Stitch export that ships with this repository:
+   stitch_mawzun/mawzun_semantic_verification_system/
+   (DESIGN.md + code.html + screen.png).
    Tailwind v4 keeps the whole palette in `@theme`; the compiled
    reference carries the same values as a `tailwind.config` object.
 ------------------------------------------------------------------- */

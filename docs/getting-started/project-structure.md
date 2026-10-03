@@ -44,8 +44,9 @@ mawzun-project/
 │       ├── cx.ts             # دمج أسماء أصناف Tailwind
 │       ├── stages.ts         # مصدر حقيقة الأقسام الخمسة
 │       └── typography.ts     # أدوار الطباعة
-├── stitch_mawzun/            # مراجع التصميم الأصلية (Stitch) + DESIGN.md
-├── archive/                  # نسخ ما قبل التعديل (وفق قواعد المشروع)
+├── stitch_mawzun/            # مراجع تصميم Stitch الأصلية
+│   └── mawzun_semantic_verification_system/   # التصدير الذي وُلدت منه رموز التصميم الحالية
+├── archive/                  # تُنشأ عند الحاجة: نسخ ما قبل التعديل (غير متعقَّبة في Git)
 ├── AGENTS.md                 # القواعد الإلزامية
 ├── wrangler.jsonc            # تكوين Cloudflare (ربط AI)
 └── bun.lock                  # ملف القفل المرجعي
@@ -72,14 +73,18 @@ mawzun-project/
   المراحل والبحث. راجع [التوجيه والأقسام](/docs/architecture/routing-and-stages).
 
 ### `stitch_mawzun/`
-مراجع التصميم الأصلية المُصدَّرة من Stitch، وتحتوي `mawzun_semantic_guard/DESIGN.md`
-الذي وُلدت منه رموز التصميم في التطبيق.
+مراجع التصميم الأصلية المُصدَّرة من Stitch. التصدير الذي وُلدت منه رموز التصميم المستخدمة
+اليوم هو `mawzun_semantic_verification_system/` وفيه `DESIGN.md` و`code.html` و`screen.png`،
+وهو المرجع الذي تشير إليه تعليقات `src/app/globals.css` و`src/components/audit/parts.tsx`.
+التصديرات الأخرى (`mawzun_1` إلى `mawzun_6`) محفوظة كتاريخ تصميمي.
 
 ### `archive/`
 لقطات الملفات قبل أي تعديل أو حذف، منظّمة بتاريخ `YYYYMMDD`. إلزامية وفق
-[قواعد المشروع](/docs/reference/conventions#الوسوم-والأرشفة).
+[قواعد المشروع](/docs/reference/conventions#الوسوم-والأرشفة). المجلد **غير متعقَّب في Git**
+ولا يُنشأ إلا عند أخذ لقطة، فهو لا يظهر في شجرة المستودع المستنسخة.
 
 ## ما ليس مضمّناً في Git
 
-`node_modules/`, `.next/`, `out/`, `build/`, `.env*`, و`archive` مُستثنى من فحص ESLint.
-راجع `.gitignore` لمزيد من التفصيل.
+`.gitignore` يستثني `node_modules/`, `.next/`, `.open-next/`, `out/`, `build/`, `.env*`، ويستثني
+ESLint صراحةً مجلدات البناء (`.next/`, `.open-next/`, `out/`, `build/`) و`archive/`، ويتجاهل
+`node_modules/` افتراضيًا. راجع `eslint.config.mjs` و`.gitignore` للتفصيل.

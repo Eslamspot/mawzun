@@ -20,6 +20,7 @@ order: 0
 | مطوّراً جديداً يشغّل المشروع أول مرة | [التركيب والتشغيل](/docs/getting-started/installation) |
 | تبحث عن خريطة المجلدات والملفات | [بنية المشروع](/docs/getting-started/project-structure) |
 | تريد معرفة الأوامر المتاحة | [الأوامر والسكربتات](/docs/getting-started/scripts) |
+| تريد تشغيل الفحص ومعرفة حدوده خطوة بخطوة | [التشغيل والحدود](/docs/getting-started/operation-and-limits) |
 | مهتماً بالمعمارية العامة | [النظرة المعمارية العامة](/docs/architecture/overview) |
 | تريد مراجعة نظام التصميم والرموز | [نظام التصميم](/docs/architecture/design-system) |
 | تريد فهم الصفحة الواحدة والأقسام المرقّمة | [التوجيه والأقسام](/docs/architecture/routing-and-stages) |
@@ -30,18 +31,21 @@ order: 0
 | تريد فلسفة الضبط ومنع الانزياح | [مبدأ الحماية الدلالية](/docs/workflow/semantic-guard) |
 | تكتب كوداً وتريد الاصطلاحات الملزمة | [الاصطلاحات البرمجية](/docs/reference/conventions) |
 | تبحث عن معنى مصطلح عربي/إنجليزي | [المسرد](/docs/reference/glossary) |
+| تريد معرفة المصادر الشرعية والتراخيص | [سجل المصادر والأدوات والتراخيص](/docs/reference/sources-and-licences) |
 
 ## أقسام التوثيق
 
 - **البداية السريعة (`getting-started/`)** — [التركيب والتشغيل](/docs/getting-started/installation)،
-  [بنية المشروع](/docs/getting-started/project-structure)، [الأوامر والسكربتات](/docs/getting-started/scripts).
+  [بنية المشروع](/docs/getting-started/project-structure)، [الأوامر والسكربتات](/docs/getting-started/scripts)،
+  [التشغيل والحدود](/docs/getting-started/operation-and-limits).
 - **المعمارية (`architecture/`)** — [النظرة العامة](/docs/architecture/overview)،
   [التوجيه والأقسام](/docs/architecture/routing-and-stages)، [نظام التصميم](/docs/architecture/design-system)،
   [المكوّنات](/docs/architecture/components)، [محرك التوثيق](/docs/architecture/docs-engine).
 - **سير العمل (`workflow/`)** — [فحص أمانة النقل](/docs/workflow/fidelity-audit)،
   [مسار التدقيق](/docs/workflow/audit-pipeline)، [مبدأ الحماية الدلالية](/docs/workflow/semantic-guard).
 - **المراجع (`reference/`)** — [الاصطلاحات البرمجية](/docs/reference/conventions)،
-  و[المسرد ثنائي اللغة](/docs/reference/glossary).
+  و[المسرد ثنائي اللغة](/docs/reference/glossary)،
+  و[سجل المصادر والأدوات والتراخيص](/docs/reference/sources-and-licences).
 - **سجلات القرارات (`adr/`)** — [Bun حصراً](/docs/adr/0001-bun-only)،
   [RTL أولاً](/docs/adr/0002-rtl-first)، [رموز التصميم](/docs/adr/0003-design-tokens).
 

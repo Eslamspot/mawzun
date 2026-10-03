@@ -36,13 +36,13 @@ export const STAGES: readonly Stage[] = [
 ] as const;
 ```
 
-### الدوال المساعدة
+### الصادرات
 
-| الدالة | الوظيفة |
-| --- | --- |
-| `stageHref(id)` | يبني مرساة القسم، مثال: `#step-1` |
-| `stageIndex(id)` | ترتيب القسم بين الخمسة، أو `-1` عند عدم التطابق |
-| `FIRST_STAGE` / `LAST_STAGE` | طرفا المسار |
+`stages.ts` لا يُصدر دوال مساعدة ولا ثوابت أطراف: صادراته هي النوع `Stage` والمصفوفة الثابتة
+`STAGES` فحسب. فالمرساة تُبنى عند الاستهلاك كـ ``#${stage.id}``، وترتيب القسم يُحسب محليًا بـ
+`STAGES.findIndex((s) => s.id === id)` بدل دالة مشتركة. راجع
+[`parts.tsx`](/docs/architecture/components#shared-primitives-partsttsx) حيث يُبنى `Stepper`،
+و`TopBar` حيث تُختار روابط التنقّل الأربعة من `STAGES` بالفهرس.
 
 ### من يستهلكها؟
 
