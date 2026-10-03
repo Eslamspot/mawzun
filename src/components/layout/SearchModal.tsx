@@ -4,7 +4,8 @@ import React, { useState, useEffect, useMemo } from "react";
 import { Icon } from "@/components/ui/Icon";
 import { cx } from "@/lib/cx";
 import { t } from "@/lib/typography";
-import { STAGES } from "@/lib/stages";
+import { STAGES, unlockedStageIds } from "@/lib/stages";
+import { useAudit } from "@/context/AuditContext";
 import { buildConstraintBank } from "@/lib/audit";
 
 interface SearchResult {
@@ -39,11 +40,15 @@ export function SearchModal({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, onClose]);
 
+  const audit = useAudit();
+  const unlocked = unlockedStageIds(audit.result !== null);
+
   const items = useMemo<SearchResult[]>(() => {
     const list: SearchResult[] = [];
 
-    // Stages
-    STAGES.forEach((stage) => {
+    // Stages — only the ones that exist. An entry that scrolls to a section the
+    // page has not rendered is a dead end dressed up as navigation.
+    STAGES.filter((stage) => unlocked.includes(stage.id)).forEach((stage) => {
       list.push({
         id: `stage-${stage.id}`,
         category: "المراحل",
@@ -57,57 +62,26 @@ export function SearchModal({
       });
     });
 
-    // Constraint bank — the five families, each searchable by its rule.
-    buildConstraintBank().constraints.forEach((constraint) => {
-      list.push({
-        id: `constraint-${constraint.id}`,
-        category: "بنك القيود",
-        title: constraint.source.join(" · ") || constraint.id,
-        subtitle: constraint.rule,
-        icon: "rule_folder",
-        action: () => {
-          document.getElementById("step-2")?.scrollIntoView({ behavior: "smooth", block: "start" });
-          onClose();
-        },
+    // The constraint bank lives inside the constraints section, so it is only
+    // searchable once that section has been opened by a run.
+    if (unlocked.includes("step-2")) {
+      buildConstraintBank().constraints.forEach((constraint) => {
+        list.push({
+          id: `constraint-${constraint.id}`,
+          category: "بنك القيود",
+          title: constraint.source.join(" · ") || constraint.id,
+          subtitle: constraint.rule,
+          icon: "rule_folder",
+          action: () => {
+            document.getElementById("step-2")?.scrollIntoView({ behavior: "smooth", block: "start" });
+            onClose();
+          },
+        });
       });
-    });
-
-    // Rules & Maxims
-    const maxims = [
-      {
-        title: "الأمور بمقاصدها (المادة 2 من مجلة الأحكام)",
-        subtitle: "الحكم دائر مع قصد المكلف ونيته الحقيقية الباطنة",
-      },
-      {
-        title: "الضرر يُزال ولا يُزال بمثله",
-        subtitle: "حظر الإضرار وحفظ التناسب عند استيفاء الحق",
-      },
-      {
-        title: "اليقين لا يزول بالشك",
-        subtitle: "بقاء الأصل على ما كان عليه حتى يثبت الناقل بيقين",
-      },
-      {
-        title: "المشقة تجلب التيسير وتدرأ الحرج",
-        subtitle: "قاعدة التخفيف وسعة الشريعة عند طروء الأعذار",
-      },
-    ];
-
-    maxims.forEach((m, idx) => {
-      list.push({
-        id: `maxim-${idx}`,
-        category: "القواعد والضوابط",
-        title: m.title,
-        subtitle: m.subtitle,
-        icon: "balance",
-        action: () => {
-          document.getElementById("step-2")?.scrollIntoView({ behavior: "smooth", block: "start" });
-          onClose();
-        },
-      });
-    });
+    }
 
     return list;
-  }, [onClose]);
+  }, [onClose, unlocked]);
 
   // Filter items by query
   const filtered = useMemo(() => {
@@ -139,7 +113,7 @@ export function SearchModal({
               setQuery(e.target.value);
               setSelectedIndex(0);
             }}
-            placeholder="ابحث في المراحل وبنك القيود والقواعد الفقهية..."
+            placeholder="ابحث في المراحل وبنك القيود..."
             autoFocus
             className={cx(
               t.body,
@@ -167,7 +141,9 @@ export function SearchModal({
               <Icon name="search_off" className="text-3xl text-outline" />
               <p className={t.bodySm}>لم نجد أي نتائج مطابقة لعبارة البحث «{query}»</p>
               <span className={cx(t.labelSm, "text-outline")}>
-                جرب البحث عن «لا يجوز»، «الشرط»، «الشريعة»، أو «الفحص».
+                {unlocked.length === 1
+                  ? "بنك القيود يُفتح بعد تنفيذ الفحص، فيصبح بحثه متاحًا هنا."
+                  : "جرّب البحث عن «لا يجوز»، «الشرط»، «الشريعة»، أو «الفحص»."}
               </span>
             </div>
           ) : (
@@ -247,7 +223,7 @@ export function SearchModal({
               للتنقل
             </span>
           </div>
-          <span>منصة موزون • البحث الدلالي الشامل</span>
+          <span>موزون • بحث نصّي في المراحل وبنك القيود</span>
         </div>
       </div>
     </div>

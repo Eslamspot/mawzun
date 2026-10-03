@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react";
 import { Icon } from "@/components/ui/Icon";
 import { cx } from "@/lib/cx";
-import { STAGES } from "@/lib/stages";
+import { STAGES, unlockedStageIds } from "@/lib/stages";
+import { useAudit } from "@/context/AuditContext";
 import { t } from "@/lib/typography";
 import { SearchModal } from "@/components/layout/SearchModal";
 import { SettingsModal } from "@/components/layout/SettingsModal";
@@ -32,7 +33,11 @@ export function TopBar() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  const nav = [STAGES[0], STAGES[1], STAGES[2], STAGES[4]];
+  const audit = useAudit();
+  // Only the sections that exist are offered: before a run that is step one
+  // alone, because the rest of the workflow describes an output there isn't one.
+  const unlocked = unlockedStageIds(audit.result !== null);
+  const nav = STAGES.filter((stage) => unlocked.includes(stage.id));
 
   return (
     <>
@@ -58,7 +63,7 @@ export function TopBar() {
               className={cx(
                 t.label,
                 "rounded px-space-md py-1.5 transition-colors",
-                index === 0
+                index === 0 && nav.length === 1
                   ? "bg-primary-container text-on-primary"
                   : "text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface",
               )}

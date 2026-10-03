@@ -26,3 +26,15 @@ export const STAGES: readonly Stage[] = [
   { id: "step-4", ordinal: "04", title: "الحكم التقريري", icon: "gavel", doneIcon: "check_circle" },
   { id: "step-5", ordinal: "05", title: "الشهادة والسجل", icon: "verified", doneIcon: "verified" },
 ] as const;
+
+/**
+ * The stages that actually exist in the DOM for a given run state.
+ *
+ * Steps two to five are not rendered until an audit has run — they describe its
+ * output, and showing them before there is an output invites the reader to read
+ * empty panels as findings. Every navigation surface derives its links from this
+ * function so none of them can point at a section that is not there.
+ */
+export function unlockedStageIds(hasRun: boolean): readonly string[] {
+  return hasRun ? STAGES.map((stage) => stage.id) : [STAGES[0].id];
+}

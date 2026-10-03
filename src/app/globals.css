@@ -209,4 +209,39 @@
     font-family: var(--font-jetbrains), "JetBrains Mono", monospace;
     font-variant-numeric: tabular-nums;
   }
+
+  /*
+    Stages revealed by a run. The motion is a cue, not decoration: each newly
+    unlocked step arrives just after the one before it, so the eye reads them in
+    order instead of seeing four panels appear at once. Users who ask their
+    system for less motion get the same page without the animation.
+  */
+  .reveal {
+    animation: mawzun-reveal 420ms cubic-bezier(0.2, 0, 0, 1) both;
+  }
+  .reveal-1 { animation-delay: 40ms; }
+  .reveal-2 { animation-delay: 110ms; }
+  .reveal-3 { animation-delay: 180ms; }
+  .reveal-4 { animation-delay: 250ms; }
+}
+
+@keyframes mawzun-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal-1,
+  .reveal-2,
+  .reveal-3,
+  .reveal-4 {
+    animation: none;
+  }
 }

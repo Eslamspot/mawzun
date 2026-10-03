@@ -156,13 +156,45 @@ export const FINDING_LABEL: Record<Finding["cls"], string> = {
   missing: "مفقود",
 };
 
-/** The stepper: numbered pills joined by direction arrows. */
-export function Stepper({ activeId }: { activeId: string }) {
+/**
+ * The stepper: numbered pills joined by direction arrows.
+ *
+ * A stage that has not been reached yet is not a link — the later sections do
+ * not exist in the DOM until the audit has run, so offering them as navigation
+ * would promise targets that are not there. Locked stages render as plain
+ * labels, dimmed, with no href.
+ */
+export function Stepper({ activeId, unlockedIds }: { activeId: string; unlockedIds: readonly string[] }) {
   return (
     <nav aria-label="مراحل سير العمل" className="flex items-center overflow-x-auto gap-space-xs py-1">
       {STAGES.map((stage, index) => {
         const isActive = stage.id === activeId;
         const isDone = index < STAGES.findIndex((s) => s.id === activeId);
+        const isUnlocked = unlockedIds.includes(stage.id);
+
+        if (!isUnlocked) {
+          return (
+            <span key={stage.id} className="flex items-center gap-space-xs">
+              {index > 0 && (
+                <span aria-hidden="true" className={cx(t.code, "select-none text-outline-variant/60")}>
+                  ←
+                </span>
+              )}
+              <span
+                aria-disabled="true"
+                title="يظهر هذا القسم بعد تنفيذ الفحص"
+                className={cx(
+                  "flex items-center gap-space-xs rounded-xs px-space-md py-1.5 whitespace-nowrap opacity-45",
+                  "bg-surface-container text-on-surface-variant",
+                )}
+              >
+                <span className={cx(t.code, "text-on-surface-variant")}>{stage.ordinal}</span>
+                <span className={cx(t.label, "whitespace-nowrap")}>{stage.title}</span>
+              </span>
+            </span>
+          );
+        }
+
         return (
           <span key={stage.id} className="flex items-center gap-space-xs">
             {index > 0 && (
