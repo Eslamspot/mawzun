@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Mawzoon Approved Constraints Registry",
+  "description": "الإصدار 1.0.0 — كل نص يحمل حقل origin يبيّن أصله. لا رقم غير مقيس.",
+  "type": "object",
+  "required": ["meta", "scope", "sources", "domains", "levels", "science_standard", "verdicts", "constraints", "test_cases"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": ["name_ar", "name_en", "version", "dossier_date", "fidelity_rule", "numbers_rule", "totals"],
+      "properties": {
+        "version": { "type": "string" },
+        "dossier_date": { "type": "string" },
+        "totals": {
+          "type": "object",
+          "required": ["constraints", "sources", "domains", "levels", "standard_items", "test_cases"],
+          "properties": {
+            "constraints": { "type": "integer", "minimum": 1 },
+            "sources": { "type": "integer", "minimum": 1 },
+            "domains": { "const": 9 },
+            "levels": { "const": 4 },
+            "standard_items": { "const": 8 },
+            "test_cases": { "const": 12 }
+          }
+        }
+      }
+    },
+    "scope": {
+      "type": "object",
+      "required": ["in_scope_verbatim", "out_of_scope_verbatim"],
+      "additionalProperties": true
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 13,
+      "items": {
+        "type": "object",
+        "required": ["id", "name_ar", "url", "access", "status", "official", "used_for", "verified_notes"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^(SRC|REF)-" },
+          "access": { "enum": ["web", "web + json_api", "rest_api_key", "document"] },
+          "status": { "enum": ["verified", "unverified_from_env", "approved_reference"] },
+          "official": { "type": "boolean", "description": "هل تذكرها وثيقة المرجعية؟" },
+          "used_for": { "type": "array", "minItems": 1, "items": { "type": "string" } }
+        }
+      }
+    },
+    "domains": {
+      "type": "array",
+      "minItems": 9,
+      "maxItems": 9,
+      "items": {
+        "type": "object",
+        "required": ["id", "name_ar", "content_verbatim", "rule_verbatim", "sources", "level", "status"],
+        "properties": {
+          "level": { "enum": ["a", "b", "c", "d"] },
+          "status": { "enum": ["verified", "unverified", "source_unavailable"] }
+        }
+      }
+    },
+    "levels": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "required": ["id", "name_ar", "scope_verbatim", "behavior_verbatim", "verdict_on_uncertainty"],
+        "properties": { "id": { "enum": ["a", "b", "c", "d"] } }
+      }
+    },
+    "science_standard": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "items": {
+        "type": "object",
+        "required": ["id", "title_ar", "verbatim"]
+      }
+    },
+    "verdicts": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "required": ["id", "label_ar", "requires", "forbids"],
+        "properties": { "id": { "enum": ["pass", "needs_fix", "stop"] } }
+      }
+    },
+    "constraints": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "kind", "label_ar", "value_ar", "rule_ar", "level", "origin", "source_id", "source_url", "evidence_status"],
+        "properties": {
+          "kind": { "enum": ["term", "ruling", "condition", "isnad", "number"] },
+          "level": { "enum": ["a", "b", "c", "d"] },
+          "origin": { "enum": ["official_dictionary", "official_document", "approved_reference", "gamhara_verified", "registry_extension"] },
+          "evidence_status": { "enum": ["verified", "unverified", "needs_review"] },
+          "source_id": { "type": "string" }
+        }
+      }
+    },
+    "test_cases": {
+      "type": "array",
+      "minItems": 12,
+      "items": {
+        "type": "object",
+        "required": ["id", "case_ar", "expected_verbatim", "level", "source"],
+        "properties": { "level": { "enum": ["a", "b", "c", "d"] } }
+      }
+    },
+    "field_findings": {
+      "type": "array",
+      "items": { "type": "object", "required": ["id", "finding", "evidence", "implication"] }
+    },
+    "coverage_gaps": {
+      "type": "array",
+      "items": { "type": "object", "required": ["gap_ar", "action"] }
+    },
+    "derived_samples": {
+      "type": "array",
+      "items": { "type": "object", "required": ["file", "kind", "from_source", "records"] }
+    }
+  }
+}
