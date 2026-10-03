@@ -22,7 +22,7 @@ order: 4
 | 03 — فيديو توضيحي لا يتجاوز دقيقتين | **منجز** | «submission/video/mawzun-motion.mp4»: مدته «00:01:50» بدقة «1920x1080» و«30 fps» — داخل الحد بأربع ثوانٍ. ومعه مولّده «generate-motion.py» والوقائع «motion-facts.json» التي بُنيت عليها أرقامه. |
 | 04 — عرض «PDF» أو «PowerPoint» (المشكلة، الحل، الآلية، القيمة المضافة، التقنيات، النتائج، خطة الاستمرار) | **منجز** | «submission/presentation/mawzun-deck.pdf»: 11 صفحة، ومعه الشريحة المصدر «generate-deck.py» وصور الشرائح. والبوابات المطبوعة عند توليده: «overflow: 0 · bounds: 0 · overlap: 0 · rtl: 0». |
 | 05 — توثيق المحتوى والمصادر الشرعية وكيفية استخدامها والتحقق منها | **منجز** | «docs/reference/sources-and-licences.md»: يسرد المصادر التسعة المعتمدة، ويطابق الـ«19» قيدًا بمواضعها في الحزمة، ويفصل ما هو طرف ثالث، ويعلن ما لم يُتحقق من تراخيصه. |
-| 06 — رابط مباشر (Live Demo) يعمل بالكامل ومتاح للتجربة | **منجز** | «https://mawzun-project.hoysamax.workers.dev/» يعيد «HTTP 200»، وعنوانه «موزون \| مقياس أمانة النقل»، وفي الصفحة الأقسام الخمسة المرقّمة «step-1»…«step-5». |
+| 06 — رابط مباشر (Live Demo) يعمل بالكامل ومتاح للتجربة | **منجز** | «https://mawzun-project.eslamspot.workers.dev/» يعيد «HTTP 200»، وعنوانه «موزون \| مقياس أمانة النقل». أُعيد الفحص بتاريخ 2026‑10‑03 على النطاق الجديد: «POST /api/audit» يعيد «HTTP 200» بحكم «needs_revision» عبر النموذج «@cf/google/gemma-4-26b-a4b-it» (الطبقة الدلالية حاضرة). |
 
 ### بنود «رابط الحل والتوثيق البرمجي» و«المراجعة النهائية»
 
@@ -41,11 +41,11 @@ order: 4
 ### ١. الرابط الحيّ (الواجهة والأقسام)
 
 ```
-$ curl -sI https://mawzun-project.hoysamax.workers.dev/
+$ curl -sI https://mawzun-project.eslamspot.workers.dev/
 HTTP/2 200
 server: cloudflare
 
-$ curl -s https://mawzun-project.hoysamax.workers.dev/ | grep -o '<title>[^<]*</title>'
+$ curl -s https://mawzun-project.eslamspot.workers.dev/ | grep -o '<title>[^<]*</title>'
 <title>موزون | مقياس أمانة النقل</title>
 
 # الأقسام الخمسة المرجعية (وجودها في HTML)

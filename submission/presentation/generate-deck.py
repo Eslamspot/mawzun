@@ -323,7 +323,7 @@ def slide01(img, d):
         card(d, xr - 540, 690, xr, 810, fill=LOW, outline=OUTLINE, name=f"kw{i}")
         reg(f"kw{i}t", block(d, k, "semi", xr - 510, 706, xr - 30, 794, PCONT,
                              align="right", hi=30, lo=20, name=f"kw{i}t"))
-    reg("live", block(d, "https://mawzun-project.hoysamax.workers.dev", "mono",
+    reg("live", block(d, "https://mawzun-project.eslamspot.workers.dev", "mono",
                       150, 858, 1770, 902, SECONDARY, align="right", hi=28, lo=20, mono=True, name="live"))
 
 
@@ -605,7 +605,7 @@ def slide11(img, d):
     card(d, 90, 470, 1858, 640, fill=PCONT, outline=PCONT, name="url")
     reg("url_h", block(d, "النموذج الحيّ", "semi", 130, 492, 1818, 546, "#c8d2e5",
                        align="right", hi=32, lo=22, name="url_h"))
-    reg("url_b", block(d, "https://mawzun-project.hoysamax.workers.dev", "mono",
+    reg("url_b", block(d, "https://mawzun-project.eslamspot.workers.dev", "mono",
                        130, 556, 1818, 616, GREEN, align="right", hi=36, lo=22, mono=True, name="url_b"))
     card(d, 90, 670, 1858, 830, fill=LOW, outline=OUTLINE, name="verify")
     reg("verify_h", block(d, "أمر التحقق من المحرك", "semi", 130, 690, 1818, 744, ONVAR,

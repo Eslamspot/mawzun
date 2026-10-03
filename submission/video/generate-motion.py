@@ -747,9 +747,9 @@ def s_close(img, lt, dur):
 
     if lt > 1.8:
         p = ease_out(span(lt, 1.8, 2.6))
-        put(d, (CX, TOP_H + 470), "mawzun-project.hoysamax.workers.dev", font(MONO_B, 40),
+        put(d, (CX, TOP_H + 470), "mawzun-project.eslamspot.workers.dev", font(MONO_B, 40),
             ACCENT if p > 0.6 else OUTLINE, anchor="mm")
-        tw = measure(d, "mawzun-project.hoysamax.workers.dev", font(MONO_B, 40))
+        tw = measure(d, "mawzun-project.eslamspot.workers.dev", font(MONO_B, 40))
         d.line((CX - tw / 2, TOP_H + 502, CX - tw / 2 + tw * p, TOP_H + 502), fill=ACCENT, width=4)
 
     if lt > 3.2:
