@@ -22,7 +22,7 @@ mawzun-project/
 │   │   └── api/audit/
 │   │       └── route.ts      # POST /api/audit (ربط نموذج Workers AI)
 │   ├── components/
-│   │   ├── audit/            # مساحة العمل: AuditWorkspace، الأقسام الخمسة، parts
+│   │   ├── audit/            # مساحة العمل: AuditWorkspace، Hero، الأقسام الخمسة، parts
 │   │   ├── layout/           # AppShell, TopBar, SearchModal, SettingsModal
 │   │   └── ui/               # Icon (العناصر الأساسية المتبقية)
 │   ├── context/
@@ -60,7 +60,8 @@ mawzun-project/
 التنسيقات العامة ورموز التصميم في [globals.css](/docs/architecture/design-system).
 
 ### `src/components/`
-- **`audit/`** — مساحة العمل والقسم الواحد: `AuditWorkspace`, `InputSection`, `ConstraintsSection`,
+- **`audit/`** — مساحة العمل والقسم الواحد: `Hero` (المقدمة الداكنة الاستعراضية، لا منطق
+  فيها — مجرد روابط مرساة)، `AuditWorkspace`, `InputSection`, `ConstraintsSection`,
   `PipelineSection`, `VerdictSection`, `LedgerSection`, و`parts.tsx` بالأساس المشترك.
 - **`layout/`** — الهيكل الثابت المشترك (`AppShell`, `TopBar`) والنوافذ (`SearchModal`, `SettingsModal`).
 - **`ui/`** — عنصر أساسي محايد متبقٍّ (`Icon`). الألواح والرقائق في مساحة العمل مبنيّة في

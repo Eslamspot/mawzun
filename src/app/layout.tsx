@@ -1,12 +1,20 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Sans_Arabic, JetBrains_Mono } from "next/font/google";
+import { Amiri, IBM_Plex_Sans_Arabic, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { AppShell } from "@/components/layout/AppShell";
 import { AuditProvider } from "@/context/AuditContext";
+import { ThemeProvider } from "@/context/ThemeContext";
 
 const plexArabic = IBM_Plex_Sans_Arabic({
   variable: "--font-plex-arabic",
   weight: ["400", "500", "600", "700"],
+  subsets: ["arabic", "latin"],
+  display: "swap",
+});
+
+const amiri = Amiri({
+  variable: "--font-amiri",
+  weight: ["400", "700"],
   subsets: ["arabic", "latin"],
   display: "swap",
 });
@@ -28,7 +36,7 @@ export default function RootLayout(props: LayoutProps<"/">) {
     <html
       lang="ar"
       dir="rtl"
-      className={`${plexArabic.variable} ${jetBrainsMono.variable} h-full antialiased`}
+      className={`${plexArabic.variable} ${amiri.variable} ${jetBrainsMono.variable} h-full antialiased`}
     >
       <head>
         {/*
@@ -40,11 +48,22 @@ export default function RootLayout(props: LayoutProps<"/">) {
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
         />
+        {/*
+          Theme bootstrap: read the stored choice (or the OS preference) before
+          first paint so the hero and workspace never flash the wrong theme.
+        */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem("mawzun_theme");if(t==="dark"||(!t&&matchMedia("(prefers-color-scheme: dark)").matches))document.documentElement.classList.add("dark")}catch(e){}})();`,
+          }}
+        />
       </head>
       <body className="min-h-full">
-        <AuditProvider>
-          <AppShell>{props.children}</AppShell>
-        </AuditProvider>
+        <ThemeProvider>
+          <AuditProvider>
+            <AppShell>{props.children}</AppShell>
+          </AuditProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

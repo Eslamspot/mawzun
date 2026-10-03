@@ -14,26 +14,30 @@ order: 3
 
 ## الألوان
 
-كل لون معرّف كمتغيّر `--color-*`، فيصبح صنفاً جاهزاً في Tailwind.
+كل لون معرّف كمتغيّر `--color-*` في `:root` (وقيم `.dark` المقابلة)، وتُربط أصناف
+Tailwind بها عبر `@theme inline` — فينقلب المظهر كله بإضافة صنف `dark` على `<html>`
+دون إعادة بناء. التبديل بزر في `TopBar`، والاختيار محفوظ في `mawzun_theme`.
 
 ### الأدوار الأساسية
 
 | الدور | الرمز | الاستخدام |
 | --- | --- | --- |
-| Primary | `#091426` / `bg-primary` | شرائط الأوامر، القسم النشط، الخواتيم |
-| Primary container | `#1e293b` / `bg-primary-container` | خلفيات مميّزة عالية الثقة |
+| Primary | `#06301f` / `bg-primary` | شرائط الأوامر، القسم النشط، الخواتيم (أخضر سعودي عميق) |
+| Primary container | `#006c35` / `bg-primary-container` | زر التنفيذ والأزرار الرئيسية (الأخضر السعودي) |
 | Secondary | `#0058be` / `bg-secondary` | التنفيذ والقياس الحيّ: البؤر وحالة التشغيل |
-| Tertiary | `#00301f` / `bg-tertiary` | حالة «متحقّق/موثّق» (الرقاقة الخضراء `tertiary-fixed`) |
+| Tertiary | `#00190e` / `bg-tertiary` | حالة «متحقّق/موثّق» (الرقاقة الخضراء `tertiary-fixed`) |
 | Error | `#ba1a1a` / `bg-error` | مخالفة القيود المعتمدة |
-| Outline variant | `#c5c6cd` / `border-outline-variant` | الحدود الشعرية والفواصل |
+| Gold | `#c9a227` / `bg-gold` | لمسات الاحتفاء: الـ Hero والتذييل وشارة ONLINE |
+| Night | `#07130d` / `bg-night` | خلفية الـ Hero الداكنة والتذييل |
+| Outline variant | `#cfc9b8` / `border-outline-variant` | الحدود الشعرية والفواصل (رملية) |
 
 ### الأسطح
 
 | الرمز | القيمة | الاستخدام |
 | --- | --- | --- |
-| `surface` | `#f8f9ff` | الخلفية العامة للتطبيق |
+| `surface` | `#faf8f2` | الخلفية العامة للتطبيق (أبيض رملي دافئ) |
 | `surface-container-lowest` | `#ffffff` | سطح البطاقات (الأبيض النقي) |
-| `surface-container-low` | `#eff4ff` | أسطح ثانوية خفيفة |
+| `surface-container-low` | `#f3efe3` | أسطح ثانوية خفيفة |
 | `surface-container` | `#e5eeff` | خلفيات الرقائق والعناصر المحايدة |
 | `surface-container-high` | `#dce9ff` | حالات التحويم والحدود السميكة |
 | `on-surface` | `#0b1c30` | النص الأساسي |
@@ -50,7 +54,8 @@ order: 3
 
 ## الطباعة
 
-الخطوط: **IBM Plex Sans Arabic** للنصوص (عبر `next/font/google`)، و**JetBrains Mono** للقياس
+الخطوط: **IBM Plex Sans Arabic** للنصوص (عبر `next/font/google`)، و**Amiri** لعنوان
+الـ Hero الاستعراضي (`t.hero`)، و**JetBrains Mono** للقياس
 عن بُعد (المعرّفات والبصمات وأكواد الطبقات).
 
 الأدوار الطباعية موحّدة في [`src/lib/typography.ts`](https://github.com/Eslamspot/mawzun/blob/main/src/lib/typography.ts)
@@ -58,6 +63,7 @@ order: 3
 
 | الدور | الصنف | الحجم / الارتفاع |
 | --- | --- | --- |
+| `t.hero` | `font-hero text-hero-mobile md:text-hero` | 32px / 46px ← 46px / 62px (Amiri) |
 | `t.display` | `font-display-lg text-display-lg` | 30px / 38px |
 | `t.h2` | `font-headline-lg text-headline-lg` | 22px / 28px |
 | `t.h3` | `font-headline-md text-headline-md` | 18px / 24px |

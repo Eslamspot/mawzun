@@ -73,10 +73,10 @@ export function VerdictSection() {
                   ? "bg-surface-container text-on-surface-variant opacity-60"
                   : isActive
                     ? verdict.id === "faithful"
-                      ? "bg-tertiary-fixed/40 text-on-tertiary-fixed-variant shadow-sm"
+                      ? "animate-verdict-pop bg-tertiary-fixed/40 text-on-tertiary-fixed-variant shadow-sm"
                       : verdict.id === "needs_revision"
-                        ? "bg-secondary-fixed text-on-secondary-fixed-variant shadow-sm"
-                        : "bg-error-container text-on-error-container shadow-sm"
+                        ? "animate-verdict-pop bg-secondary-fixed text-on-secondary-fixed-variant shadow-sm"
+                        : "animate-verdict-pop bg-error-container text-on-error-container shadow-sm"
                     : "bg-surface-container text-on-surface-variant opacity-60",
               )}
             >

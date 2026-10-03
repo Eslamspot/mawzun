@@ -5,6 +5,7 @@ import { Icon } from "@/components/ui/Icon";
 import { cx } from "@/lib/cx";
 import { STAGES, unlockedStageIds } from "@/lib/stages";
 import { useAudit } from "@/context/AuditContext";
+import { useTheme } from "@/context/ThemeContext";
 import { t } from "@/lib/typography";
 import { SearchModal } from "@/components/layout/SearchModal";
 import { SettingsModal } from "@/components/layout/SettingsModal";
@@ -34,6 +35,7 @@ export function TopBar() {
   }, []);
 
   const audit = useAudit();
+  const { theme, toggle } = useTheme();
   // Only the sections that exist are offered: before a run that is step one
   // alone, because the rest of the workflow describes an output there isn't one.
   const unlocked = unlockedStageIds(audit.result !== null);
@@ -43,15 +45,21 @@ export function TopBar() {
     <>
       <header className="fixed top-0 right-0 left-0 z-40 flex h-16 items-center justify-between border-b border-outline-variant bg-surface/95 px-margin-desktop backdrop-blur-xl">
         <div className="flex items-center gap-space-lg">
-          <div className="flex items-baseline gap-space-sm">
+          <div className="flex items-center gap-space-sm">
+            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-on-primary">
+              <Icon name="balance" className="text-lg" />
+            </span>
             <span className={cx(t.h4, "tracking-tight text-primary")}>مَوْزُون | MAWZŪN</span>
             <span className={cx(t.code, "font-normal text-on-surface-variant")}>
               (مقياس أمانة النقل)
             </span>
           </div>
-          <span className="flex items-center gap-space-xs rounded border border-outline-variant bg-surface-container px-space-sm py-0.5">
-            <span className="h-1.5 w-1.5 rounded-full bg-tertiary-container" />
-            <span className={cx(t.code, "text-on-surface")}>ONLINE / v1.0</span>
+          <span className="flex items-center gap-space-xs rounded-full border border-gold/50 bg-gold-container px-space-sm py-0.5">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="animate-live-ping absolute inline-flex h-full w-full rounded-full bg-gold" />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-gold" />
+            </span>
+            <span className={cx(t.code, "text-on-gold-container")}>ONLINE / v1.0</span>
           </span>
         </div>
 
@@ -76,8 +84,8 @@ export function TopBar() {
         <div className="flex items-center gap-space-sm">
           <button
             type="button"
-            onClick={() => setIsSearchOpen(true)}
             aria-label="البحث في القيود والمراحل"
+            onClick={() => setIsSearchOpen(true)}
             className={cx(
               t.bodySm,
               "hidden items-center gap-space-xs rounded border border-outline-variant bg-surface-container-low px-space-sm py-1.5 text-on-surface-variant transition-colors hover:bg-surface-container sm:flex",
@@ -92,10 +100,21 @@ export function TopBar() {
 
           <button
             type="button"
+            aria-label={theme === "dark" ? "التحويل إلى الوضع الفاتح" : "التحويل إلى الوضع الليلي"}
+            onClick={toggle}
+            className={cx(
+              "flex h-9 w-9 cursor-pointer items-center justify-center rounded border border-outline-variant text-on-surface-variant transition-colors hover:bg-surface-container-high",
+            )}
+          >
+            <Icon name={theme === "dark" ? "light_mode" : "dark_mode"} className="text-lg" />
+          </button>
+
+          <button
+            type="button"
             aria-label="الإعدادات"
             onClick={() => setIsSettingsOpen((prev) => !prev)}
             className={cx(
-              "flex h-9 w-9 items-center justify-center rounded border transition-colors",
+              "flex h-9 w-9 cursor-pointer items-center justify-center rounded border transition-colors",
               isSettingsOpen
                 ? "border-primary bg-primary text-on-primary"
                 : "border-outline-variant text-on-surface-variant hover:bg-surface-container-high",
