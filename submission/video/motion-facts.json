@@ -1,0 +1,57 @@
+{
+  "digest": "1df82074c44af7decb2cb01feb6c134adc7ab91fc1c3b393e2dc37ba5a2e710d",
+  "verdict": "needs_revision",
+  "reason": "رُصد انزياح في: قوة الحكم. لكل موضع سببه ودليله في القائمة أدناه. نطاق الفحص في هذا التشغيل: رُفض 3 بندًا من مخرج النموذج لعدم مطابقته الصيغة أو لاقتباس غير موجود في النص. التفصيل في سجل الرفض.",
+  "layerSummary": {
+    "L1": {
+      "checked": 0,
+      "shifted": 0,
+      "missing": 0
+    },
+    "L2": {
+      "checked": 1,
+      "shifted": 1,
+      "missing": 0
+    },
+    "L3": {
+      "checked": 0,
+      "shifted": 0,
+      "missing": 0
+    }
+  },
+  "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+  "engine": "1.0.0",
+  "bank": "1.0.0",
+  "finding_note": "«لا يجوز» قوته في الأصل «منع» (ملزم)، ونُقل إلى «not recommended» وقوته «كراهة» (غير ملزم). تغيّر في الإلزام — الحكم تغيّر وإن كانت اللغة سليمة. المحاذاة: ordinal.",
+  "finding_source": "لا يجوز",
+  "finding_derived": "not recommended",
+  "finding_span": "not recommended",
+  "finding_kind": "ruling",
+  "finding_layer": "L2",
+  "finding_cls": "shifted",
+  "finding_constraint": "ruling-prohibition",
+  "coverage": [
+    {
+      "layer": "L1",
+      "reason": "مطابقة النص القرآني حرفاً بحرف غير مفعّلة في هذا البناء: تحتاج ربط النص العثماني المعتمد. أي اقتباس قرآني في المشتق غير مفحوص في هذه الطبقة."
+    },
+    {
+      "layer": "L3",
+      "reason": "رُفض 3 بندًا من مخرج النموذج لعدم مطابقته الصيغة أو لاقتباس غير موجود في النص. التفصيل في سجل الرفض."
+    }
+  ],
+  "record_keys": [
+    "bank",
+    "coverage",
+    "createdAt",
+    "digest",
+    "engineVersion",
+    "findings",
+    "input",
+    "layerSummary",
+    "model",
+    "reason",
+    "reviewerDecision",
+    "verdict"
+  ]
+}
