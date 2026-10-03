@@ -36,7 +36,7 @@ export function TopBar() {
 
   return (
     <>
-      <header className="fixed top-0 right-0 left-0 z-40 flex h-16 items-center justify-between bg-surface-container-lowest/90 px-gutter shadow-[0_1px_8px_rgba(0,0,0,0.04)] backdrop-blur-xl lg:right-64">
+      <header className="fixed top-0 right-0 left-0 z-40 flex h-16 items-center justify-between bg-surface-container-lowest/90 px-gutter shadow-[0_1px_8px_rgba(0,0,0,0.04)] backdrop-blur-xl">
         <div className="flex items-center gap-space-md">
           <div className="flex items-center gap-space-sm">
             <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary-fixed/40 text-primary">
@@ -50,11 +50,11 @@ export function TopBar() {
                 <span
                   className={`${t.code} rounded bg-surface-container px-space-xs py-0.5 text-[10px] text-secondary`}
                 >
-                  v2.4
+                  ١.٠
                 </span>
               </span>
               <span className={`${t.labelSm} font-normal text-on-surface-variant`}>
-                طبقة الأمان الدلالي
+                مقياس أمانة النقل
               </span>
             </div>
           </div>

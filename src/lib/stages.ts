@@ -1,9 +1,9 @@
 /**
  * Stages of the Mawzun audit workflow, in order.
  *
- * This is the single source of truth shared by the `Sidebar`, the `TopBar`
- * breadcrumb and the next/previous action bars, so navigation can never drift
- * out of sync with the routes.
+ * This is the single source of truth shared by the `TopBar` breadcrumb and the
+ * workspace's own step rail, so navigation can never drift out of sync with the
+ * routes.
  */
 export type StageStatus = "done" | "active" | "pending";
 
