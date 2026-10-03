@@ -1,0 +1,377 @@
+{
+  "version": "1.0.0",
+  "description": "مدوّنة اختبار موسومة لقياس أمانة النقل في محرك موزون. كل زوج يحمل نوع العمل ومستوى المحتوى والنص الأصلي والنص المشتق والحكم المتوقع ونوع الانزياح. الأزواج النظيفة تحمل drift = none، وأزواج المستوى د تحمل drift = level_d.",
+  "targetLanguage": "en",
+  "pairs": [
+    {
+      "id": "rf-01",
+      "workType": "translate",
+      "contentLevel": "ب",
+      "source": "لا يجوز بيع الطعام قبل قبضه.",
+      "derived": "It is not recommended to sell food before taking possession.",
+      "expectedVerdict": "needs_revision",
+      "drift": "ruling_force",
+      "driftNote": "منع ملزم «لا يجوز» نُقل إلى لفظ كراهة غير ملزم «not recommended»."
+    },
+    {
+      "id": "rf-02",
+      "workType": "translate",
+      "contentLevel": "أ",
+      "source": "يجب على المسلم أداء الصلاة.",
+      "derived": "A Muslim is permitted to perform the prayer.",
+      "expectedVerdict": "needs_revision",
+      "drift": "ruling_force",
+      "driftNote": "إيجاب ملزم «يجب» نُقل إلى إباحة غير ملزمة «permitted»."
+    },
+    {
+      "id": "rf-03",
+      "workType": "translate",
+      "contentLevel": "ب",
+      "source": "لا يجوز للمسلم أكل مال أخيه بغير حق.",
+      "derived": "A Muslim is allowed to take his brother's wealth without right.",
+      "expectedVerdict": "needs_revision",
+      "drift": "ruling_force",
+      "driftNote": "منع «لا يجوز» نُقل إلى إباحة «allowed»، مع بقاء أداة الشرط «بغير حق» منقولة إلى «without right»."
+    },
+    {
+      "id": "rf-04",
+      "workType": "paraphrase",
+      "contentLevel": "ب",
+      "source": "يجب صلة الرحم.",
+      "derived": "It is recommended to keep ties of kinship.",
+      "expectedVerdict": "needs_revision",
+      "drift": "ruling_force",
+      "driftNote": "إيجاب «يجب» نُقل إلى استحباب غير ملزم «recommended»."
+    },
+    {
+      "id": "cd-01",
+      "workType": "translate",
+      "contentLevel": "ب",
+      "source": "يجب على المسلم أداء الصلاة إذا استطاع.",
+      "derived": "A Muslim must perform the prayer.",
+      "expectedVerdict": "needs_revision",
+      "drift": "condition_dropped",
+      "driftNote": "شرط الاستطاعة «إذا استطاع» أُسقط، فصار الإيجاب مطلقًا."
+    },
+    {
+      "id": "cd-02",
+      "workType": "translate",
+      "contentLevel": "ب",
+      "source": "لا يجوز أكل الميتة إلا عند الضرورة.",
+      "derived": "It is forbidden to eat carrion.",
+      "expectedVerdict": "needs_revision",
+      "drift": "condition_dropped",
+      "driftNote": "الاستثناء «إلا عند الضرورة» أُسقط، فاتّسع نطاق المنع بلا دليل."
+    },
+    {
+      "id": "cd-03",
+      "workType": "summarize",
+      "contentLevel": "ب",
+      "source": "يجب الحج على المسلم إذا كان مقتدرًا.",
+      "derived": "The Hajj is obligatory for every Muslim.",
+      "expectedVerdict": "needs_revision",
+      "drift": "condition_dropped",
+      "driftNote": "شرط القدرة «إذا كان مقتدرًا» أُسقط، فصار الحج عامًّا على كل مسلم."
+    },
+    {
+      "id": "cd-04",
+      "workType": "translate",
+      "contentLevel": "ب",
+      "source": "يجوز التيمم بشرط فقد الماء.",
+      "derived": "Tayammum is permissible.",
+      "expectedVerdict": "needs_revision",
+      "drift": "condition_dropped",
+      "driftNote": "شرط «بشرط فقد الماء» أُسقط، فصار التيمم جائزًا بلا شرط."
+    },
+    {
+      "id": "isn-01",
+      "workType": "translate",
+      "contentLevel": "أ",
+      "source": "قال النبي ﷺ: «إنما الأعمال بالنيات»، حديث متفق عليه.",
+      "derived": "The Prophet said, in a hadith, that deeds are judged by their intentions.",
+      "expectedVerdict": "needs_revision",
+      "drift": "isnad",
+      "driftNote": "درجة الثبوت «متفق عليه» أُسقطت مع نقل الحديث."
+    },
+    {
+      "id": "isn-02",
+      "workType": "summarize",
+      "contentLevel": "أ",
+      "source": "قال النبي ﷺ: «إنما الأعمال بالنيات»، رواه البخاري.",
+      "derived": "The Prophet said that deeds are judged by their intentions.",
+      "expectedVerdict": "needs_revision",
+      "drift": "isnad",
+      "driftNote": "إسناد الحديث «رواه البخاري» أُسقط، ففقد الأثر قابلية التتبع."
+    },
+    {
+      "id": "isn-03",
+      "workType": "translate",
+      "contentLevel": "أ",
+      "source": "حديث صحيح رواه البخاري برقم 7.",
+      "derived": "A well-known teaching, Hadith 7.",
+      "expectedVerdict": "needs_revision",
+      "drift": "isnad",
+      "driftNote": "درجة الثبوت «صحيح» وإسناد «رواه البخاري» أُسقطا، مع بقاء المصطلح «حديث» والرقم 7."
+    },
+    {
+      "id": "isn-04",
+      "workType": "translate",
+      "contentLevel": "أ",
+      "source": "رواه البخاري في حديث صحيح.",
+      "derived": "Reported by al-Bukhari in a hadith.",
+      "expectedVerdict": "needs_revision",
+      "drift": "isnad",
+      "driftNote": "درجة الثبوت «صحيح» أُسقطت مع بقاء الإسناد منقولًا."
+    },
+    {
+      "id": "num-01",
+      "workType": "translate",
+      "contentLevel": "أ",
+      "source": "قال النبي ﷺ: «إنما الأعمال بالنيات»، رواه البخاري برقم 1.",
+      "derived": "The Prophet said: Deeds are judged by intentions. Reported by al-Bukhari.",
+      "expectedVerdict": "needs_revision",
+      "drift": "number",
+      "driftNote": "رقم الحديث «1» أُسقط، مع بقاء الإسناد منقولًا."
+    },
+    {
+      "id": "num-02",
+      "workType": "summarize",
+      "contentLevel": "أ",
+      "source": "رواه البخاري برقم 5 ومسلم برقم 6.",
+      "derived": "Reported by al-Bukhari number 5, and by Muslim.",
+      "expectedVerdict": "needs_revision",
+      "drift": "number",
+      "driftNote": "رقم «6» أُسقط، مع بقاء رقم 5 والإسناد."
+    },
+    {
+      "id": "num-03",
+      "workType": "translate",
+      "contentLevel": "ب",
+      "source": "آية الكرسي في سورة البقرة 2:255.",
+      "derived": "Ayat al-Kursi is in Surah al-Baqarah.",
+      "expectedVerdict": "needs_revision",
+      "drift": "number",
+      "driftNote": "إحالة السورة والآية «2:255» أُسقطت كاملة."
+    },
+    {
+      "id": "num-04",
+      "workType": "translate",
+      "contentLevel": "ب",
+      "source": "آية الكرسي في سورة البقرة 2:255.",
+      "derived": "Ayat al-Kursi is in Surah al-Baqarah 2:256.",
+      "expectedVerdict": "needs_revision",
+      "drift": "number",
+      "driftNote": "رقم الآية تغيّر من «2:255» إلى «2:256»."
+    },
+    {
+      "id": "trm-01",
+      "workType": "translate",
+      "contentLevel": "أ",
+      "source": "العبادة تشمل أعمال القلب والقول والعمل.",
+      "derived": "Rituals include the acts of the heart, speech, and action.",
+      "expectedVerdict": "needs_revision",
+      "drift": "term",
+      "driftNote": "مصطلح «العبادة» نُقل إلى مقابل تمنعه الحزمة «rituals»، ففقد معناه الشرعي."
+    },
+    {
+      "id": "trm-02",
+      "workType": "translate",
+      "contentLevel": "أ",
+      "source": "الشريعة جاءت بحفظ الضرورات الخمس.",
+      "derived": "The penal law protects the five necessities.",
+      "expectedVerdict": "needs_revision",
+      "drift": "term",
+      "driftNote": "مصطلح «الشريعة» نُقل إلى «penal law»، وهو مقابل مختزل تمنعه الحزمة."
+    },
+    {
+      "id": "trm-03",
+      "workType": "paraphrase",
+      "contentLevel": "أ",
+      "source": "الفتوى جواب شرعي يصدره مؤهل.",
+      "derived": "An opinion is a religious answer issued by a qualified person.",
+      "expectedVerdict": "needs_revision",
+      "drift": "term",
+      "driftNote": "مصطلح «الفتوى» نُقل إلى «opinion»، وهو مقابل تمنعه الحزمة."
+    },
+    {
+      "id": "trm-04",
+      "workType": "translate",
+      "contentLevel": "أ",
+      "source": "التوحيد أصل الدين.",
+      "derived": "Monotheism is the foundation of the religion.",
+      "expectedVerdict": "needs_revision",
+      "drift": "term",
+      "driftNote": "مصطلح «التوحيد» اختُزل في «Monotheism» فلم يظهر أي مقابل معتمد من الحزمة."
+    },
+    {
+      "id": "cj-01",
+      "workType": "summarize",
+      "contentLevel": "ج",
+      "source": "مسائل الشريعة الاجتهادية يذكر فيها الخلاف بلا ترجيح.",
+      "derived": "In discretionary matters of Sharia, the difference of opinion is mentioned without preferring one view.",
+      "expectedVerdict": "faithful",
+      "drift": "none",
+      "driftNote": "مستوى ج نظيف: مسألة اجتهادية عُرض الخلاف فيها بلا ترجيح، والمصطلح «الشريعة» منقول إلى Sharia."
+    },
+    {
+      "id": "cj-02",
+      "workType": "paraphrase",
+      "contentLevel": "ج",
+      "source": "يستحب في المسائل الاجتهادية بيان الخلاف بلا ترجيح.",
+      "derived": "In discretionary matters, the difference of opinion must be stated.",
+      "expectedVerdict": "needs_revision",
+      "drift": "ruling_force",
+      "driftNote": "مستوى ج: استحباب «يستحب» نُقل إلى إيجاب ملزم «must»، فصار ما هو اجتهادي ملزمًا."
+    },
+    {
+      "id": "cj-03",
+      "workType": "translate",
+      "contentLevel": "ج",
+      "source": "مسائل الخلاف الاجتهادية تُعرض بلا ترجيح، ويُحال في الفتوى الشخصية.",
+      "derived": "Disputed discretionary matters are presented without preferring one view, and personal cases are referred for a fatwa.",
+      "expectedVerdict": "faithful",
+      "drift": "none",
+      "driftNote": "مستوى ج نظيف: الخلاف معروض بلا ترجيح، ومصطلح «الفتوى» منقول إلى a fatwa."
+    },
+    {
+      "id": "cln-01",
+      "workType": "translate",
+      "contentLevel": "أ",
+      "source": "العبادة في الإسلام تشمل أعمال القلب والقول والعمل.",
+      "derived": "Worship in Islam includes the acts of the heart, speech, and action.",
+      "expectedVerdict": "faithful",
+      "drift": "none",
+      "driftNote": "ترجمة صحيحة: «العبادة» إلى worship و«الإسلام» إلى Islam."
+    },
+    {
+      "id": "cln-02",
+      "workType": "translate",
+      "contentLevel": "ب",
+      "source": "يجب على المسلم أداء الصلاة، ويستحب له إخلاص النية.",
+      "derived": "A Muslim must perform the prayer, and it is recommended for him to be sincere in intention.",
+      "expectedVerdict": "faithful",
+      "drift": "none",
+      "driftNote": "قوتا الحكم محفوظتان: الإيجاب إلى must والاستحباب إلى recommended."
+    },
+    {
+      "id": "cln-03",
+      "workType": "summarize",
+      "contentLevel": "ب",
+      "source": "الزكاة ركن من أركان الإسلام، ويجب إخراجها على من ملك نصابًا.",
+      "derived": "Zakat is a pillar of Islam, and it is obligatory for whoever owns the minimum threshold.",
+      "expectedVerdict": "faithful",
+      "drift": "none",
+      "driftNote": "تلخيص صحيح: «الإسلام» و«يجب» محفوظان."
+    },
+    {
+      "id": "cln-04",
+      "workType": "summarize",
+      "contentLevel": "أ",
+      "source": "قال النبي ﷺ: «إنما الأعمال بالنيات»، رواه البخاري برقم 1.",
+      "derived": "The Prophet said: Deeds are judged by intentions. Reported by al-Bukhari, Hadith 1.",
+      "expectedVerdict": "faithful",
+      "drift": "none",
+      "driftNote": "تلخيص صحيح: الإسناد «رواه البخاري» والرقم 1 محفوظان."
+    },
+    {
+      "id": "cln-05",
+      "workType": "translate",
+      "contentLevel": "أ",
+      "source": "التوحيد أصل الدين، والمسلم يعتقد أن الله واحد لا شريك له.",
+      "derived": "Tawhid is the foundation of the religion; a Muslim believes that God is one, with no partner.",
+      "expectedVerdict": "faithful",
+      "drift": "none",
+      "driftNote": "ترجمة صحيحة: «التوحيد» إلى Tawhid، ولا شرط في الأصل."
+    },
+    {
+      "id": "cln-06",
+      "workType": "translate",
+      "contentLevel": "ب",
+      "source": "يجب على المسلم أداء الصلاة إذا استطاع.",
+      "derived": "A Muslim must perform the prayer when able.",
+      "expectedVerdict": "faithful",
+      "drift": "none",
+      "driftNote": "ترجمة صحيحة: الإيجاب محفوظ والشرط «إذا» منقول إلى when."
+    },
+    {
+      "id": "cln-07",
+      "workType": "paraphrase",
+      "contentLevel": "أ",
+      "source": "قال النبي ﷺ: «إنما الأعمال بالنيات»، رواه البخاري برقم 1.",
+      "derived": "Reported by al-Bukhari (no. 1), the Prophet said that deeds are judged by intentions.",
+      "expectedVerdict": "faithful",
+      "drift": "none",
+      "driftNote": "إعادة صياغة صحيحة: الإسناد والرقم 1 محفوظان."
+    },
+    {
+      "id": "cln-08",
+      "workType": "summarize",
+      "contentLevel": "ب",
+      "source": "يجوز للمسلم أن يجمع بين الصلاتين إذا كان مسافرًا.",
+      "derived": "A Muslim is permitted to combine two prayers when travelling.",
+      "expectedVerdict": "faithful",
+      "drift": "none",
+      "driftNote": "تلخيص صحيح: الإباحة «يجوز» محفوظة والشرط «إذا» منقول إلى when."
+    },
+    {
+      "id": "cln-09",
+      "workType": "translate",
+      "contentLevel": "أ",
+      "source": "الشريعة حفظت الضرورات الخمس.",
+      "derived": "Sharia protects the five necessities.",
+      "expectedVerdict": "faithful",
+      "drift": "none",
+      "driftNote": "ترجمة صحيحة: «الشريعة» إلى Sharia."
+    },
+    {
+      "id": "cln-10",
+      "workType": "translate",
+      "contentLevel": "أ",
+      "source": "حديث متفق عليه رواه البخاري برقم 1.",
+      "derived": "An agreed upon hadith reported by al-Bukhari, no. 1.",
+      "expectedVerdict": "faithful",
+      "drift": "none",
+      "driftNote": "ترجمة صحيحة: الدرجة «متفق عليه» والإسناد والرقم 1 محفوظة."
+    },
+    {
+      "id": "d-01",
+      "workType": "translate",
+      "contentLevel": "د",
+      "source": "هل يجب عليّ إخراج زكاة على مالٍ ورثته من أبي؟",
+      "derived": "Do I have to pay zakat on money I inherited from my father?",
+      "expectedVerdict": "refer",
+      "drift": "level_d",
+      "driftNote": "واقعة شخصية (زكاة مال موروث) توجب الوقف والتحويل."
+    },
+    {
+      "id": "d-02",
+      "workType": "summarize",
+      "contentLevel": "د",
+      "source": "أنا مسافر وأريد الجمع بين الصلاتين، فما الحكم في حالتي؟",
+      "derived": "I am travelling and want to combine the prayers; what is the ruling in my case?",
+      "expectedVerdict": "refer",
+      "drift": "level_d",
+      "driftNote": "واقعة شخصية (جمع الصلاتين في السفر) توجب الوقف والتحويل."
+    },
+    {
+      "id": "d-03",
+      "workType": "translate",
+      "contentLevel": "د",
+      "source": "حدث بيني وبين زوجتي خلاف، فما حكم الطلاق في حال الغضب؟",
+      "derived": "A dispute arose between me and my wife; what is the ruling on divorce in anger?",
+      "expectedVerdict": "refer",
+      "drift": "level_d",
+      "driftNote": "نزاع أسري شخصي يوجب الوقف والتحويل."
+    },
+    {
+      "id": "d-04",
+      "workType": "paraphrase",
+      "contentLevel": "د",
+      "source": "ما حكم بيع الذهب الذي أملكه لتسديد دينٍ عليّ؟",
+      "derived": "What is the ruling on selling gold I own to pay off a debt?",
+      "expectedVerdict": "refer",
+      "drift": "level_d",
+      "driftNote": "واقعة شخصية مالية توجب الوقف والتحويل."
+    }
+  ]
+}

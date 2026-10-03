@@ -86,6 +86,23 @@ function formsOf(constraint: Constraint): string[] {
   return [...constraint.source].filter((f) => f.trim().length > 0).sort((a, b) => b.length - a.length);
 }
 
+/**
+ * The alef letters of a raw Arabic string, keeping each letter's identity.
+ *
+ * `normalizeWithMap` folds أ/إ/آ/ٱ to a bare alef so sloppier input still matches
+ * a glossary term — right for content words, wrong for the one- and two-letter
+ * function words. The conditional «إن» and the emphatic «أن» collapse to the same
+ * key, so «والمسلم يعتقد أن الله واحد» was reported as carrying a condition that
+ * the sentence does not have. Comparing the raw letters of a condition marker
+ * restores the distinction without touching the shared normalizer, which every
+ * other layer depends on.
+ */
+const ALEF_LIKE = /[\u0623\u0625\u0622\u0671\u0627]/g;
+
+function alefSignature(raw: string): string {
+  return (raw.match(ALEF_LIKE) ?? []).map((ch) => (ch === "\u0627" ? "-" : ch)).join("");
+}
+
 /** The word immediately before `index`, skipping spaces. */
 function precedingWord(text: string, index: number): string {
   let i = index - 1;
@@ -131,7 +148,12 @@ export function runLayer2(ctx: LayerContext): Layer2Output {
     for (const form of forms) {
       const firstToken = form.trim().split(/\s+/)[0] ?? "";
       const isNegatorItself = NEGATORS.has(arabicKey(firstToken));
+      // Condition markers are the only forms short and grammatical enough that
+      // folding the alefs changes which word they are; see `alefSignature`.
+      const strictAlef = constraint.kind === "condition";
+      const formSignature = strictAlef ? alefSignature(form) : "";
       for (const match of findPhrase(sourceNorm, ctx.source, form)) {
+        if (strictAlef && alefSignature(match.text) !== formSignature) continue;
         if (
           constraint.kind === "ruling" &&
           !isNegatorItself &&

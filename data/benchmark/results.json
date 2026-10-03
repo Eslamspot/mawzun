@@ -1,0 +1,2717 @@
+{
+  "run": {
+    "benchmarkVersion": "1.0.0",
+    "engine": "mawzun-audit",
+    "engineVersion": "1.0.0",
+    "corpusSize": 37,
+    "targetLanguage": "en",
+    "now": "2026-10-03T00:00:00.000Z",
+    "semanticProvider": "declared-gap",
+    "measured": "layers L1 (deterministic) and L2 (lexical)",
+    "notMeasured": "layer L3 (semantic) — model-dependent, deliberately excluded",
+    "gapReason": "مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس."
+  },
+  "summary": {
+    "totals": {
+      "pairs": 37,
+      "matched": 36,
+      "mismatched": 1,
+      "matchRate": 0.973,
+      "expected": {
+        "faithful": 12,
+        "needs_revision": 21,
+        "refer": 4
+      }
+    },
+    "confusion": {
+      "faithful": {
+        "faithful": 11,
+        "needs_revision": 1,
+        "refer": 0
+      },
+      "needs_revision": {
+        "faithful": 0,
+        "needs_revision": 21,
+        "refer": 0
+      },
+      "refer": {
+        "faithful": 0,
+        "needs_revision": 0,
+        "refer": 4
+      }
+    },
+    "driftDetection": {
+      "pairs": 21,
+      "detected": 21,
+      "missed": 0,
+      "recall": 1
+    },
+    "perDrift": {
+      "ruling_force": {
+        "total": 5,
+        "detected": 5,
+        "verdictMatched": 5,
+        "detectedIds": [
+          "rf-01",
+          "rf-02",
+          "rf-03",
+          "rf-04",
+          "cj-02"
+        ],
+        "missedIds": []
+      },
+      "condition_dropped": {
+        "total": 4,
+        "detected": 4,
+        "verdictMatched": 4,
+        "detectedIds": [
+          "cd-01",
+          "cd-02",
+          "cd-03",
+          "cd-04"
+        ],
+        "missedIds": []
+      },
+      "isnad": {
+        "total": 4,
+        "detected": 4,
+        "verdictMatched": 4,
+        "detectedIds": [
+          "isn-01",
+          "isn-02",
+          "isn-03",
+          "isn-04"
+        ],
+        "missedIds": []
+      },
+      "number": {
+        "total": 4,
+        "detected": 4,
+        "verdictMatched": 4,
+        "detectedIds": [
+          "num-01",
+          "num-02",
+          "num-03",
+          "num-04"
+        ],
+        "missedIds": []
+      },
+      "term": {
+        "total": 4,
+        "detected": 4,
+        "verdictMatched": 4,
+        "detectedIds": [
+          "trm-01",
+          "trm-02",
+          "trm-03",
+          "trm-04"
+        ],
+        "missedIds": []
+      },
+      "none": {
+        "total": 12,
+        "detected": 11,
+        "verdictMatched": 11,
+        "detectedIds": [
+          "cj-01",
+          "cj-03",
+          "cln-01",
+          "cln-03",
+          "cln-04",
+          "cln-05",
+          "cln-06",
+          "cln-07",
+          "cln-08",
+          "cln-09",
+          "cln-10"
+        ],
+        "missedIds": [
+          "cln-02"
+        ]
+      },
+      "level_d": {
+        "total": 4,
+        "detected": 4,
+        "verdictMatched": 4,
+        "detectedIds": [
+          "d-01",
+          "d-02",
+          "d-03",
+          "d-04"
+        ],
+        "missedIds": []
+      }
+    },
+    "perContentLevel": {
+      "ب": {
+        "total": 13,
+        "matched": 12
+      },
+      "أ": {
+        "total": 17,
+        "matched": 17
+      },
+      "ج": {
+        "total": 3,
+        "matched": 3
+      },
+      "د": {
+        "total": 4,
+        "matched": 4
+      }
+    },
+    "perWorkType": {
+      "translate": {
+        "total": 24,
+        "matched": 23,
+        "faithful": 6,
+        "needs_revision": 16,
+        "refer": 2
+      },
+      "paraphrase": {
+        "total": 5,
+        "matched": 5,
+        "faithful": 1,
+        "needs_revision": 3,
+        "refer": 1
+      },
+      "summarize": {
+        "total": 8,
+        "matched": 8,
+        "faithful": 4,
+        "needs_revision": 3,
+        "refer": 1
+      }
+    },
+    "falsePositives": [
+      {
+        "id": "cln-02",
+        "drift": "none",
+        "expected": "faithful",
+        "actual": "needs_revision",
+        "reason": "رُصد انزياح في: قوة الحكم. لكل موضع سببه ودليله في القائمة أدناه. نطاق الفحص في هذا التشغيل: مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس."
+      }
+    ],
+    "falseNegatives": []
+  },
+  "pairs": [
+    {
+      "id": "rf-01",
+      "workType": "translate",
+      "contentLevel": "ب",
+      "engineLevel": "B",
+      "targetLanguage": "en",
+      "drift": "ruling_force",
+      "driftNote": "منع ملزم «لا يجوز» نُقل إلى لفظ كراهة غير ملزم «not recommended».",
+      "expectedVerdict": "needs_revision",
+      "actualVerdict": "needs_revision",
+      "passed": true,
+      "driftDetected": true,
+      "reason": "رُصد انزياح في: قوة الحكم. لكل موضع سببه ودليله في القائمة أدناه. نطاق الفحص في هذا التشغيل: مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس.",
+      "findings": [
+        {
+          "layer": "L2",
+          "kind": "ruling",
+          "cls": "shifted",
+          "constraintId": "ruling-prohibition",
+          "start": 6,
+          "end": 21,
+          "span": "not recommended",
+          "evidence": {
+            "source": "لا يجوز",
+            "derived": "not recommended",
+            "note": "«لا يجوز» قوته في الأصل «منع» (ملزم)، ونُقل إلى «not recommended» وقوته «كراهة» (غير ملزم). تغيّر في الإلزام — الحكم تغيّر وإن كانت اللغة سليمة. المحاذاة: ordinal."
+          }
+        }
+      ],
+      "layerSummary": {
+        "L1": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L2": {
+          "checked": 1,
+          "shifted": 1,
+          "missing": 0
+        },
+        "L3": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        }
+      },
+      "coverage": [
+        {
+          "layer": "L1",
+          "kind": "quote",
+          "reason": "مطابقة النص القرآني حرفاً بحرف غير مفعّلة في هذا البناء: تحتاج ربط النص العثماني المعتمد. أي اقتباس قرآني في المشتق غير مفحوص في هذه الطبقة."
+        },
+        {
+          "layer": "L3",
+          "kind": "condition",
+          "reason": "مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس."
+        }
+      ],
+      "alignment": "ordinal"
+    },
+    {
+      "id": "rf-02",
+      "workType": "translate",
+      "contentLevel": "أ",
+      "engineLevel": "A",
+      "targetLanguage": "en",
+      "drift": "ruling_force",
+      "driftNote": "إيجاب ملزم «يجب» نُقل إلى إباحة غير ملزمة «permitted».",
+      "expectedVerdict": "needs_revision",
+      "actualVerdict": "needs_revision",
+      "passed": true,
+      "driftDetected": true,
+      "reason": "رُصد انزياح في: قوة الحكم. لكل موضع سببه ودليله في القائمة أدناه. نطاق الفحص في هذا التشغيل: مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس.",
+      "findings": [
+        {
+          "layer": "L2",
+          "kind": "ruling",
+          "cls": "shifted",
+          "constraintId": "ruling-obligation",
+          "start": 12,
+          "end": 21,
+          "span": "permitted",
+          "evidence": {
+            "source": "يجب",
+            "derived": "permitted",
+            "note": "«يجب» قوته في الأصل «إيجاب» (ملزم)، ونُقل إلى «permitted» وقوته «إباحة» (غير ملزم). تغيّر في الإلزام — الحكم تغيّر وإن كانت اللغة سليمة. المحاذاة: ordinal."
+          }
+        }
+      ],
+      "layerSummary": {
+        "L1": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L2": {
+          "checked": 1,
+          "shifted": 1,
+          "missing": 0
+        },
+        "L3": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        }
+      },
+      "coverage": [
+        {
+          "layer": "L1",
+          "kind": "quote",
+          "reason": "مطابقة النص القرآني حرفاً بحرف غير مفعّلة في هذا البناء: تحتاج ربط النص العثماني المعتمد. أي اقتباس قرآني في المشتق غير مفحوص في هذه الطبقة."
+        },
+        {
+          "layer": "L3",
+          "kind": "condition",
+          "reason": "مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس."
+        }
+      ],
+      "alignment": "ordinal"
+    },
+    {
+      "id": "rf-03",
+      "workType": "translate",
+      "contentLevel": "ب",
+      "engineLevel": "B",
+      "targetLanguage": "en",
+      "drift": "ruling_force",
+      "driftNote": "منع «لا يجوز» نُقل إلى إباحة «allowed»، مع بقاء أداة الشرط «بغير حق» منقولة إلى «without right».",
+      "expectedVerdict": "needs_revision",
+      "actualVerdict": "needs_revision",
+      "passed": true,
+      "driftDetected": true,
+      "reason": "رُصد انزياح في: قوة الحكم. لكل موضع سببه ودليله في القائمة أدناه. نطاق الفحص في هذا التشغيل: مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس.",
+      "findings": [
+        {
+          "layer": "L2",
+          "kind": "ruling",
+          "cls": "shifted",
+          "constraintId": "ruling-prohibition",
+          "start": 12,
+          "end": 19,
+          "span": "allowed",
+          "evidence": {
+            "source": "لا يجوز",
+            "derived": "allowed",
+            "note": "«لا يجوز» قوته في الأصل «منع» (ملزم)، ونُقل إلى «allowed» وقوته «إباحة» (غير ملزم). تغيّر في الإلزام — الحكم تغيّر وإن كانت اللغة سليمة. المحاذاة: ordinal."
+          }
+        },
+        {
+          "layer": "L2",
+          "kind": "condition",
+          "cls": "preserved",
+          "constraintId": "condition-marker",
+          "start": 49,
+          "end": 56,
+          "span": "without",
+          "evidence": {
+            "source": "بغير",
+            "derived": "without",
+            "note": "«بغير» نُقل بمقابل معتمد."
+          }
+        }
+      ],
+      "layerSummary": {
+        "L1": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L2": {
+          "checked": 2,
+          "shifted": 1,
+          "missing": 0
+        },
+        "L3": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        }
+      },
+      "coverage": [
+        {
+          "layer": "L1",
+          "kind": "quote",
+          "reason": "مطابقة النص القرآني حرفاً بحرف غير مفعّلة في هذا البناء: تحتاج ربط النص العثماني المعتمد. أي اقتباس قرآني في المشتق غير مفحوص في هذه الطبقة."
+        },
+        {
+          "layer": "L3",
+          "kind": "condition",
+          "reason": "مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس."
+        }
+      ],
+      "alignment": "ordinal"
+    },
+    {
+      "id": "rf-04",
+      "workType": "paraphrase",
+      "contentLevel": "ب",
+      "engineLevel": "B",
+      "targetLanguage": "en",
+      "drift": "ruling_force",
+      "driftNote": "إيجاب «يجب» نُقل إلى استحباب غير ملزم «recommended».",
+      "expectedVerdict": "needs_revision",
+      "actualVerdict": "needs_revision",
+      "passed": true,
+      "driftDetected": true,
+      "reason": "رُصد انزياح في: قوة الحكم. لكل موضع سببه ودليله في القائمة أدناه. نطاق الفحص في هذا التشغيل: مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس.",
+      "findings": [
+        {
+          "layer": "L2",
+          "kind": "ruling",
+          "cls": "shifted",
+          "constraintId": "ruling-obligation",
+          "start": 6,
+          "end": 17,
+          "span": "recommended",
+          "evidence": {
+            "source": "يجب",
+            "derived": "recommended",
+            "note": "«يجب» قوته في الأصل «إيجاب» (ملزم)، ونُقل إلى «recommended» وقوته «استحباب» (غير ملزم). تغيّر في الإلزام — الحكم تغيّر وإن كانت اللغة سليمة. المحاذاة: ordinal."
+          }
+        }
+      ],
+      "layerSummary": {
+        "L1": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L2": {
+          "checked": 1,
+          "shifted": 1,
+          "missing": 0
+        },
+        "L3": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        }
+      },
+      "coverage": [
+        {
+          "layer": "L1",
+          "kind": "quote",
+          "reason": "مطابقة النص القرآني حرفاً بحرف غير مفعّلة في هذا البناء: تحتاج ربط النص العثماني المعتمد. أي اقتباس قرآني في المشتق غير مفحوص في هذه الطبقة."
+        },
+        {
+          "layer": "L3",
+          "kind": "condition",
+          "reason": "مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس."
+        }
+      ],
+      "alignment": "ordinal"
+    },
+    {
+      "id": "cd-01",
+      "workType": "translate",
+      "contentLevel": "ب",
+      "engineLevel": "B",
+      "targetLanguage": "en",
+      "drift": "condition_dropped",
+      "driftNote": "شرط الاستطاعة «إذا استطاع» أُسقط، فصار الإيجاب مطلقًا.",
+      "expectedVerdict": "needs_revision",
+      "actualVerdict": "needs_revision",
+      "passed": true,
+      "driftDetected": true,
+      "reason": "عناصر في الأصل لا يقابلها شيء في المشتق: الشرط. إسقاط العنصر تغيير في المعنى كما هو إقحامه. نطاق الفحص في هذا التشغيل: مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس.",
+      "findings": [
+        {
+          "layer": "L2",
+          "kind": "condition",
+          "cls": "missing",
+          "constraintId": "condition-marker",
+          "start": 0,
+          "end": 0,
+          "span": "",
+          "evidence": {
+            "source": "إذا",
+            "derived": "",
+            "note": "«إذا» موجود في الأصل، ولا يظهر له في المشتق أي مقابل من المقابلات المعتمدة."
+          }
+        },
+        {
+          "layer": "L2",
+          "kind": "ruling",
+          "cls": "preserved",
+          "constraintId": "ruling-obligation",
+          "start": 9,
+          "end": 13,
+          "span": "must",
+          "evidence": {
+            "source": "يجب",
+            "derived": "must",
+            "note": "«يجب» نُقل بمقابل «must»، والحكم لم يتغير في قوته. المحاذاة: ordinal."
+          }
+        }
+      ],
+      "layerSummary": {
+        "L1": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L2": {
+          "checked": 2,
+          "shifted": 0,
+          "missing": 1
+        },
+        "L3": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        }
+      },
+      "coverage": [
+        {
+          "layer": "L1",
+          "kind": "quote",
+          "reason": "مطابقة النص القرآني حرفاً بحرف غير مفعّلة في هذا البناء: تحتاج ربط النص العثماني المعتمد. أي اقتباس قرآني في المشتق غير مفحوص في هذه الطبقة."
+        },
+        {
+          "layer": "L3",
+          "kind": "condition",
+          "reason": "مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس."
+        }
+      ],
+      "alignment": "ordinal"
+    },
+    {
+      "id": "cd-02",
+      "workType": "translate",
+      "contentLevel": "ب",
+      "engineLevel": "B",
+      "targetLanguage": "en",
+      "drift": "condition_dropped",
+      "driftNote": "الاستثناء «إلا عند الضرورة» أُسقط، فاتّسع نطاق المنع بلا دليل.",
+      "expectedVerdict": "needs_revision",
+      "actualVerdict": "needs_revision",
+      "passed": true,
+      "driftDetected": true,
+      "reason": "عناصر في الأصل لا يقابلها شيء في المشتق: الشرط. إسقاط العنصر تغيير في المعنى كما هو إقحامه. نطاق الفحص في هذا التشغيل: مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس.",
+      "findings": [
+        {
+          "layer": "L2",
+          "kind": "condition",
+          "cls": "missing",
+          "constraintId": "condition-marker",
+          "start": 0,
+          "end": 0,
+          "span": "",
+          "evidence": {
+            "source": "إلا",
+            "derived": "",
+            "note": "«إلا» موجود في الأصل، ولا يظهر له في المشتق أي مقابل من المقابلات المعتمدة."
+          }
+        },
+        {
+          "layer": "L2",
+          "kind": "condition",
+          "cls": "missing",
+          "constraintId": "condition-marker",
+          "start": 0,
+          "end": 0,
+          "span": "",
+          "evidence": {
+            "source": "عند",
+            "derived": "",
+            "note": "«عند» موجود في الأصل، ولا يظهر له في المشتق أي مقابل من المقابلات المعتمدة."
+          }
+        },
+        {
+          "layer": "L2",
+          "kind": "ruling",
+          "cls": "preserved",
+          "constraintId": "ruling-prohibition",
+          "start": 6,
+          "end": 15,
+          "span": "forbidden",
+          "evidence": {
+            "source": "لا يجوز",
+            "derived": "forbidden",
+            "note": "«لا يجوز» نُقل بمقابل «forbidden»، والحكم لم يتغير في قوته. المحاذاة: ordinal."
+          }
+        }
+      ],
+      "layerSummary": {
+        "L1": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L2": {
+          "checked": 3,
+          "shifted": 0,
+          "missing": 2
+        },
+        "L3": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        }
+      },
+      "coverage": [
+        {
+          "layer": "L1",
+          "kind": "quote",
+          "reason": "مطابقة النص القرآني حرفاً بحرف غير مفعّلة في هذا البناء: تحتاج ربط النص العثماني المعتمد. أي اقتباس قرآني في المشتق غير مفحوص في هذه الطبقة."
+        },
+        {
+          "layer": "L3",
+          "kind": "condition",
+          "reason": "مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس."
+        }
+      ],
+      "alignment": "ordinal"
+    },
+    {
+      "id": "cd-03",
+      "workType": "summarize",
+      "contentLevel": "ب",
+      "engineLevel": "B",
+      "targetLanguage": "en",
+      "drift": "condition_dropped",
+      "driftNote": "شرط القدرة «إذا كان مقتدرًا» أُسقط، فصار الحج عامًّا على كل مسلم.",
+      "expectedVerdict": "needs_revision",
+      "actualVerdict": "needs_revision",
+      "passed": true,
+      "driftDetected": true,
+      "reason": "عناصر في الأصل لا يقابلها شيء في المشتق: الشرط. إسقاط العنصر تغيير في المعنى كما هو إقحامه. نطاق الفحص في هذا التشغيل: مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس.",
+      "findings": [
+        {
+          "layer": "L2",
+          "kind": "condition",
+          "cls": "missing",
+          "constraintId": "condition-marker",
+          "start": 0,
+          "end": 0,
+          "span": "",
+          "evidence": {
+            "source": "إذا",
+            "derived": "",
+            "note": "«إذا» موجود في الأصل، ولا يظهر له في المشتق أي مقابل من المقابلات المعتمدة."
+          }
+        },
+        {
+          "layer": "L2",
+          "kind": "ruling",
+          "cls": "preserved",
+          "constraintId": "ruling-obligation",
+          "start": 12,
+          "end": 22,
+          "span": "obligatory",
+          "evidence": {
+            "source": "يجب",
+            "derived": "obligatory",
+            "note": "«يجب» نُقل بمقابل «obligatory»، والحكم لم يتغير في قوته. المحاذاة: ordinal."
+          }
+        }
+      ],
+      "layerSummary": {
+        "L1": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L2": {
+          "checked": 2,
+          "shifted": 0,
+          "missing": 1
+        },
+        "L3": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        }
+      },
+      "coverage": [
+        {
+          "layer": "L1",
+          "kind": "quote",
+          "reason": "مطابقة النص القرآني حرفاً بحرف غير مفعّلة في هذا البناء: تحتاج ربط النص العثماني المعتمد. أي اقتباس قرآني في المشتق غير مفحوص في هذه الطبقة."
+        },
+        {
+          "layer": "L3",
+          "kind": "condition",
+          "reason": "مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس."
+        }
+      ],
+      "alignment": "ordinal"
+    },
+    {
+      "id": "cd-04",
+      "workType": "translate",
+      "contentLevel": "ب",
+      "engineLevel": "B",
+      "targetLanguage": "en",
+      "drift": "condition_dropped",
+      "driftNote": "شرط «بشرط فقد الماء» أُسقط، فصار التيمم جائزًا بلا شرط.",
+      "expectedVerdict": "needs_revision",
+      "actualVerdict": "needs_revision",
+      "passed": true,
+      "driftDetected": true,
+      "reason": "عناصر في الأصل لا يقابلها شيء في المشتق: الشرط. إسقاط العنصر تغيير في المعنى كما هو إقحامه. نطاق الفحص في هذا التشغيل: مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس.",
+      "findings": [
+        {
+          "layer": "L2",
+          "kind": "condition",
+          "cls": "missing",
+          "constraintId": "condition-marker",
+          "start": 0,
+          "end": 0,
+          "span": "",
+          "evidence": {
+            "source": "بشرط",
+            "derived": "",
+            "note": "«بشرط» موجود في الأصل، ولا يظهر له في المشتق أي مقابل من المقابلات المعتمدة."
+          }
+        },
+        {
+          "layer": "L2",
+          "kind": "ruling",
+          "cls": "preserved",
+          "constraintId": "ruling-permission",
+          "start": 12,
+          "end": 23,
+          "span": "permissible",
+          "evidence": {
+            "source": "يجوز",
+            "derived": "permissible",
+            "note": "«يجوز» نُقل بمقابل «permissible»، والحكم لم يتغير في قوته. المحاذاة: ordinal."
+          }
+        }
+      ],
+      "layerSummary": {
+        "L1": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L2": {
+          "checked": 2,
+          "shifted": 0,
+          "missing": 1
+        },
+        "L3": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        }
+      },
+      "coverage": [
+        {
+          "layer": "L1",
+          "kind": "quote",
+          "reason": "مطابقة النص القرآني حرفاً بحرف غير مفعّلة في هذا البناء: تحتاج ربط النص العثماني المعتمد. أي اقتباس قرآني في المشتق غير مفحوص في هذه الطبقة."
+        },
+        {
+          "layer": "L3",
+          "kind": "condition",
+          "reason": "مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس."
+        }
+      ],
+      "alignment": "ordinal"
+    },
+    {
+      "id": "isn-01",
+      "workType": "translate",
+      "contentLevel": "أ",
+      "engineLevel": "A",
+      "targetLanguage": "en",
+      "drift": "isnad",
+      "driftNote": "درجة الثبوت «متفق عليه» أُسقطت مع نقل الحديث.",
+      "expectedVerdict": "needs_revision",
+      "actualVerdict": "needs_revision",
+      "passed": true,
+      "driftDetected": true,
+      "reason": "عناصر في الأصل لا يقابلها شيء في المشتق: السند. إسقاط العنصر تغيير في المعنى كما هو إقحامه. نطاق الفحص في هذا التشغيل: مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس.",
+      "findings": [
+        {
+          "layer": "L1",
+          "kind": "isnad",
+          "cls": "missing",
+          "constraintId": "isnad-grade",
+          "start": 0,
+          "end": 0,
+          "span": "",
+          "evidence": {
+            "source": "متفق عليه",
+            "derived": "",
+            "note": "الأصل يحمل «متفق عليه» (درجة ثبوت أو إحالة)، والمشتق لا يحمل أي مقابل معتمد. نقل حديث بلا درجة ثبوته تغيير في قوة الاستدلال."
+          }
+        },
+        {
+          "layer": "L2",
+          "kind": "term",
+          "cls": "preserved",
+          "constraintId": "term-hadith",
+          "start": 23,
+          "end": 29,
+          "span": "hadith",
+          "evidence": {
+            "source": "حديث",
+            "derived": "hadith",
+            "note": "«حديث» نُقل بمقابل معتمد."
+          }
+        }
+      ],
+      "layerSummary": {
+        "L1": {
+          "checked": 1,
+          "shifted": 0,
+          "missing": 1
+        },
+        "L2": {
+          "checked": 1,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L3": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        }
+      },
+      "coverage": [
+        {
+          "layer": "L1",
+          "kind": "quote",
+          "reason": "مطابقة النص القرآني حرفاً بحرف غير مفعّلة في هذا البناء: تحتاج ربط النص العثماني المعتمد. أي اقتباس قرآني في المشتق غير مفحوص في هذه الطبقة."
+        },
+        {
+          "layer": "L3",
+          "kind": "condition",
+          "reason": "مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس."
+        }
+      ],
+      "alignment": "ordinal"
+    },
+    {
+      "id": "isn-02",
+      "workType": "summarize",
+      "contentLevel": "أ",
+      "engineLevel": "A",
+      "targetLanguage": "en",
+      "drift": "isnad",
+      "driftNote": "إسناد الحديث «رواه البخاري» أُسقط، ففقد الأثر قابلية التتبع.",
+      "expectedVerdict": "needs_revision",
+      "actualVerdict": "needs_revision",
+      "passed": true,
+      "driftDetected": true,
+      "reason": "عناصر في الأصل لا يقابلها شيء في المشتق: السند. إسقاط العنصر تغيير في المعنى كما هو إقحامه. نطاق الفحص في هذا التشغيل: مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس.",
+      "findings": [
+        {
+          "layer": "L1",
+          "kind": "isnad",
+          "cls": "missing",
+          "constraintId": "isnad-reference",
+          "start": 0,
+          "end": 0,
+          "span": "",
+          "evidence": {
+            "source": "رواه البخاري",
+            "derived": "",
+            "note": "الأصل يحمل «رواه البخاري» (درجة ثبوت أو إحالة)، والمشتق لا يحمل أي مقابل معتمد. نقل حديث بلا درجة ثبوته تغيير في قوة الاستدلال."
+          }
+        }
+      ],
+      "layerSummary": {
+        "L1": {
+          "checked": 1,
+          "shifted": 0,
+          "missing": 1
+        },
+        "L2": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L3": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        }
+      },
+      "coverage": [
+        {
+          "layer": "L1",
+          "kind": "quote",
+          "reason": "مطابقة النص القرآني حرفاً بحرف غير مفعّلة في هذا البناء: تحتاج ربط النص العثماني المعتمد. أي اقتباس قرآني في المشتق غير مفحوص في هذه الطبقة."
+        },
+        {
+          "layer": "L3",
+          "kind": "condition",
+          "reason": "مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس."
+        }
+      ],
+      "alignment": "proportional"
+    },
+    {
+      "id": "isn-03",
+      "workType": "translate",
+      "contentLevel": "أ",
+      "engineLevel": "A",
+      "targetLanguage": "en",
+      "drift": "isnad",
+      "driftNote": "درجة الثبوت «صحيح» وإسناد «رواه البخاري» أُسقطا، مع بقاء المصطلح «حديث» والرقم 7.",
+      "expectedVerdict": "needs_revision",
+      "actualVerdict": "needs_revision",
+      "passed": true,
+      "driftDetected": true,
+      "reason": "عناصر في الأصل لا يقابلها شيء في المشتق: السند. إسقاط العنصر تغيير في المعنى كما هو إقحامه. نطاق الفحص في هذا التشغيل: مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس.",
+      "findings": [
+        {
+          "layer": "L1",
+          "kind": "number",
+          "cls": "preserved",
+          "constraintId": "number-reference",
+          "start": 0,
+          "end": 0,
+          "span": "7",
+          "evidence": {
+            "source": "7",
+            "derived": "7",
+            "note": "الرقم «7» موجود في النصين بالقيمة نفسها."
+          }
+        },
+        {
+          "layer": "L1",
+          "kind": "isnad",
+          "cls": "missing",
+          "constraintId": "isnad-grade",
+          "start": 0,
+          "end": 0,
+          "span": "",
+          "evidence": {
+            "source": "صحيح",
+            "derived": "",
+            "note": "الأصل يحمل «صحيح» (درجة ثبوت أو إحالة)، والمشتق لا يحمل أي مقابل معتمد. نقل حديث بلا درجة ثبوته تغيير في قوة الاستدلال."
+          }
+        },
+        {
+          "layer": "L1",
+          "kind": "isnad",
+          "cls": "missing",
+          "constraintId": "isnad-reference",
+          "start": 0,
+          "end": 0,
+          "span": "",
+          "evidence": {
+            "source": "رواه البخاري",
+            "derived": "",
+            "note": "الأصل يحمل «رواه البخاري» (درجة ثبوت أو إحالة)، والمشتق لا يحمل أي مقابل معتمد. نقل حديث بلا درجة ثبوته تغيير في قوة الاستدلال."
+          }
+        },
+        {
+          "layer": "L2",
+          "kind": "term",
+          "cls": "preserved",
+          "constraintId": "term-hadith",
+          "start": 23,
+          "end": 29,
+          "span": "Hadith",
+          "evidence": {
+            "source": "حديث",
+            "derived": "Hadith",
+            "note": "«حديث» نُقل بمقابل معتمد."
+          }
+        }
+      ],
+      "layerSummary": {
+        "L1": {
+          "checked": 3,
+          "shifted": 0,
+          "missing": 2
+        },
+        "L2": {
+          "checked": 1,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L3": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        }
+      },
+      "coverage": [
+        {
+          "layer": "L1",
+          "kind": "quote",
+          "reason": "مطابقة النص القرآني حرفاً بحرف غير مفعّلة في هذا البناء: تحتاج ربط النص العثماني المعتمد. أي اقتباس قرآني في المشتق غير مفحوص في هذه الطبقة."
+        },
+        {
+          "layer": "L3",
+          "kind": "condition",
+          "reason": "مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس."
+        }
+      ],
+      "alignment": "ordinal"
+    },
+    {
+      "id": "isn-04",
+      "workType": "translate",
+      "contentLevel": "أ",
+      "engineLevel": "A",
+      "targetLanguage": "en",
+      "drift": "isnad",
+      "driftNote": "درجة الثبوت «صحيح» أُسقطت مع بقاء الإسناد منقولًا.",
+      "expectedVerdict": "needs_revision",
+      "actualVerdict": "needs_revision",
+      "passed": true,
+      "driftDetected": true,
+      "reason": "عناصر في الأصل لا يقابلها شيء في المشتق: السند. إسقاط العنصر تغيير في المعنى كما هو إقحامه. نطاق الفحص في هذا التشغيل: مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس.",
+      "findings": [
+        {
+          "layer": "L1",
+          "kind": "isnad",
+          "cls": "missing",
+          "constraintId": "isnad-grade",
+          "start": 0,
+          "end": 0,
+          "span": "",
+          "evidence": {
+            "source": "صحيح",
+            "derived": "",
+            "note": "الأصل يحمل «صحيح» (درجة ثبوت أو إحالة)، والمشتق لا يحمل أي مقابل معتمد. نقل حديث بلا درجة ثبوته تغيير في قوة الاستدلال."
+          }
+        },
+        {
+          "layer": "L1",
+          "kind": "isnad",
+          "cls": "preserved",
+          "constraintId": "isnad-reference",
+          "start": 12,
+          "end": 22,
+          "span": "al-Bukhari",
+          "evidence": {
+            "source": "رواه البخاري",
+            "derived": "al-Bukhari",
+            "note": "الدرجة أو الإحالة «رواه البخاري» نُقلت إلى المشتق بلفظ معتمد."
+          }
+        },
+        {
+          "layer": "L2",
+          "kind": "term",
+          "cls": "preserved",
+          "constraintId": "term-hadith",
+          "start": 28,
+          "end": 34,
+          "span": "hadith",
+          "evidence": {
+            "source": "حديث",
+            "derived": "hadith",
+            "note": "«حديث» نُقل بمقابل معتمد."
+          }
+        }
+      ],
+      "layerSummary": {
+        "L1": {
+          "checked": 2,
+          "shifted": 0,
+          "missing": 1
+        },
+        "L2": {
+          "checked": 1,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L3": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        }
+      },
+      "coverage": [
+        {
+          "layer": "L1",
+          "kind": "quote",
+          "reason": "مطابقة النص القرآني حرفاً بحرف غير مفعّلة في هذا البناء: تحتاج ربط النص العثماني المعتمد. أي اقتباس قرآني في المشتق غير مفحوص في هذه الطبقة."
+        },
+        {
+          "layer": "L3",
+          "kind": "condition",
+          "reason": "مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس."
+        }
+      ],
+      "alignment": "ordinal"
+    },
+    {
+      "id": "num-01",
+      "workType": "translate",
+      "contentLevel": "أ",
+      "engineLevel": "A",
+      "targetLanguage": "en",
+      "drift": "number",
+      "driftNote": "رقم الحديث «1» أُسقط، مع بقاء الإسناد منقولًا.",
+      "expectedVerdict": "needs_revision",
+      "actualVerdict": "needs_revision",
+      "passed": true,
+      "driftDetected": true,
+      "reason": "عناصر في الأصل لا يقابلها شيء في المشتق: الأرقام. إسقاط العنصر تغيير في المعنى كما هو إقحامه. نطاق الفحص في هذا التشغيل: مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس.",
+      "findings": [
+        {
+          "layer": "L1",
+          "kind": "number",
+          "cls": "missing",
+          "constraintId": "number-reference",
+          "start": 0,
+          "end": 0,
+          "span": "",
+          "evidence": {
+            "source": "1",
+            "derived": "",
+            "note": "الرقم «1» موجود في الأصل وغير موجود في النص المشتق. أرقام الآيات والأحاديث والنسب تُقارن حرفياً."
+          }
+        },
+        {
+          "layer": "L1",
+          "kind": "isnad",
+          "cls": "preserved",
+          "constraintId": "isnad-reference",
+          "start": 62,
+          "end": 72,
+          "span": "al-Bukhari",
+          "evidence": {
+            "source": "رواه البخاري",
+            "derived": "al-Bukhari",
+            "note": "الدرجة أو الإحالة «رواه البخاري» نُقلت إلى المشتق بلفظ معتمد."
+          }
+        }
+      ],
+      "layerSummary": {
+        "L1": {
+          "checked": 2,
+          "shifted": 0,
+          "missing": 1
+        },
+        "L2": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L3": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        }
+      },
+      "coverage": [
+        {
+          "layer": "L1",
+          "kind": "quote",
+          "reason": "مطابقة النص القرآني حرفاً بحرف غير مفعّلة في هذا البناء: تحتاج ربط النص العثماني المعتمد. أي اقتباس قرآني في المشتق غير مفحوص في هذه الطبقة."
+        },
+        {
+          "layer": "L3",
+          "kind": "condition",
+          "reason": "مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس."
+        }
+      ],
+      "alignment": "proportional"
+    },
+    {
+      "id": "num-02",
+      "workType": "summarize",
+      "contentLevel": "أ",
+      "engineLevel": "A",
+      "targetLanguage": "en",
+      "drift": "number",
+      "driftNote": "رقم «6» أُسقط، مع بقاء رقم 5 والإسناد.",
+      "expectedVerdict": "needs_revision",
+      "actualVerdict": "needs_revision",
+      "passed": true,
+      "driftDetected": true,
+      "reason": "عناصر في الأصل لا يقابلها شيء في المشتق: الأرقام. إسقاط العنصر تغيير في المعنى كما هو إقحامه. نطاق الفحص في هذا التشغيل: مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس.",
+      "findings": [
+        {
+          "layer": "L1",
+          "kind": "number",
+          "cls": "preserved",
+          "constraintId": "number-reference",
+          "start": 0,
+          "end": 0,
+          "span": "5",
+          "evidence": {
+            "source": "5",
+            "derived": "5",
+            "note": "الرقم «5» موجود في النصين بالقيمة نفسها."
+          }
+        },
+        {
+          "layer": "L1",
+          "kind": "number",
+          "cls": "missing",
+          "constraintId": "number-reference",
+          "start": 0,
+          "end": 0,
+          "span": "",
+          "evidence": {
+            "source": "6",
+            "derived": "",
+            "note": "الرقم «6» موجود في الأصل وغير موجود في النص المشتق. أرقام الآيات والأحاديث والنسب تُقارن حرفياً."
+          }
+        },
+        {
+          "layer": "L1",
+          "kind": "isnad",
+          "cls": "preserved",
+          "constraintId": "isnad-reference",
+          "start": 12,
+          "end": 22,
+          "span": "al-Bukhari",
+          "evidence": {
+            "source": "رواه البخاري",
+            "derived": "al-Bukhari",
+            "note": "الدرجة أو الإحالة «رواه البخاري» نُقلت إلى المشتق بلفظ معتمد."
+          }
+        }
+      ],
+      "layerSummary": {
+        "L1": {
+          "checked": 3,
+          "shifted": 0,
+          "missing": 1
+        },
+        "L2": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L3": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        }
+      },
+      "coverage": [
+        {
+          "layer": "L1",
+          "kind": "quote",
+          "reason": "مطابقة النص القرآني حرفاً بحرف غير مفعّلة في هذا البناء: تحتاج ربط النص العثماني المعتمد. أي اقتباس قرآني في المشتق غير مفحوص في هذه الطبقة."
+        },
+        {
+          "layer": "L3",
+          "kind": "condition",
+          "reason": "مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس."
+        }
+      ],
+      "alignment": "proportional"
+    },
+    {
+      "id": "num-03",
+      "workType": "translate",
+      "contentLevel": "ب",
+      "engineLevel": "B",
+      "targetLanguage": "en",
+      "drift": "number",
+      "driftNote": "إحالة السورة والآية «2:255» أُسقطت كاملة.",
+      "expectedVerdict": "needs_revision",
+      "actualVerdict": "needs_revision",
+      "passed": true,
+      "driftDetected": true,
+      "reason": "عناصر في الأصل لا يقابلها شيء في المشتق: الأرقام، الإحالة. إسقاط العنصر تغيير في المعنى كما هو إقحامه. نطاق الفحص في هذا التشغيل: مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس.",
+      "findings": [
+        {
+          "layer": "L1",
+          "kind": "number",
+          "cls": "missing",
+          "constraintId": "number-reference",
+          "start": 0,
+          "end": 0,
+          "span": "",
+          "evidence": {
+            "source": "2",
+            "derived": "",
+            "note": "الرقم «2» موجود في الأصل وغير موجود في النص المشتق. أرقام الآيات والأحاديث والنسب تُقارن حرفياً."
+          }
+        },
+        {
+          "layer": "L1",
+          "kind": "number",
+          "cls": "missing",
+          "constraintId": "number-reference",
+          "start": 0,
+          "end": 0,
+          "span": "",
+          "evidence": {
+            "source": "255",
+            "derived": "",
+            "note": "الرقم «255» موجود في الأصل وغير موجود في النص المشتق. أرقام الآيات والأحاديث والنسب تُقارن حرفياً."
+          }
+        },
+        {
+          "layer": "L1",
+          "kind": "reference",
+          "cls": "missing",
+          "constraintId": "number-reference",
+          "start": 0,
+          "end": 0,
+          "span": "",
+          "evidence": {
+            "source": "2:255",
+            "derived": "",
+            "note": "إحالة رقمية (سورة:آية أو نسبة) موجودة في الأصل وغير موجودة في المشتق."
+          }
+        }
+      ],
+      "layerSummary": {
+        "L1": {
+          "checked": 3,
+          "shifted": 0,
+          "missing": 3
+        },
+        "L2": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L3": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        }
+      },
+      "coverage": [
+        {
+          "layer": "L1",
+          "kind": "quote",
+          "reason": "مطابقة النص القرآني حرفاً بحرف غير مفعّلة في هذا البناء: تحتاج ربط النص العثماني المعتمد. أي اقتباس قرآني في المشتق غير مفحوص في هذه الطبقة."
+        },
+        {
+          "layer": "L3",
+          "kind": "condition",
+          "reason": "مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس."
+        }
+      ],
+      "alignment": "proportional"
+    },
+    {
+      "id": "num-04",
+      "workType": "translate",
+      "contentLevel": "ب",
+      "engineLevel": "B",
+      "targetLanguage": "en",
+      "drift": "number",
+      "driftNote": "رقم الآية تغيّر من «2:255» إلى «2:256».",
+      "expectedVerdict": "needs_revision",
+      "actualVerdict": "needs_revision",
+      "passed": true,
+      "driftDetected": true,
+      "reason": "عناصر في الأصل لا يقابلها شيء في المشتق: الأرقام، الإحالة. إسقاط العنصر تغيير في المعنى كما هو إقحامه. نطاق الفحص في هذا التشغيل: مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس.",
+      "findings": [
+        {
+          "layer": "L1",
+          "kind": "number",
+          "cls": "preserved",
+          "constraintId": "number-reference",
+          "start": 0,
+          "end": 0,
+          "span": "2",
+          "evidence": {
+            "source": "2",
+            "derived": "2",
+            "note": "الرقم «2» موجود في النصين بالقيمة نفسها."
+          }
+        },
+        {
+          "layer": "L1",
+          "kind": "number",
+          "cls": "missing",
+          "constraintId": "number-reference",
+          "start": 0,
+          "end": 0,
+          "span": "",
+          "evidence": {
+            "source": "255",
+            "derived": "",
+            "note": "الرقم «255» موجود في الأصل وغير موجود في النص المشتق. أرقام الآيات والأحاديث والنسب تُقارن حرفياً."
+          }
+        },
+        {
+          "layer": "L1",
+          "kind": "reference",
+          "cls": "missing",
+          "constraintId": "number-reference",
+          "start": 0,
+          "end": 0,
+          "span": "",
+          "evidence": {
+            "source": "2:255",
+            "derived": "",
+            "note": "إحالة رقمية (سورة:آية أو نسبة) موجودة في الأصل وغير موجودة في المشتق."
+          }
+        }
+      ],
+      "layerSummary": {
+        "L1": {
+          "checked": 3,
+          "shifted": 0,
+          "missing": 2
+        },
+        "L2": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L3": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        }
+      },
+      "coverage": [
+        {
+          "layer": "L1",
+          "kind": "quote",
+          "reason": "مطابقة النص القرآني حرفاً بحرف غير مفعّلة في هذا البناء: تحتاج ربط النص العثماني المعتمد. أي اقتباس قرآني في المشتق غير مفحوص في هذه الطبقة."
+        },
+        {
+          "layer": "L3",
+          "kind": "condition",
+          "reason": "مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس."
+        }
+      ],
+      "alignment": "proportional"
+    },
+    {
+      "id": "trm-01",
+      "workType": "translate",
+      "contentLevel": "أ",
+      "engineLevel": "A",
+      "targetLanguage": "en",
+      "drift": "term",
+      "driftNote": "مصطلح «العبادة» نُقل إلى مقابل تمنعه الحزمة «rituals»، ففقد معناه الشرعي.",
+      "expectedVerdict": "needs_revision",
+      "actualVerdict": "needs_revision",
+      "passed": true,
+      "driftDetected": true,
+      "reason": "رُصد انزياح في: المصطلح. لكل موضع سببه ودليله في القائمة أدناه. نطاق الفحص في هذا التشغيل: مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس.",
+      "findings": [
+        {
+          "layer": "L2",
+          "kind": "term",
+          "cls": "shifted",
+          "constraintId": "term-ibadah",
+          "start": 0,
+          "end": 7,
+          "span": "Rituals",
+          "evidence": {
+            "source": "العبادة",
+            "derived": "Rituals",
+            "note": "«العبادة» نُقل بمقابل تُمنعه الحزمة العلمية: «Rituals». القاعدة: تشمل أعمال القلب والقول والعمل، ولا تختزل في الشعائر فقط. التعريف بالمفهوم بعبارة واضحة مع الحفاظ على المصطلح وذكر مرادفاته الدقيقة."
+          }
+        }
+      ],
+      "layerSummary": {
+        "L1": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L2": {
+          "checked": 1,
+          "shifted": 1,
+          "missing": 0
+        },
+        "L3": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        }
+      },
+      "coverage": [
+        {
+          "layer": "L1",
+          "kind": "quote",
+          "reason": "مطابقة النص القرآني حرفاً بحرف غير مفعّلة في هذا البناء: تحتاج ربط النص العثماني المعتمد. أي اقتباس قرآني في المشتق غير مفحوص في هذه الطبقة."
+        },
+        {
+          "layer": "L3",
+          "kind": "condition",
+          "reason": "مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس."
+        }
+      ],
+      "alignment": "ordinal"
+    },
+    {
+      "id": "trm-02",
+      "workType": "translate",
+      "contentLevel": "أ",
+      "engineLevel": "A",
+      "targetLanguage": "en",
+      "drift": "term",
+      "driftNote": "مصطلح «الشريعة» نُقل إلى «penal law»، وهو مقابل مختزل تمنعه الحزمة.",
+      "expectedVerdict": "needs_revision",
+      "actualVerdict": "needs_revision",
+      "passed": true,
+      "driftDetected": true,
+      "reason": "رُصد انزياح في: المصطلح. لكل موضع سببه ودليله في القائمة أدناه. نطاق الفحص في هذا التشغيل: مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس.",
+      "findings": [
+        {
+          "layer": "L2",
+          "kind": "term",
+          "cls": "shifted",
+          "constraintId": "term-sharia",
+          "start": 4,
+          "end": 13,
+          "span": "penal law",
+          "evidence": {
+            "source": "الشريعة",
+            "derived": "penal law",
+            "note": "«الشريعة» نُقل بمقابل تُمنعه الحزمة العلمية: «penal law». القاعدة: تشرح بحسب السياق، ولا تختزل في القانون الجنائي والعقوبات. المقابل المعتمد في القاموس مع شرح موجز عند عدم كفاية المقابل الحرفي."
+          }
+        }
+      ],
+      "layerSummary": {
+        "L1": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L2": {
+          "checked": 1,
+          "shifted": 1,
+          "missing": 0
+        },
+        "L3": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        }
+      },
+      "coverage": [
+        {
+          "layer": "L1",
+          "kind": "quote",
+          "reason": "مطابقة النص القرآني حرفاً بحرف غير مفعّلة في هذا البناء: تحتاج ربط النص العثماني المعتمد. أي اقتباس قرآني في المشتق غير مفحوص في هذه الطبقة."
+        },
+        {
+          "layer": "L3",
+          "kind": "condition",
+          "reason": "مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس."
+        }
+      ],
+      "alignment": "ordinal"
+    },
+    {
+      "id": "trm-03",
+      "workType": "paraphrase",
+      "contentLevel": "أ",
+      "engineLevel": "A",
+      "targetLanguage": "en",
+      "drift": "term",
+      "driftNote": "مصطلح «الفتوى» نُقل إلى «opinion»، وهو مقابل تمنعه الحزمة.",
+      "expectedVerdict": "needs_revision",
+      "actualVerdict": "needs_revision",
+      "passed": true,
+      "driftDetected": true,
+      "reason": "رُصد انزياح في: المصطلح. لكل موضع سببه ودليله في القائمة أدناه. نطاق الفحص في هذا التشغيل: مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس.",
+      "findings": [
+        {
+          "layer": "L2",
+          "kind": "term",
+          "cls": "shifted",
+          "constraintId": "term-fatwa",
+          "start": 3,
+          "end": 10,
+          "span": "opinion",
+          "evidence": {
+            "source": "الفتوى",
+            "derived": "opinion",
+            "note": "«الفتوى» نُقل بمقابل تُمنعه الحزمة العلمية: «opinion». القاعدة: جواب شرعي يصدره مؤهل في واقعة أو سؤال، ولا يساوي المعلومة العامة."
+          }
+        }
+      ],
+      "layerSummary": {
+        "L1": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L2": {
+          "checked": 1,
+          "shifted": 1,
+          "missing": 0
+        },
+        "L3": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        }
+      },
+      "coverage": [
+        {
+          "layer": "L1",
+          "kind": "quote",
+          "reason": "مطابقة النص القرآني حرفاً بحرف غير مفعّلة في هذا البناء: تحتاج ربط النص العثماني المعتمد. أي اقتباس قرآني في المشتق غير مفحوص في هذه الطبقة."
+        },
+        {
+          "layer": "L3",
+          "kind": "condition",
+          "reason": "مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس."
+        }
+      ],
+      "alignment": "ordinal"
+    },
+    {
+      "id": "trm-04",
+      "workType": "translate",
+      "contentLevel": "أ",
+      "engineLevel": "A",
+      "targetLanguage": "en",
+      "drift": "term",
+      "driftNote": "مصطلح «التوحيد» اختُزل في «Monotheism» فلم يظهر أي مقابل معتمد من الحزمة.",
+      "expectedVerdict": "needs_revision",
+      "actualVerdict": "needs_revision",
+      "passed": true,
+      "driftDetected": true,
+      "reason": "عناصر في الأصل لا يقابلها شيء في المشتق: المصطلح. إسقاط العنصر تغيير في المعنى كما هو إقحامه. نطاق الفحص في هذا التشغيل: مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس.",
+      "findings": [
+        {
+          "layer": "L2",
+          "kind": "term",
+          "cls": "missing",
+          "constraintId": "term-tawhid",
+          "start": 0,
+          "end": 0,
+          "span": "",
+          "evidence": {
+            "source": "التوحيد",
+            "derived": "",
+            "note": "«التوحيد» موجود في الأصل، ولا يظهر له في المشتق أي مقابل من المقابلات المعتمدة."
+          }
+        }
+      ],
+      "layerSummary": {
+        "L1": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L2": {
+          "checked": 1,
+          "shifted": 0,
+          "missing": 1
+        },
+        "L3": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        }
+      },
+      "coverage": [
+        {
+          "layer": "L1",
+          "kind": "quote",
+          "reason": "مطابقة النص القرآني حرفاً بحرف غير مفعّلة في هذا البناء: تحتاج ربط النص العثماني المعتمد. أي اقتباس قرآني في المشتق غير مفحوص في هذه الطبقة."
+        },
+        {
+          "layer": "L3",
+          "kind": "condition",
+          "reason": "مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس."
+        }
+      ],
+      "alignment": "ordinal"
+    },
+    {
+      "id": "cj-01",
+      "workType": "summarize",
+      "contentLevel": "ج",
+      "engineLevel": "C",
+      "targetLanguage": "en",
+      "drift": "none",
+      "driftNote": "مستوى ج نظيف: مسألة اجتهادية عُرض الخلاف فيها بلا ترجيح، والمصطلح «الشريعة» منقول إلى Sharia.",
+      "expectedVerdict": "faithful",
+      "actualVerdict": "faithful",
+      "passed": true,
+      "driftDetected": true,
+      "reason": "لم يُرصد انزياح في أي قيد مطبَّق من الحزمة العلمية. أمانة النقل محفوظة في حدود القيود المعتمدة. نطاق الفحص في هذا التشغيل: مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس.",
+      "findings": [
+        {
+          "layer": "L2",
+          "kind": "term",
+          "cls": "preserved",
+          "constraintId": "term-sharia",
+          "start": 28,
+          "end": 34,
+          "span": "Sharia",
+          "evidence": {
+            "source": "الشريعة",
+            "derived": "Sharia",
+            "note": "«الشريعة» نُقل بمقابل معتمد."
+          }
+        }
+      ],
+      "layerSummary": {
+        "L1": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L2": {
+          "checked": 1,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L3": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        }
+      },
+      "coverage": [
+        {
+          "layer": "L1",
+          "kind": "quote",
+          "reason": "مطابقة النص القرآني حرفاً بحرف غير مفعّلة في هذا البناء: تحتاج ربط النص العثماني المعتمد. أي اقتباس قرآني في المشتق غير مفحوص في هذه الطبقة."
+        },
+        {
+          "layer": "L3",
+          "kind": "condition",
+          "reason": "مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس."
+        }
+      ],
+      "alignment": "ordinal"
+    },
+    {
+      "id": "cj-02",
+      "workType": "paraphrase",
+      "contentLevel": "ج",
+      "engineLevel": "C",
+      "targetLanguage": "en",
+      "drift": "ruling_force",
+      "driftNote": "مستوى ج: استحباب «يستحب» نُقل إلى إيجاب ملزم «must»، فصار ما هو اجتهادي ملزمًا.",
+      "expectedVerdict": "needs_revision",
+      "actualVerdict": "needs_revision",
+      "passed": true,
+      "driftDetected": true,
+      "reason": "رُصد انزياح في: قوة الحكم. لكل موضع سببه ودليله في القائمة أدناه. نطاق الفحص في هذا التشغيل: مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس.",
+      "findings": [
+        {
+          "layer": "L2",
+          "kind": "ruling",
+          "cls": "shifted",
+          "constraintId": "ruling-recommendation",
+          "start": 52,
+          "end": 56,
+          "span": "must",
+          "evidence": {
+            "source": "يستحب",
+            "derived": "must",
+            "note": "«يستحب» قوته في الأصل «استحباب» (غير ملزم)، ونُقل إلى «must» وقوته «إيجاب» (ملزم). تغيّر في الإلزام — الحكم تغيّر وإن كانت اللغة سليمة. المحاذاة: ordinal."
+          }
+        }
+      ],
+      "layerSummary": {
+        "L1": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L2": {
+          "checked": 1,
+          "shifted": 1,
+          "missing": 0
+        },
+        "L3": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        }
+      },
+      "coverage": [
+        {
+          "layer": "L1",
+          "kind": "quote",
+          "reason": "مطابقة النص القرآني حرفاً بحرف غير مفعّلة في هذا البناء: تحتاج ربط النص العثماني المعتمد. أي اقتباس قرآني في المشتق غير مفحوص في هذه الطبقة."
+        },
+        {
+          "layer": "L3",
+          "kind": "condition",
+          "reason": "مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس."
+        }
+      ],
+      "alignment": "ordinal"
+    },
+    {
+      "id": "cj-03",
+      "workType": "translate",
+      "contentLevel": "ج",
+      "engineLevel": "C",
+      "targetLanguage": "en",
+      "drift": "none",
+      "driftNote": "مستوى ج نظيف: الخلاف معروض بلا ترجيح، ومصطلح «الفتوى» منقول إلى a fatwa.",
+      "expectedVerdict": "faithful",
+      "actualVerdict": "faithful",
+      "passed": true,
+      "driftDetected": true,
+      "reason": "لم يُرصد انزياح في أي قيد مطبَّق من الحزمة العلمية. أمانة النقل محفوظة في حدود القيود المعتمدة. نطاق الفحص في هذا التشغيل: مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس.",
+      "findings": [
+        {
+          "layer": "L2",
+          "kind": "term",
+          "cls": "preserved",
+          "constraintId": "term-fatwa",
+          "start": 110,
+          "end": 117,
+          "span": "a fatwa",
+          "evidence": {
+            "source": "الفتوى",
+            "derived": "a fatwa",
+            "note": "«الفتوى» نُقل بمقابل معتمد."
+          }
+        }
+      ],
+      "layerSummary": {
+        "L1": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L2": {
+          "checked": 1,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L3": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        }
+      },
+      "coverage": [
+        {
+          "layer": "L1",
+          "kind": "quote",
+          "reason": "مطابقة النص القرآني حرفاً بحرف غير مفعّلة في هذا البناء: تحتاج ربط النص العثماني المعتمد. أي اقتباس قرآني في المشتق غير مفحوص في هذه الطبقة."
+        },
+        {
+          "layer": "L3",
+          "kind": "condition",
+          "reason": "مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس."
+        }
+      ],
+      "alignment": "ordinal"
+    },
+    {
+      "id": "cln-01",
+      "workType": "translate",
+      "contentLevel": "أ",
+      "engineLevel": "A",
+      "targetLanguage": "en",
+      "drift": "none",
+      "driftNote": "ترجمة صحيحة: «العبادة» إلى worship و«الإسلام» إلى Islam.",
+      "expectedVerdict": "faithful",
+      "actualVerdict": "faithful",
+      "passed": true,
+      "driftDetected": true,
+      "reason": "لم يُرصد انزياح في أي قيد مطبَّق من الحزمة العلمية. أمانة النقل محفوظة في حدود القيود المعتمدة. نطاق الفحص في هذا التشغيل: مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس.",
+      "findings": [
+        {
+          "layer": "L2",
+          "kind": "term",
+          "cls": "preserved",
+          "constraintId": "term-ibadah",
+          "start": 0,
+          "end": 7,
+          "span": "Worship",
+          "evidence": {
+            "source": "العبادة",
+            "derived": "Worship",
+            "note": "«العبادة» نُقل بمقابل معتمد."
+          }
+        },
+        {
+          "layer": "L2",
+          "kind": "term",
+          "cls": "preserved",
+          "constraintId": "term-islam",
+          "start": 11,
+          "end": 16,
+          "span": "Islam",
+          "evidence": {
+            "source": "الإسلام",
+            "derived": "Islam",
+            "note": "«الإسلام» نُقل بمقابل معتمد."
+          }
+        }
+      ],
+      "layerSummary": {
+        "L1": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L2": {
+          "checked": 2,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L3": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        }
+      },
+      "coverage": [
+        {
+          "layer": "L1",
+          "kind": "quote",
+          "reason": "مطابقة النص القرآني حرفاً بحرف غير مفعّلة في هذا البناء: تحتاج ربط النص العثماني المعتمد. أي اقتباس قرآني في المشتق غير مفحوص في هذه الطبقة."
+        },
+        {
+          "layer": "L3",
+          "kind": "condition",
+          "reason": "مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس."
+        }
+      ],
+      "alignment": "ordinal"
+    },
+    {
+      "id": "cln-02",
+      "workType": "translate",
+      "contentLevel": "ب",
+      "engineLevel": "B",
+      "targetLanguage": "en",
+      "drift": "none",
+      "driftNote": "قوتا الحكم محفوظتان: الإيجاب إلى must والاستحباب إلى recommended.",
+      "expectedVerdict": "faithful",
+      "actualVerdict": "needs_revision",
+      "passed": false,
+      "driftDetected": false,
+      "reason": "رُصد انزياح في: قوة الحكم. لكل موضع سببه ودليله في القائمة أدناه. نطاق الفحص في هذا التشغيل: مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس.",
+      "findings": [
+        {
+          "layer": "L2",
+          "kind": "ruling",
+          "cls": "shifted",
+          "constraintId": "ruling-obligation",
+          "start": 44,
+          "end": 55,
+          "span": "recommended",
+          "evidence": {
+            "source": "يجب",
+            "derived": "recommended",
+            "note": "«يجب» قوته في الأصل «إيجاب» (ملزم)، ونُقل إلى «recommended» وقوته «استحباب» (غير ملزم). تغيّر في الإلزام — الحكم تغيّر وإن كانت اللغة سليمة. المحاذاة: ordinal."
+          }
+        }
+      ],
+      "layerSummary": {
+        "L1": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L2": {
+          "checked": 1,
+          "shifted": 1,
+          "missing": 0
+        },
+        "L3": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        }
+      },
+      "coverage": [
+        {
+          "layer": "L1",
+          "kind": "quote",
+          "reason": "مطابقة النص القرآني حرفاً بحرف غير مفعّلة في هذا البناء: تحتاج ربط النص العثماني المعتمد. أي اقتباس قرآني في المشتق غير مفحوص في هذه الطبقة."
+        },
+        {
+          "layer": "L3",
+          "kind": "condition",
+          "reason": "مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس."
+        }
+      ],
+      "alignment": "ordinal"
+    },
+    {
+      "id": "cln-03",
+      "workType": "summarize",
+      "contentLevel": "ب",
+      "engineLevel": "B",
+      "targetLanguage": "en",
+      "drift": "none",
+      "driftNote": "تلخيص صحيح: «الإسلام» و«يجب» محفوظان.",
+      "expectedVerdict": "faithful",
+      "actualVerdict": "faithful",
+      "passed": true,
+      "driftDetected": true,
+      "reason": "لم يُرصد انزياح في أي قيد مطبَّق من الحزمة العلمية. أمانة النقل محفوظة في حدود القيود المعتمدة. نطاق الفحص في هذا التشغيل: مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس.",
+      "findings": [
+        {
+          "layer": "L2",
+          "kind": "term",
+          "cls": "preserved",
+          "constraintId": "term-islam",
+          "start": 21,
+          "end": 26,
+          "span": "Islam",
+          "evidence": {
+            "source": "الإسلام",
+            "derived": "Islam",
+            "note": "«الإسلام» نُقل بمقابل معتمد."
+          }
+        }
+      ],
+      "layerSummary": {
+        "L1": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L2": {
+          "checked": 1,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L3": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        }
+      },
+      "coverage": [
+        {
+          "layer": "L1",
+          "kind": "quote",
+          "reason": "مطابقة النص القرآني حرفاً بحرف غير مفعّلة في هذا البناء: تحتاج ربط النص العثماني المعتمد. أي اقتباس قرآني في المشتق غير مفحوص في هذه الطبقة."
+        },
+        {
+          "layer": "L3",
+          "kind": "condition",
+          "reason": "مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس."
+        }
+      ],
+      "alignment": "ordinal"
+    },
+    {
+      "id": "cln-04",
+      "workType": "summarize",
+      "contentLevel": "أ",
+      "engineLevel": "A",
+      "targetLanguage": "en",
+      "drift": "none",
+      "driftNote": "تلخيص صحيح: الإسناد «رواه البخاري» والرقم 1 محفوظان.",
+      "expectedVerdict": "faithful",
+      "actualVerdict": "faithful",
+      "passed": true,
+      "driftDetected": true,
+      "reason": "لم يُرصد انزياح في أي قيد مطبَّق من الحزمة العلمية. أمانة النقل محفوظة في حدود القيود المعتمدة. نطاق الفحص في هذا التشغيل: مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس.",
+      "findings": [
+        {
+          "layer": "L1",
+          "kind": "number",
+          "cls": "preserved",
+          "constraintId": "number-reference",
+          "start": 0,
+          "end": 0,
+          "span": "1",
+          "evidence": {
+            "source": "1",
+            "derived": "1",
+            "note": "الرقم «1» موجود في النصين بالقيمة نفسها."
+          }
+        },
+        {
+          "layer": "L1",
+          "kind": "isnad",
+          "cls": "preserved",
+          "constraintId": "isnad-reference",
+          "start": 62,
+          "end": 72,
+          "span": "al-Bukhari",
+          "evidence": {
+            "source": "رواه البخاري",
+            "derived": "al-Bukhari",
+            "note": "الدرجة أو الإحالة «رواه البخاري» نُقلت إلى المشتق بلفظ معتمد."
+          }
+        }
+      ],
+      "layerSummary": {
+        "L1": {
+          "checked": 2,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L2": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L3": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        }
+      },
+      "coverage": [
+        {
+          "layer": "L1",
+          "kind": "quote",
+          "reason": "مطابقة النص القرآني حرفاً بحرف غير مفعّلة في هذا البناء: تحتاج ربط النص العثماني المعتمد. أي اقتباس قرآني في المشتق غير مفحوص في هذه الطبقة."
+        },
+        {
+          "layer": "L3",
+          "kind": "condition",
+          "reason": "مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس."
+        }
+      ],
+      "alignment": "proportional"
+    },
+    {
+      "id": "cln-05",
+      "workType": "translate",
+      "contentLevel": "أ",
+      "engineLevel": "A",
+      "targetLanguage": "en",
+      "drift": "none",
+      "driftNote": "ترجمة صحيحة: «التوحيد» إلى Tawhid، ولا شرط في الأصل.",
+      "expectedVerdict": "faithful",
+      "actualVerdict": "faithful",
+      "passed": true,
+      "driftDetected": true,
+      "reason": "لم يُرصد انزياح في أي قيد مطبَّق من الحزمة العلمية. أمانة النقل محفوظة في حدود القيود المعتمدة. نطاق الفحص في هذا التشغيل: مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس.",
+      "findings": [
+        {
+          "layer": "L2",
+          "kind": "term",
+          "cls": "preserved",
+          "constraintId": "term-tawhid",
+          "start": 0,
+          "end": 6,
+          "span": "Tawhid",
+          "evidence": {
+            "source": "التوحيد",
+            "derived": "Tawhid",
+            "note": "«التوحيد» نُقل بمقابل معتمد."
+          }
+        }
+      ],
+      "layerSummary": {
+        "L1": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L2": {
+          "checked": 1,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L3": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        }
+      },
+      "coverage": [
+        {
+          "layer": "L1",
+          "kind": "quote",
+          "reason": "مطابقة النص القرآني حرفاً بحرف غير مفعّلة في هذا البناء: تحتاج ربط النص العثماني المعتمد. أي اقتباس قرآني في المشتق غير مفحوص في هذه الطبقة."
+        },
+        {
+          "layer": "L3",
+          "kind": "condition",
+          "reason": "مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس."
+        }
+      ],
+      "alignment": "ordinal"
+    },
+    {
+      "id": "cln-06",
+      "workType": "translate",
+      "contentLevel": "ب",
+      "engineLevel": "B",
+      "targetLanguage": "en",
+      "drift": "none",
+      "driftNote": "ترجمة صحيحة: الإيجاب محفوظ والشرط «إذا» منقول إلى when.",
+      "expectedVerdict": "faithful",
+      "actualVerdict": "faithful",
+      "passed": true,
+      "driftDetected": true,
+      "reason": "لم يُرصد انزياح في أي قيد مطبَّق من الحزمة العلمية. أمانة النقل محفوظة في حدود القيود المعتمدة. نطاق الفحص في هذا التشغيل: مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس.",
+      "findings": [
+        {
+          "layer": "L2",
+          "kind": "ruling",
+          "cls": "preserved",
+          "constraintId": "ruling-obligation",
+          "start": 9,
+          "end": 13,
+          "span": "must",
+          "evidence": {
+            "source": "يجب",
+            "derived": "must",
+            "note": "«يجب» نُقل بمقابل «must»، والحكم لم يتغير في قوته. المحاذاة: ordinal."
+          }
+        },
+        {
+          "layer": "L2",
+          "kind": "condition",
+          "cls": "preserved",
+          "constraintId": "condition-marker",
+          "start": 33,
+          "end": 37,
+          "span": "when",
+          "evidence": {
+            "source": "إذا",
+            "derived": "when",
+            "note": "«إذا» نُقل بمقابل معتمد."
+          }
+        }
+      ],
+      "layerSummary": {
+        "L1": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L2": {
+          "checked": 2,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L3": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        }
+      },
+      "coverage": [
+        {
+          "layer": "L1",
+          "kind": "quote",
+          "reason": "مطابقة النص القرآني حرفاً بحرف غير مفعّلة في هذا البناء: تحتاج ربط النص العثماني المعتمد. أي اقتباس قرآني في المشتق غير مفحوص في هذه الطبقة."
+        },
+        {
+          "layer": "L3",
+          "kind": "condition",
+          "reason": "مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس."
+        }
+      ],
+      "alignment": "ordinal"
+    },
+    {
+      "id": "cln-07",
+      "workType": "paraphrase",
+      "contentLevel": "أ",
+      "engineLevel": "A",
+      "targetLanguage": "en",
+      "drift": "none",
+      "driftNote": "إعادة صياغة صحيحة: الإسناد والرقم 1 محفوظان.",
+      "expectedVerdict": "faithful",
+      "actualVerdict": "faithful",
+      "passed": true,
+      "driftDetected": true,
+      "reason": "لم يُرصد انزياح في أي قيد مطبَّق من الحزمة العلمية. أمانة النقل محفوظة في حدود القيود المعتمدة. نطاق الفحص في هذا التشغيل: مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس.",
+      "findings": [
+        {
+          "layer": "L1",
+          "kind": "number",
+          "cls": "preserved",
+          "constraintId": "number-reference",
+          "start": 0,
+          "end": 0,
+          "span": "1",
+          "evidence": {
+            "source": "1",
+            "derived": "1",
+            "note": "الرقم «1» موجود في النصين بالقيمة نفسها."
+          }
+        },
+        {
+          "layer": "L1",
+          "kind": "isnad",
+          "cls": "preserved",
+          "constraintId": "isnad-reference",
+          "start": 12,
+          "end": 22,
+          "span": "al-Bukhari",
+          "evidence": {
+            "source": "رواه البخاري",
+            "derived": "al-Bukhari",
+            "note": "الدرجة أو الإحالة «رواه البخاري» نُقلت إلى المشتق بلفظ معتمد."
+          }
+        }
+      ],
+      "layerSummary": {
+        "L1": {
+          "checked": 2,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L2": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L3": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        }
+      },
+      "coverage": [
+        {
+          "layer": "L1",
+          "kind": "quote",
+          "reason": "مطابقة النص القرآني حرفاً بحرف غير مفعّلة في هذا البناء: تحتاج ربط النص العثماني المعتمد. أي اقتباس قرآني في المشتق غير مفحوص في هذه الطبقة."
+        },
+        {
+          "layer": "L3",
+          "kind": "condition",
+          "reason": "مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس."
+        }
+      ],
+      "alignment": "proportional"
+    },
+    {
+      "id": "cln-08",
+      "workType": "summarize",
+      "contentLevel": "ب",
+      "engineLevel": "B",
+      "targetLanguage": "en",
+      "drift": "none",
+      "driftNote": "تلخيص صحيح: الإباحة «يجوز» محفوظة والشرط «إذا» منقول إلى when.",
+      "expectedVerdict": "faithful",
+      "actualVerdict": "faithful",
+      "passed": true,
+      "driftDetected": true,
+      "reason": "لم يُرصد انزياح في أي قيد مطبَّق من الحزمة العلمية. أمانة النقل محفوظة في حدود القيود المعتمدة. نطاق الفحص في هذا التشغيل: مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس.",
+      "findings": [
+        {
+          "layer": "L2",
+          "kind": "ruling",
+          "cls": "preserved",
+          "constraintId": "ruling-permission",
+          "start": 12,
+          "end": 21,
+          "span": "permitted",
+          "evidence": {
+            "source": "يجوز",
+            "derived": "permitted",
+            "note": "«يجوز» نُقل بمقابل «permitted»، والحكم لم يتغير في قوته. المحاذاة: ordinal."
+          }
+        },
+        {
+          "layer": "L2",
+          "kind": "condition",
+          "cls": "preserved",
+          "constraintId": "condition-marker",
+          "start": 45,
+          "end": 49,
+          "span": "when",
+          "evidence": {
+            "source": "إذا",
+            "derived": "when",
+            "note": "«إذا» نُقل بمقابل معتمد."
+          }
+        }
+      ],
+      "layerSummary": {
+        "L1": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L2": {
+          "checked": 2,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L3": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        }
+      },
+      "coverage": [
+        {
+          "layer": "L1",
+          "kind": "quote",
+          "reason": "مطابقة النص القرآني حرفاً بحرف غير مفعّلة في هذا البناء: تحتاج ربط النص العثماني المعتمد. أي اقتباس قرآني في المشتق غير مفحوص في هذه الطبقة."
+        },
+        {
+          "layer": "L3",
+          "kind": "condition",
+          "reason": "مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس."
+        }
+      ],
+      "alignment": "ordinal"
+    },
+    {
+      "id": "cln-09",
+      "workType": "translate",
+      "contentLevel": "أ",
+      "engineLevel": "A",
+      "targetLanguage": "en",
+      "drift": "none",
+      "driftNote": "ترجمة صحيحة: «الشريعة» إلى Sharia.",
+      "expectedVerdict": "faithful",
+      "actualVerdict": "faithful",
+      "passed": true,
+      "driftDetected": true,
+      "reason": "لم يُرصد انزياح في أي قيد مطبَّق من الحزمة العلمية. أمانة النقل محفوظة في حدود القيود المعتمدة. نطاق الفحص في هذا التشغيل: مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس.",
+      "findings": [
+        {
+          "layer": "L2",
+          "kind": "term",
+          "cls": "preserved",
+          "constraintId": "term-sharia",
+          "start": 0,
+          "end": 6,
+          "span": "Sharia",
+          "evidence": {
+            "source": "الشريعة",
+            "derived": "Sharia",
+            "note": "«الشريعة» نُقل بمقابل معتمد."
+          }
+        }
+      ],
+      "layerSummary": {
+        "L1": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L2": {
+          "checked": 1,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L3": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        }
+      },
+      "coverage": [
+        {
+          "layer": "L1",
+          "kind": "quote",
+          "reason": "مطابقة النص القرآني حرفاً بحرف غير مفعّلة في هذا البناء: تحتاج ربط النص العثماني المعتمد. أي اقتباس قرآني في المشتق غير مفحوص في هذه الطبقة."
+        },
+        {
+          "layer": "L3",
+          "kind": "condition",
+          "reason": "مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس."
+        }
+      ],
+      "alignment": "ordinal"
+    },
+    {
+      "id": "cln-10",
+      "workType": "translate",
+      "contentLevel": "أ",
+      "engineLevel": "A",
+      "targetLanguage": "en",
+      "drift": "none",
+      "driftNote": "ترجمة صحيحة: الدرجة «متفق عليه» والإسناد والرقم 1 محفوظة.",
+      "expectedVerdict": "faithful",
+      "actualVerdict": "faithful",
+      "passed": true,
+      "driftDetected": true,
+      "reason": "لم يُرصد انزياح في أي قيد مطبَّق من الحزمة العلمية. أمانة النقل محفوظة في حدود القيود المعتمدة. نطاق الفحص في هذا التشغيل: مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس.",
+      "findings": [
+        {
+          "layer": "L1",
+          "kind": "number",
+          "cls": "preserved",
+          "constraintId": "number-reference",
+          "start": 0,
+          "end": 0,
+          "span": "1",
+          "evidence": {
+            "source": "1",
+            "derived": "1",
+            "note": "الرقم «1» موجود في النصين بالقيمة نفسها."
+          }
+        },
+        {
+          "layer": "L1",
+          "kind": "isnad",
+          "cls": "preserved",
+          "constraintId": "isnad-grade",
+          "start": 3,
+          "end": 14,
+          "span": "agreed upon",
+          "evidence": {
+            "source": "متفق عليه",
+            "derived": "agreed upon",
+            "note": "الدرجة أو الإحالة «متفق عليه» نُقلت إلى المشتق بلفظ معتمد."
+          }
+        },
+        {
+          "layer": "L1",
+          "kind": "isnad",
+          "cls": "preserved",
+          "constraintId": "isnad-reference",
+          "start": 34,
+          "end": 44,
+          "span": "al-Bukhari",
+          "evidence": {
+            "source": "رواه البخاري",
+            "derived": "al-Bukhari",
+            "note": "الدرجة أو الإحالة «رواه البخاري» نُقلت إلى المشتق بلفظ معتمد."
+          }
+        },
+        {
+          "layer": "L2",
+          "kind": "term",
+          "cls": "preserved",
+          "constraintId": "term-hadith",
+          "start": 15,
+          "end": 21,
+          "span": "hadith",
+          "evidence": {
+            "source": "حديث",
+            "derived": "hadith",
+            "note": "«حديث» نُقل بمقابل معتمد."
+          }
+        }
+      ],
+      "layerSummary": {
+        "L1": {
+          "checked": 3,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L2": {
+          "checked": 1,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L3": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        }
+      },
+      "coverage": [
+        {
+          "layer": "L1",
+          "kind": "quote",
+          "reason": "مطابقة النص القرآني حرفاً بحرف غير مفعّلة في هذا البناء: تحتاج ربط النص العثماني المعتمد. أي اقتباس قرآني في المشتق غير مفحوص في هذه الطبقة."
+        },
+        {
+          "layer": "L3",
+          "kind": "condition",
+          "reason": "مدوّنة القياس تشغّل الطبقتين الأولى والثانية فقط عبر declaredGapProvider: الطبقة الدلالية النموذجية غير داخلة في هذا القياس."
+        }
+      ],
+      "alignment": "proportional"
+    },
+    {
+      "id": "d-01",
+      "workType": "translate",
+      "contentLevel": "د",
+      "engineLevel": "D",
+      "targetLanguage": "en",
+      "drift": "level_d",
+      "driftNote": "واقعة شخصية (زكاة مال موروث) توجب الوقف والتحويل.",
+      "expectedVerdict": "refer",
+      "actualVerdict": "refer",
+      "passed": true,
+      "driftDetected": true,
+      "reason": "مستوى (د): فتوى أو حالة شخصية. هذا المستوى لا يُفحص ولا يُحكم فيه؛ النظام يوقف ويحيل إلى أهل العلم.",
+      "findings": [],
+      "layerSummary": {
+        "L1": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L2": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L3": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        }
+      },
+      "coverage": [
+        {
+          "layer": "L1",
+          "kind": "quote",
+          "reason": "مستوى (د): لم يُجرَ أي فحص بحسب القاعدة؛ النظام يوقف ويحيل."
+        }
+      ],
+      "alignment": "proportional"
+    },
+    {
+      "id": "d-02",
+      "workType": "summarize",
+      "contentLevel": "د",
+      "engineLevel": "D",
+      "targetLanguage": "en",
+      "drift": "level_d",
+      "driftNote": "واقعة شخصية (جمع الصلاتين في السفر) توجب الوقف والتحويل.",
+      "expectedVerdict": "refer",
+      "actualVerdict": "refer",
+      "passed": true,
+      "driftDetected": true,
+      "reason": "مستوى (د): فتوى أو حالة شخصية. هذا المستوى لا يُفحص ولا يُحكم فيه؛ النظام يوقف ويحيل إلى أهل العلم.",
+      "findings": [],
+      "layerSummary": {
+        "L1": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L2": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L3": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        }
+      },
+      "coverage": [
+        {
+          "layer": "L1",
+          "kind": "quote",
+          "reason": "مستوى (د): لم يُجرَ أي فحص بحسب القاعدة؛ النظام يوقف ويحيل."
+        }
+      ],
+      "alignment": "proportional"
+    },
+    {
+      "id": "d-03",
+      "workType": "translate",
+      "contentLevel": "د",
+      "engineLevel": "D",
+      "targetLanguage": "en",
+      "drift": "level_d",
+      "driftNote": "نزاع أسري شخصي يوجب الوقف والتحويل.",
+      "expectedVerdict": "refer",
+      "actualVerdict": "refer",
+      "passed": true,
+      "driftDetected": true,
+      "reason": "مستوى (د): فتوى أو حالة شخصية. هذا المستوى لا يُفحص ولا يُحكم فيه؛ النظام يوقف ويحيل إلى أهل العلم.",
+      "findings": [],
+      "layerSummary": {
+        "L1": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L2": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L3": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        }
+      },
+      "coverage": [
+        {
+          "layer": "L1",
+          "kind": "quote",
+          "reason": "مستوى (د): لم يُجرَ أي فحص بحسب القاعدة؛ النظام يوقف ويحيل."
+        }
+      ],
+      "alignment": "proportional"
+    },
+    {
+      "id": "d-04",
+      "workType": "paraphrase",
+      "contentLevel": "د",
+      "engineLevel": "D",
+      "targetLanguage": "en",
+      "drift": "level_d",
+      "driftNote": "واقعة شخصية مالية توجب الوقف والتحويل.",
+      "expectedVerdict": "refer",
+      "actualVerdict": "refer",
+      "passed": true,
+      "driftDetected": true,
+      "reason": "مستوى (د): فتوى أو حالة شخصية. هذا المستوى لا يُفحص ولا يُحكم فيه؛ النظام يوقف ويحيل إلى أهل العلم.",
+      "findings": [],
+      "layerSummary": {
+        "L1": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L2": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        },
+        "L3": {
+          "checked": 0,
+          "shifted": 0,
+          "missing": 0
+        }
+      },
+      "coverage": [
+        {
+          "layer": "L1",
+          "kind": "quote",
+          "reason": "مستوى (د): لم يُجرَ أي فحص بحسب القاعدة؛ النظام يوقف ويحيل."
+        }
+      ],
+      "alignment": "proportional"
+    }
+  ]
+}
