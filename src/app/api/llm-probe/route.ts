@@ -44,7 +44,9 @@ export async function POST() {
       body: JSON.stringify({
         model: "muse-spark-1.3-contributor",
         messages: [{ role: "user", content: "Reply with one Arabic word." }],
-        max_tokens: 200,
+        // Reasoning models spend the token budget on thinking first: a tight
+        // ceiling returns finish_reason "length" with empty content.
+        max_tokens: 2000,
       }),
     });
   } catch (error) {
@@ -70,12 +72,15 @@ export async function POST() {
     );
   }
 
-  const reply =
+  const choice =
     data && typeof data === "object"
-      ? String(
-          (data as { choices?: { message?: { content?: unknown } }[] }).choices?.[0]?.message
-            ?.content ?? "",
-        ).slice(0, 200)
-      : "";
-  return NextResponse.json({ ok: true, model: "muse-spark-1.3-contributor", reply });
+      ? (data as { choices?: { message?: { content?: unknown }; finish_reason?: unknown }[] }).choices?.[0]
+      : undefined;
+  const reply = String(choice?.message?.content ?? "").slice(0, 200);
+  return NextResponse.json({
+    ok: true,
+    model: "muse-spark-1.3-contributor",
+    reply,
+    finish_reason: choice?.finish_reason ?? null,
+  });
 }
