@@ -1,5 +1,7 @@
 # موزون | مقياس أمانة النقل
 
+[![CI](https://github.com/Eslamspot/mawzun/actions/workflows/ci.yml/badge.svg)](https://github.com/Eslamspot/mawzun/actions/workflows/ci.yml)
+
 قد تكون الترجمة سليمة نحواً وبلاغة، ومع ذلك تخون المعنى: نهيٌ شرعي ملزم يُنقل بلفظ «غير مستحسن»
 فيمرّ من كل مدقّق لغوي، لأن اللغة لم تخطئ — بل غيّر النقل **قوة الحكم** من حظر إلى مجرد أولوية.
 يقيس **موزون** («Mawzun») هذا الانزياح بين نص شرعي أصلي ونص مشتق منه (ترجمة / تلخيص / إعادة
@@ -114,6 +116,14 @@ bun run docs:check
 «docs/README.md»، أو انتقل مباشرةً إلى
 [التشغيل والحدود](docs/getting-started/operation-and-limits.md) و
 [فحص أمانة النقل](docs/workflow/fidelity-audit.md) و[مسار التدقيق](docs/workflow/audit-pipeline.md).
+
+## التكامل والنشر المستمر (CI/CD)
+
+- **CI** (`.github/workflows/ci.yml`): كل دفع يعمل نفس البوابات الخمس — `lint`،
+  `engine:check`، `knowledge:check`، `docs:check`، ثم `build`.
+- **CD** (`.github/workflows/cd.yml`): الدفع على `main` يبني حزمة الـ Worker
+  وينشرها، ثم يفحص دخانيًا الصفحة والـ API. يتطلب سرّين في إعدادات المستودع:
+  `CLOUDFLARE_API_TOKEN` و`CLOUDFLARE_ACCOUNT_ID`.
 
 ## الترخيص
 
