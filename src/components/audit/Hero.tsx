@@ -109,13 +109,13 @@ function CountUp({ value, suffix }: { value: number; suffix: string }) {
 
 export function Hero() {
   return (
-    <section aria-label="مقدمة موزون" className="relative overflow-hidden bg-night text-on-night">
+    <section aria-label="مقدمة موزون" className="relative overflow-hidden bg-gradient-to-b from-[#0e5f31] via-primary-container to-[#074a24] text-on-night">
       {/* Drifting geometric lattice + gold radial glows */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-        <StarLattice className="animate-drift absolute -top-40 -left-40 h-[480px] w-[480px] text-gold opacity-[0.13]" />
-        <StarLattice className="animate-drift absolute -bottom-48 -right-32 h-[480px] w-[480px] text-gold opacity-[0.1]" />
-        <div className="absolute -top-32 right-1/4 h-72 w-72 rounded-full bg-primary-container/40 blur-[110px]" />
-        <div className="absolute bottom-0 left-1/3 h-56 w-56 rounded-full bg-gold/15 blur-[100px]" />
+        <StarLattice className="animate-drift absolute -top-40 -left-40 h-[480px] w-[480px] text-on-night opacity-[0.16]" />
+        <StarLattice className="animate-drift absolute -bottom-48 -right-32 h-[480px] w-[480px] text-on-night opacity-[0.12]" />
+        <div className="absolute -top-32 right-1/4 h-72 w-72 rounded-full bg-gold/25 blur-[110px]" />
+        <div className="absolute bottom-0 left-1/3 h-56 w-56 rounded-full bg-gold/20 blur-[100px]" />
       </div>
 
       <div className="relative mx-auto flex w-full max-w-7xl flex-col gap-space-xl px-margin-desktop py-space-xl md:py-16">

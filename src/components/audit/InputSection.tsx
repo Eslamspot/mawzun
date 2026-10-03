@@ -24,18 +24,89 @@ const WORK_TYPES: { id: WorkType; label: string; latin: string }[] = [
   { id: "paraphrase", label: "إعادة صياغة", latin: "Paraphrase" },
 ];
 
-const LEVELS: { id: ContentLevel; label: string; latin: string }[] = [
-  { id: "A", label: "المستوى أ", latin: "Canonical" },
-  { id: "B", label: "المستوى ب", latin: "Commentary" },
-  { id: "C", label: "المستوى ج", latin: "Contested" },
-  { id: "D", label: "المستوى د", latin: "Personal case" },
+const LEVELS: { id: ContentLevel; label: string; latin: string; hint: string }[] = [
+  { id: "A", label: "المستوى أ", latin: "أصل مستقر", hint: "قرآن وحديث صحيح وأركان — فحص صارم موثق بالمصدر." },
+  { id: "B", label: "المستوى ب", latin: "شرح وتعريف", hint: "شرح المفاهيم والاستدلال من المادة المعتمدة مع إظهار المرجع." },
+  { id: "C", label: "المستوى ج", latin: "خلافي وحساس", hint: "مسائل خلافية أو عالية الحساسية — إجابة مقيدة أو بيان الخلاف أو الإحالة للمختص." },
+  { id: "D", label: "المستوى د", latin: "حالة شخصية", hint: "فتوى أو حالة خاصة — وقف وتحويل دائم، لا حكم مستقل من النظام." },
 ];
 
-export const EXAMPLE = {
-  sourceText: "لا يجوز بيع الطعام قبل قبضه، ويجب على البائع بيانه للمشتري.",
-  derivedText:
-    "It is not recommended to sell food before taking possession, and the seller must clarify it to the buyer.",
-};
+const TARGET_LANGUAGES: { id: string; label: string }[] = [
+  { id: "en", label: "الإنجليزية (English)" },
+  { id: "fr", label: "الفرنسية (Français)" },
+  { id: "ur", label: "الأردية (اردو)" },
+  { id: "id", label: "الإندونيسية (Bahasa Indonesia)" },
+  { id: "tr", label: "التركية (Türkçe)" },
+  { id: "fa", label: "الفارسية (فارسی)" },
+  { id: "es", label: "الإسبانية (Español)" },
+  { id: "de", label: "الألمانية (Deutsch)" },
+  { id: "ms", label: "الملايو (Bahasa Melayu)" },
+  { id: "bn", label: "البنغالية (বাংলা)" },
+];
+
+/**
+ * Teaching examples drawn from the golden cases in `data/knowledge/`. Each
+ * one demonstrates a different lesson: softening a ruling, a correct
+ * rendering for contrast, hardening a ruling, distorting a term, a number
+ * the deterministic layer catches, and a personal case that must stop.
+ */
+export const EXAMPLES: {
+  tag: string;
+  sourceText: string;
+  derivedText: string;
+  workType: WorkType;
+  contentLevel: ContentLevel;
+  targetLanguage: string;
+}[] = [
+  {
+    tag: "تخفيف الحكم: «لا يجوز» نُقلت إلى not recommended",
+    sourceText: "لا يجوز تأجير العقار من الباطن إلا بإذن صريح.",
+    derivedText: "Subleasing the property is not recommended without explicit permission.",
+    workType: "translate",
+    contentLevel: "B",
+    targetLanguage: "en",
+  },
+  {
+    tag: "ترجمة سليمة للمقارنة: prohibited تحفظ قوة المنع",
+    sourceText: "لا يجوز تأجير العقار من الباطن إلا بإذن صريح.",
+    derivedText: "Subleasing the property is prohibited without explicit permission.",
+    workType: "translate",
+    contentLevel: "B",
+    targetLanguage: "en",
+  },
+  {
+    tag: "تشديد الحكم: مستحب رُفع إلى obligatory",
+    sourceText: "يُستحب الوضوء قبل النوم.",
+    derivedText: "Wudu before sleeping is obligatory.",
+    workType: "translate",
+    contentLevel: "B",
+    targetLanguage: "en",
+  },
+  {
+    tag: "تحريف المصطلح: التوحيد أصبح numerical oneness",
+    sourceText: "التوحيد أصل الدين.",
+    derivedText: "Numerical oneness is the foundation of the religion.",
+    workType: "translate",
+    contentLevel: "B",
+    targetLanguage: "en",
+  },
+  {
+    tag: "خطأ عددي تكشفه الطبقة الحتمية: ثلاث → two",
+    sourceText: "صام ثلاث ليال متتالية.",
+    derivedText: "He fasted for two consecutive nights.",
+    workType: "translate",
+    contentLevel: "A",
+    targetLanguage: "en",
+  },
+  {
+    tag: "المستوى د: حالة شخصية تنتهي بوقف وتحويل",
+    sourceText: "أنا في دولة كذا، هل يجوز لي فعل كذا في زواجي؟",
+    derivedText: "Subleasing is not recommended in your case.",
+    workType: "translate",
+    contentLevel: "D",
+    targetLanguage: "en",
+  },
+];
 
 /**
  * Real fingerprint of the text, shown as a short prefix. Returns null until the
@@ -110,8 +181,21 @@ export function InputSection() {
   const sourceHash = useShortHash(audit.sourceText);
   const derivedHash = useShortHash(audit.derivedText);
   const words = (value: string) => value.trim().split(/\s+/).filter(Boolean).length;
+  const [exampleTag, setExampleTag] = useState<string | null>(null);
 
   const ready = audit.sourceText.trim().length > 0 && audit.derivedText.trim().length > 0;
+
+  /** Load a random teaching example, never the one already on screen. */
+  function loadRandomExample() {
+    const pool = EXAMPLES.filter((example) => example.derivedText !== audit.derivedText);
+    const pick = (pool.length > 0 ? pool : EXAMPLES)[Math.floor(Math.random() * (pool.length > 0 ? pool.length : EXAMPLES.length))];
+    audit.setSourceText(pick.sourceText);
+    audit.setDerivedText(pick.derivedText);
+    audit.setContentLevel(pick.contentLevel);
+    audit.setWorkType(pick.workType);
+    audit.setTargetLanguage(pick.targetLanguage);
+    setExampleTag(pick.tag);
+  }
 
   return (
     <WorkflowCard
@@ -154,13 +238,22 @@ export function InputSection() {
               "rounded-xs border border-outline-variant bg-surface-container-lowest px-space-sm py-2 text-on-surface",
             )}
           >
-            <option value="en">الإنجليزية (English)</option>
-            <option value="fr">الفرنسية (Français)</option>
+            {TARGET_LANGUAGES.map((language) => (
+              <option key={language.id} value={language.id}>
+                {language.label}
+              </option>
+            ))}
           </select>
           <span className={cx(t.bodySm, "text-on-surface-variant")}>
-            بنك القيود يحمل مقابلات معتمدة لهاتين اللغتين.
+            المقابلات المعتمدة إنجليزية فقط؛ اللغات الأخرى تُفحص حتميًا ودلاليًا،
+            وما لم يُفحص يُعلن في السجل.
           </span>
         </div>
+      </div>
+
+      <div className={cx(t.bodySm, "rounded-lg border border-gold/40 bg-gold-container/40 p-space-sm leading-relaxed text-on-surface")}>
+        <span className="font-bold">المستوى المختار ({LEVELS.find((level) => level.id === audit.contentLevel)?.label}): </span>
+        {LEVELS.find((level) => level.id === audit.contentLevel)?.hint}
       </div>
 
       <div className="grid grid-cols-1 gap-space-lg lg:grid-cols-2">
@@ -245,20 +338,15 @@ export function InputSection() {
         </button>
         <button
           type="button"
-          onClick={() => {
-            audit.setSourceText(EXAMPLE.sourceText);
-            audit.setDerivedText(EXAMPLE.derivedText);
-            audit.setContentLevel("B");
-            audit.setWorkType("translate");
-            audit.setTargetLanguage("en");
-          }}
+          onClick={loadRandomExample}
           className={cx(
             t.label,
-            "inline-flex items-center gap-space-xs rounded-xs border border-outline-variant px-space-md py-2 font-semibold text-on-surface-variant transition-colors hover:bg-surface-container",
+            "inline-flex cursor-pointer items-center gap-space-xs rounded-xs border border-outline-variant px-space-md py-2 font-semibold text-on-surface-variant transition-colors hover:bg-surface-container",
           )}
+          title="مثال عشوائي من الحالات الذهبية يوضح درسًا مختلفًا في كل مرة"
         >
           <Icon name="experiment" className="text-base" />
-          حمّل مثال الانزياح
+          حمّل مثالًا عشوائيًا
         </button>
         <button
           type="button"
@@ -274,6 +362,11 @@ export function InputSection() {
         {audit.error && (
           <StatusChip tone="escalate" icon="error">
             {audit.error}
+          </StatusChip>
+        )}
+        {exampleTag && (
+          <StatusChip tone="revision" icon="school">
+            درس هذا المثال: {exampleTag}
           </StatusChip>
         )}
       </div>
