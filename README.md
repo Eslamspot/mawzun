@@ -114,3 +114,9 @@ bun run docs:check
 «docs/README.md»، أو انتقل مباشرةً إلى
 [التشغيل والحدود](docs/getting-started/operation-and-limits.md) و
 [فحص أمانة النقل](docs/workflow/fidelity-audit.md) و[مسار التدقيق](docs/workflow/audit-pipeline.md).
+
+## الترخيص
+
+موزون مفتوح المصدر برخصة **MIT** — يحق لأي شخص الاستخدام والنسخ والتعديل والتوزيع،
+بشرط إبقاء إشعار الحقوق ونص الرخصة في «LICENSE». التفصيل في
+[«sources-and-licences»](docs/reference/sources-and-licences.md).
