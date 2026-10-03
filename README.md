@@ -51,7 +51,7 @@ bun run deploy                # ترقية النسخة إلى الموقع ال
 bun run preview               # بناء ومعاينة الـ Worker محليًا
 ```
 
-وهناك نسخة منشورة من المنصّة على «[mawzun-project.hoysamax.workers.dev](https://mawzun-project.hoysamax.workers.dev/)».
+وهناك نسخة منشورة من المنصّة على «[mawzun-project.eslamspot.workers.dev](https://mawzun-project.eslamspot.workers.dev/)».
 ولأن النشر ترقيةٌ بأمر «bun run deploy»، فقد تسبق النسخة المنشورةُ هذا الفرعَ حتى تُرقّى نسخة جديدة.
 
 ## مراحل سير العمل الخمس
