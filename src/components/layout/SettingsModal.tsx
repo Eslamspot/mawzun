@@ -1,12 +1,23 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { Icon } from "@/components/ui/Icon";
 import { cx } from "@/lib/cx";
 import { t } from "@/lib/typography";
 import { useToast } from "@/context/ToastContext";
-import { useWorkflow } from "@/context/WorkflowContext";
+import { useAudit } from "@/context/AuditContext";
 
+/**
+ * Settings.
+ *
+ * The previous version exposed strictness levels, an auto-repair switch and an
+ * audio toggle — none of which changed any behaviour. A control that does
+ * nothing is worse than no control, so this screen now states where the real
+ * policy lives and offers the one action that has an effect: clearing the run.
+ *
+ * Strictness is a property of the constraint bank, not of a slider: what is
+ * checked is what the bank declares, and the bank travels in the record.
+ */
 export function SettingsModal({
   isOpen,
   onClose,
@@ -15,11 +26,7 @@ export function SettingsModal({
   onClose: () => void;
 }) {
   const { toast } = useToast();
-  const { resetWorkflow } = useWorkflow();
-
-  const [strictness, setStrictness] = useState<"strict" | "standard" | "permissive">("strict");
-  const [autoRepair, setAutoRepair] = useState<boolean>(true);
-  const [soundEnabled, setSoundEnabled] = useState<boolean>(true);
+  const { reset } = useAudit();
 
   if (!isOpen) return null;
 
@@ -37,7 +44,7 @@ export function SettingsModal({
             <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-surface-container text-primary">
               <Icon name="tune" className="text-base" />
             </span>
-            <span className={cx(t.label, "font-bold text-on-surface")}>إعدادات محرك الحوكمة</span>
+            <span className={cx(t.label, "font-bold text-on-surface")}>أين تُضبط السياسة؟</span>
           </div>
           <button
             type="button"
@@ -49,105 +56,42 @@ export function SettingsModal({
           </button>
         </div>
 
-        {/* Strictness Level */}
-        <div className="flex flex-col gap-2">
-          <span className={cx(t.labelSm, "font-semibold text-on-surface")}>
-            مستوى صرامة التدقيق الشرعي (Guardrail Rigor)
-          </span>
-          <div className="grid grid-cols-3 gap-1.5 p-1 bg-surface-container-low rounded-xl">
-            {(
-              [
-                { id: "strict", label: "صارم 100%", sub: "حظر أدنى انزياح" },
-                { id: "standard", label: "معياري 90%", sub: "تنبيه مع إجازة" },
-                { id: "permissive", label: "مرن", sub: "حوكمة إرشادية" },
-              ] as const
-            ).map((opt) => (
-              <button
-                key={opt.id}
-                type="button"
-                onClick={() => {
-                  setStrictness(opt.id);
-                  toast({
-                    title: `تم ضبط مستوى الصرامة: ${opt.label}`,
-                    variant: "info",
-                  });
-                }}
-                className={cx(
-                  "flex flex-col items-center justify-center py-2 px-1 rounded-lg text-center transition-all",
-                  strictness === opt.id
-                    ? "bg-surface-container-lowest text-primary font-bold shadow-xs"
-                    : "text-secondary hover:text-on-surface",
-                )}
-              >
-                <span className={cx(t.labelSm, "text-xs")}>{opt.label}</span>
-                <span className="text-[9px] text-outline mt-0.5">{opt.sub}</span>
-              </button>
-            ))}
+        <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-1">
+            <span className={cx(t.labelSm, "font-semibold text-on-surface")}>بنك القيود</span>
+            <span className={cx(t.bodySm, "leading-relaxed text-on-surface-variant")}>
+              المصطلحات ومقابلاتها المعتمدة والممنوعة، مستوردة من الحزمة العلمية المعتمدة. من هنا يُتحكَّم في
+              صرامة الفحص، لا من مفتاح في الواجهة.
+            </span>
+          </div>
+
+          <div className="flex flex-col gap-1">
+            <span className={cx(t.labelSm, "font-semibold text-on-surface")}>جدول قوة الحكم</span>
+            <span className={cx(t.bodySm, "leading-relaxed text-on-surface-variant")}>
+              لكل لفظ حكمي قوته ومقابلاته في كل لغة. الفحص بحث في هذا الجدول، ونتيجته قابلة لإعادة الإنتاج.
+            </span>
+          </div>
+
+          <div className="flex flex-col gap-1">
+            <span className={cx(t.labelSm, "font-semibold text-on-surface")}>نطاق الفحص</span>
+            <span className={cx(t.bodySm, "leading-relaxed text-on-surface-variant")}>
+              ما لم يُفحص يُعلن في الحكم وفي السجل. لا يوجد مفتاح يوسّع النطاق صامتًا.
+            </span>
           </div>
         </div>
 
-        {/* Auto-Repair Toggle */}
-        <div className="flex items-center justify-between p-3 rounded-xl bg-surface-container-low/50">
-          <div className="flex flex-col">
-            <span className={cx(t.labelSm, "font-semibold text-on-surface")}>
-              الإصلاح الدلالي الذاتي التلقائي
-            </span>
-            <span className={cx(t.bodySm, "text-outline text-xs mt-0.5")}>
-              حقن موجهات المعاجم فور اكتشاف أي انحراف
-            </span>
-          </div>
-          <button
-            type="button"
-            onClick={() => {
-              setAutoRepair(!autoRepair);
-              toast({
-                title: !autoRepair ? "تم تفعيل الإصلاح الذاتي" : "تم تعطيل الإصلاح الذاتي",
-                variant: "info",
-              });
-            }}
-            className={cx(
-              "w-11 h-6 flex items-center rounded-full p-1 transition-colors",
-              autoRepair ? "bg-primary justify-end" : "bg-surface-container-high justify-start",
-            )}
-          >
-            <span className="w-4 h-4 rounded-full bg-white shadow-md" />
-          </button>
-        </div>
-
-        {/* Audio feedback */}
-        <div className="flex items-center justify-between p-3 rounded-xl bg-surface-container-low/50">
-          <div className="flex flex-col">
-            <span className={cx(t.labelSm, "font-semibold text-on-surface")}>
-              النطق الصوتي والتعليق
-            </span>
-            <span className={cx(t.bodySm, "text-outline text-xs mt-0.5")}>
-              تشغيل القراءة الصوتية عند استعراض المخرجات
-            </span>
-          </div>
-          <button
-            type="button"
-            onClick={() => setSoundEnabled(!soundEnabled)}
-            className={cx(
-              "w-11 h-6 flex items-center rounded-full p-1 transition-colors",
-              soundEnabled ? "bg-primary justify-end" : "bg-surface-container-high justify-start",
-            )}
-          >
-            <span className="w-4 h-4 rounded-full bg-white shadow-md" />
-          </button>
-        </div>
-
-        {/* Danger zone / Reset */}
         <div className="pt-2 border-t border-surface-container">
           <button
             type="button"
             onClick={() => {
-              resetWorkflow();
+              reset();
+              toast({ title: "تم مسح تشغيل الفحص الحالي", variant: "info" });
               onClose();
             }}
             className="flex items-center justify-center gap-1.5 w-full py-2 rounded-lg text-error hover:bg-error-container/40 transition-colors font-label-sm text-xs font-semibold"
           >
             <Icon name="restart_alt" className="text-sm" />
-            استعادة ضبط المصنع ومسح البيانات المؤقتة
+            مسح المدخلات والسجل الحالي
           </button>
         </div>
       </div>

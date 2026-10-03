@@ -54,17 +54,17 @@ export function Sidebar() {
               <span className="flex items-center gap-space-xs">
                 <Icon name="verified_user" className="text-base text-primary" />
                 <span className={cx(t.labelSm, "font-semibold text-on-surface")}>
-                  المحرك الدلالي
+                  مقياس أمانة النقل
                 </span>
-              </span>
-              <span
+                </span>
+                <span
                 className={cx(
                   t.code,
                   "rounded bg-primary-fixed/40 px-1.5 py-0.5 text-[11px] text-primary-container",
                 )}
-              >
-                نشط
-              </span>
+                >
+                حتمي
+                </span>
             </div>
           </div>
 
@@ -126,19 +126,19 @@ export function Sidebar() {
           <span className="flex items-center gap-space-xs">
             <span className="h-2 w-2 animate-pulse rounded-full bg-primary" />
             <span className={cx(t.labelSm, "font-medium text-on-surface")}>
-              النظام الدلالي: نشط ومحمي
+              الفحص الحتمي: يعمل بلا نموذج
             </span>
           </span>
           <p className={cx(t.bodySm, "leading-relaxed text-on-surface-variant")}>
-            الحوكمة اللغوية متوافقة مع مراجع المعتمد الشرعي.
+            الطبقتان الأولى والثانية بحث في جداول مستوردة من الحزمة العلمية، والنتيجة قابلة لإعادة الإنتاج.
           </p>
           <div className="flex items-center justify-between border-t border-surface-container-high/60 pt-2">
             <span className={cx(t.labelSm, "inline-flex items-center gap-1 text-primary font-medium")}>
               <Icon name="verified" className="text-sm" filled />
-              موزون v2.4
+              موزون ١.٠
             </span>
             <span className={cx(t.code, "text-[11px] text-outline")}>
-              معتمد ومحمي
+              يقيس أمانة النقل
             </span>
           </div>
         </div>

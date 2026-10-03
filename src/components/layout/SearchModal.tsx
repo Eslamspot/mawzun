@@ -6,12 +6,11 @@ import { Icon } from "@/components/ui/Icon";
 import { cx } from "@/lib/cx";
 import { t } from "@/lib/typography";
 import { STAGES } from "@/lib/stages";
-import { PRESET_TEXTS } from "@/lib/semanticEngine";
-import { useWorkflow } from "@/context/WorkflowContext";
+import { buildConstraintBank } from "@/lib/audit";
 
 interface SearchResult {
   id: string;
-  category: "المراحل" | "المتون المرجعية" | "القواعد والضوابط";
+  category: "المراحل" | "بنك القيود" | "القواعد والضوابط";
   title: string;
   subtitle: string;
   icon: string;
@@ -26,7 +25,6 @@ export function SearchModal({
   onClose: () => void;
 }) {
   const router = useRouter();
-  const { selectPreset } = useWorkflow();
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -61,17 +59,16 @@ export function SearchModal({
       });
     });
 
-    // Presets
-    PRESET_TEXTS.forEach((preset) => {
+    // Constraint bank — the five families, each searchable by its rule.
+    buildConstraintBank().constraints.forEach((constraint) => {
       list.push({
-        id: `preset-${preset.id}`,
-        category: "المتون المرجعية",
-        title: preset.title,
-        subtitle: `${preset.source} • ${preset.category}`,
-        icon: "menu_book",
+        id: `constraint-${constraint.id}`,
+        category: "بنك القيود",
+        title: constraint.source.join(" · ") || constraint.id,
+        subtitle: constraint.rule,
+        icon: "rule_folder",
         action: () => {
-          selectPreset(preset.id);
-          router.push("/01-input");
+          router.push("/02-constraints");
           onClose();
         },
       });
@@ -105,14 +102,14 @@ export function SearchModal({
         subtitle: m.subtitle,
         icon: "balance",
         action: () => {
-          router.push("/03-constraints");
+          router.push("/02-constraints");
           onClose();
         },
       });
     });
 
     return list;
-  }, [onClose, router, selectPreset]);
+  }, [onClose, router]);
 
   // Filter items by query
   const filtered = useMemo(() => {
@@ -144,7 +141,7 @@ export function SearchModal({
               setQuery(e.target.value);
               setSelectedIndex(0);
             }}
-            placeholder="ابحث في المراحل، المتون، القواعد الفقهية، أو مركز التوثيق..."
+            placeholder="ابحث في المراحل وبنك القيود والقواعد الفقهية..."
             autoFocus
             className={cx(
               t.body,
@@ -172,7 +169,7 @@ export function SearchModal({
               <Icon name="search_off" className="text-3xl text-outline" />
               <p className={t.bodySm}>لم نجد أي نتائج مطابقة لعبارة البحث «{query}»</p>
               <span className={cx(t.labelSm, "text-outline")}>
-                جرب البحث عن «النية»، «الضرر»، «التحويل»، أو «الميثاق».
+                جرب البحث عن «لا يجوز»، «الشرط»، «الشريعة»، أو «الفحص».
               </span>
             </div>
           ) : (

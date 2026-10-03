@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { IBM_Plex_Sans_Arabic, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { AppShell } from "@/components/layout/AppShell";
+import { AuditProvider } from "@/context/AuditContext";
 
 const plexArabic = IBM_Plex_Sans_Arabic({
   variable: "--font-plex-arabic",
@@ -41,7 +42,9 @@ export default function RootLayout(props: LayoutProps<"/">) {
         />
       </head>
       <body className="min-h-full">
-        <AppShell>{props.children}</AppShell>
+        <AuditProvider>
+          <AppShell>{props.children}</AppShell>
+        </AuditProvider>
       </body>
     </html>
   );
