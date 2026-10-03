@@ -230,11 +230,18 @@ export function InputSection() {
           disabled={audit.isRunning || !ready}
           className={cx(
             t.label,
-            "inline-flex items-center gap-space-xs rounded-xs bg-primary px-space-md py-2 font-semibold text-on-primary shadow-sm transition-colors hover:bg-primary-container disabled:opacity-40",
+            "relative inline-flex cursor-pointer items-center gap-space-xs overflow-hidden rounded-lg bg-primary-container px-space-lg py-3 font-bold text-on-primary-container shadow-[0_8px_24px_-8px_rgb(0_108_53/0.6)] transition-all duration-200 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40",
+            ready && !audit.isRunning && "animate-pulse-ring",
           )}
         >
           <Icon name="play_arrow" className="text-base" />
           {audit.isRunning ? "جارٍ الفحص…" : "نفّذ الفحص ثلاثي الطبقات"}
+          {audit.isRunning && (
+            <span
+              aria-hidden="true"
+              className="animate-shimmer absolute inset-y-0 w-1/3 bg-gradient-to-l from-transparent via-white/30 to-transparent"
+            />
+          )}
         </button>
         <button
           type="button"

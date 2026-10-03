@@ -7,6 +7,8 @@
  * 600 — the design forbids heavy display weights.
  */
 export const t = {
+  /** Hero showpiece statement (Amiri display). */
+  hero: "font-hero text-hero-mobile md:text-hero",
   /** Page-level statement. */
   display: "font-display-lg text-display-lg",
   /** Section titles inside a workflow card. */

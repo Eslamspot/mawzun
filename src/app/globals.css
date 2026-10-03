@@ -8,37 +8,49 @@
    Tailwind v4 keeps the whole palette in `@theme`; the compiled
    reference carries the same values as a `tailwind.config` object.
 ------------------------------------------------------------------- */
-@theme {
-  /* Surfaces */
-  --color-surface: #f8f9ff;
-  --color-surface-dim: #cbdbf5;
-  --color-surface-bright: #f8f9ff;
+/* ------------------------------------------------------------------
+   Mawzun — design tokens
+   Saudi identity edition (feat/saudi-hero-redesign):
+   - primary remapped from slate to Saudi green (#006C35 family);
+   - new gold / night / sand accents for the hero and live details;
+   - every colour is a runtime CSS variable so `.dark` on <html>
+     flips the whole app without rebuilding utilities
+     (@theme inline maps each utility to its variable).
+   Ported surfaces originate from the Stitch export:
+   stitch_mawzun/mawzun_semantic_verification_system/
+   (DESIGN.md + code.html + screen.png).
+------------------------------------------------------------------- */
+:root {
+  /* Surfaces — warm sand-white */
+  --color-surface: #faf8f2;
+  --color-surface-dim: #e7e0cf;
+  --color-surface-bright: #faf8f2;
   --color-surface-container-lowest: #ffffff;
-  --color-surface-container-low: #eff4ff;
-  --color-surface-container: #e5eeff;
-  --color-surface-container-high: #dce9ff;
-  --color-surface-container-highest: #d3e4fe;
-  --color-surface-variant: #d3e4fe;
-  --color-on-surface: #0b1c30;
-  --color-on-surface-variant: #45474c;
-  --color-inverse-surface: #213145;
-  --color-inverse-on-surface: #eaf1ff;
+  --color-surface-container-low: #f3efe3;
+  --color-surface-container: #eae4d2;
+  --color-surface-container-high: #e0d8c0;
+  --color-surface-container-highest: #d6ccb2;
+  --color-surface-variant: #d6ccb2;
+  --color-on-surface: #10231a;
+  --color-on-surface-variant: #4a554e;
+  --color-inverse-surface: #10231a;
+  --color-inverse-on-surface: #eef4ec;
 
-  /* Structure — hairline boundaries, never shadows */
+  /* Structure — hairline boundaries, never heavy shadows */
   --color-outline: #75777d;
-  --color-outline-variant: #c5c6cd;
+  --color-outline-variant: #cfc9b8;
   --color-surface-tint: #545f73;
 
-  /* Primary — deep slate. Authority: command bars, active workflow, seals. */
-  --color-primary: #091426;
+  /* Primary — Saudi green. Authority: command bars, active workflow, seals. */
+  --color-primary: #06301f;
   --color-on-primary: #ffffff;
-  --color-primary-container: #1e293b;
-  --color-on-primary-container: #8590a6;
-  --color-inverse-primary: #bcc7de;
-  --color-primary-fixed: #d8e3fb;
-  --color-primary-fixed-dim: #bcc7de;
-  --color-on-primary-fixed: #111c2d;
-  --color-on-primary-fixed-variant: #3c475a;
+  --color-primary-container: #006c35;
+  --color-on-primary-container: #dcf2e3;
+  --color-inverse-primary: #9fd8b4;
+  --color-primary-fixed: #d3efdb;
+  --color-primary-fixed-dim: #a9dcbb;
+  --color-on-primary-fixed: #0a1f14;
+  --color-on-primary-fixed-variant: #2c4a38;
 
   /* Secondary — execution and telemetry: focal states, live cursors. */
   --color-secondary: #0058be;
@@ -66,8 +78,147 @@
   --color-error-container: #ffdad6;
   --color-on-error-container: #93000a;
 
-  --color-background: #f8f9ff;
-  --color-on-background: #0b1c30;
+  --color-background: #faf8f2;
+  --color-on-background: #10231a;
+
+  /* Saudi accents — gold for celebration, night for the hero. */
+  --color-gold: #c9a227;
+  --color-on-gold: #241a02;
+  --color-gold-container: #f3e7bd;
+  --color-on-gold-container: #5c450a;
+  --color-night: #07130d;
+  --color-night-soft: #0d2318;
+  --color-on-night: #f2f7f0;
+  --color-sand: #efe7d3;
+}
+
+.dark {
+  /* Surfaces — deep ink green */
+  --color-surface: #0a1710;
+  --color-surface-dim: #060f0a;
+  --color-surface-bright: #0e2015;
+  --color-surface-container-lowest: #0e2015;
+  --color-surface-container-low: #122619;
+  --color-surface-container: #162e1e;
+  --color-surface-container-high: #1b3724;
+  --color-surface-container-highest: #21402b;
+  --color-surface-variant: #21402b;
+  --color-on-surface: #e9f2e8;
+  --color-on-surface-variant: #a9bcab;
+  --color-inverse-surface: #e9f2e8;
+  --color-inverse-on-surface: #0a1710;
+
+  --color-outline: #8a938b;
+  --color-outline-variant: #2c4232;
+  --color-surface-tint: #9db3a1;
+
+  --color-primary: #7bd8a0;
+  --color-on-primary: #06230f;
+  --color-primary-container: #006c35;
+  --color-on-primary-container: #e2f5e8;
+  --color-inverse-primary: #06301f;
+  --color-primary-fixed: #0f3d22;
+  --color-primary-fixed-dim: #14532d;
+  --color-on-primary-fixed: #d9f2e1;
+  --color-on-primary-fixed-variant: #a9dcbb;
+
+  --color-secondary: #8fb4ff;
+  --color-on-secondary: #061a3a;
+  --color-secondary-container: #004395;
+  --color-on-secondary-container: #e3ecff;
+  --color-secondary-fixed: #16305c;
+  --color-secondary-fixed-dim: #274a7d;
+  --color-on-secondary-fixed: #dbe7ff;
+  --color-on-secondary-fixed-variant: #a9c4f5;
+
+  --color-tertiary: #7ce8b3;
+  --color-on-tertiary: #06230f;
+  --color-tertiary-container: #0f5132;
+  --color-on-tertiary-container: #d3f7e3;
+  --color-tertiary-fixed: #0f5132;
+  --color-tertiary-fixed-dim: #157347;
+  --color-on-tertiary-fixed: #d3f7e3;
+  --color-on-tertiary-fixed-variant: #9fe3bd;
+
+  --color-error: #ff8a80;
+  --color-on-error: #3d0002;
+  --color-error-container: #5c0a06;
+  --color-on-error-container: #ffd9d4;
+
+  --color-background: #0a1710;
+  --color-on-background: #e9f2e8;
+
+  --color-gold: #e3c25a;
+  --color-on-gold: #241a02;
+  --color-gold-container: #3d3008;
+  --color-on-gold-container: #f3e7bd;
+  --color-night: #07130d;
+  --color-night-soft: #0d2318;
+  --color-on-night: #f2f7f0;
+  --color-sand: #1c2a20;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme inline {
+  --color-surface: var(--color-surface);
+  --color-surface-dim: var(--color-surface-dim);
+  --color-surface-bright: var(--color-surface-bright);
+  --color-surface-container-lowest: var(--color-surface-container-lowest);
+  --color-surface-container-low: var(--color-surface-container-low);
+  --color-surface-container: var(--color-surface-container);
+  --color-surface-container-high: var(--color-surface-container-high);
+  --color-surface-container-highest: var(--color-surface-container-highest);
+  --color-surface-variant: var(--color-surface-variant);
+  --color-on-surface: var(--color-on-surface);
+  --color-on-surface-variant: var(--color-on-surface-variant);
+  --color-inverse-surface: var(--color-inverse-surface);
+  --color-inverse-on-surface: var(--color-inverse-on-surface);
+  --color-outline: var(--color-outline);
+  --color-outline-variant: var(--color-outline-variant);
+  --color-surface-tint: var(--color-surface-tint);
+  --color-primary: var(--color-primary);
+  --color-on-primary: var(--color-on-primary);
+  --color-primary-container: var(--color-primary-container);
+  --color-on-primary-container: var(--color-on-primary-container);
+  --color-inverse-primary: var(--color-inverse-primary);
+  --color-primary-fixed: var(--color-primary-fixed);
+  --color-primary-fixed-dim: var(--color-primary-fixed-dim);
+  --color-on-primary-fixed: var(--color-on-primary-fixed);
+  --color-on-primary-fixed-variant: var(--color-on-primary-fixed-variant);
+  --color-secondary: var(--color-secondary);
+  --color-on-secondary: var(--color-on-secondary);
+  --color-secondary-container: var(--color-secondary-container);
+  --color-on-secondary-container: var(--color-on-secondary-container);
+  --color-secondary-fixed: var(--color-secondary-fixed);
+  --color-secondary-fixed-dim: var(--color-secondary-fixed-dim);
+  --color-on-secondary-fixed: var(--color-on-secondary-fixed);
+  --color-on-secondary-fixed-variant: var(--color-on-secondary-fixed-variant);
+  --color-tertiary: var(--color-tertiary);
+  --color-on-tertiary: var(--color-on-tertiary);
+  --color-tertiary-container: var(--color-tertiary-container);
+  --color-on-tertiary-container: var(--color-on-tertiary-container);
+  --color-tertiary-fixed: var(--color-tertiary-fixed);
+  --color-tertiary-fixed-dim: var(--color-tertiary-fixed-dim);
+  --color-on-tertiary-fixed: var(--color-on-tertiary-fixed);
+  --color-on-tertiary-fixed-variant: var(--color-on-tertiary-fixed-variant);
+  --color-error: var(--color-error);
+  --color-on-error: var(--color-on-error);
+  --color-error-container: var(--color-error-container);
+  --color-on-error-container: var(--color-on-error-container);
+  --color-background: var(--color-background);
+  --color-on-background: var(--color-on-background);
+  --color-gold: var(--color-gold);
+  --color-on-gold: var(--color-on-gold);
+  --color-gold-container: var(--color-gold-container);
+  --color-on-gold-container: var(--color-on-gold-container);
+  --color-night: var(--color-night);
+  --color-night-soft: var(--color-night-soft);
+  --color-on-night: var(--color-on-night);
+  --color-sand: var(--color-sand);
+}
+
+@theme {
 
   /* Spacing scale, as declared in the export. */
   --spacing-space-xs: 0.25rem;
@@ -147,12 +298,74 @@
   --text-code-sm: 10px;
   --text-code-sm--line-height: 14px;
   --text-code-sm--letter-spacing: 0.03em;
+
+  /* Hero display scale — Amiri showpiece above the workspace. */
+  --text-hero: 46px;
+  --text-hero--line-height: 62px;
+  --text-hero--font-weight: 700;
+
+  --text-hero-mobile: 32px;
+  --text-hero-mobile--line-height: 46px;
+  --text-hero-mobile--font-weight: 700;
+
+  /* Motion tokens — utilities: animate-pulse-ring, animate-shimmer,
+     animate-float-y, animate-drift, animate-verdict-pop, animate-live-ping. */
+  --animate-pulse-ring: mawzun-pulse-ring 2.2s ease-out infinite;
+  --animate-shimmer: mawzun-shimmer 1.6s linear infinite;
+  --animate-float-y: mawzun-float-y 7s ease-in-out infinite;
+  --animate-drift: mawzun-drift 26s linear infinite;
+  --animate-verdict-pop: mawzun-verdict-pop 520ms cubic-bezier(0.2, 0, 0, 1) both;
+  --animate-live-ping: mawzun-live-ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes mawzun-pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgb(0 108 53 / 0.45); }
+  70% { box-shadow: 0 0 0 12px rgb(0 108 53 / 0); }
+  100% { box-shadow: 0 0 0 0 rgb(0 108 53 / 0); }
+}
+
+@keyframes mawzun-shimmer {
+  from { transform: translateX(100%); }
+  to { transform: translateX(-100%); }
+}
+
+@keyframes mawzun-float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+
+@keyframes mawzun-drift {
+  from { transform: translate(0, 0); }
+  to { transform: translate(-120px, 0); }
+}
+
+@keyframes mawzun-verdict-pop {
+  0% { opacity: 0; transform: scale(0.96) translateY(10px); }
+  60% { opacity: 1; transform: scale(1.015) translateY(0); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes mawzun-live-ping {
+  0% { transform: scale(1); opacity: 0.9; }
+  75%, 100% { transform: scale(2.6); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-pulse-ring,
+  .animate-shimmer,
+  .animate-float-y,
+  .animate-drift,
+  .animate-verdict-pop,
+  .animate-live-ping {
+    animation: none;
+  }
 }
 
 /* Font families reference next/font CSS variables, so they must be inlined.
    Arabic maps to IBM Plex Sans Arabic and expands line-height by 25–30%
    relative to Latin, so diacritics are not clipped. */
 @theme inline {
+  --font-hero: var(--font-amiri), "Amiri", serif;
   --font-display-lg: var(--font-plex-arabic), "IBM Plex Sans Arabic", sans-serif;
   --font-display-lg-mobile: var(--font-plex-arabic), "IBM Plex Sans Arabic", sans-serif;
   --font-headline-lg: var(--font-plex-arabic), "IBM Plex Sans Arabic", sans-serif;

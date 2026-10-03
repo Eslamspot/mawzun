@@ -18,6 +18,7 @@ import { Icon } from "@/components/ui/Icon";
 import { StatusChip, Stepper } from "@/components/audit/parts";
 import { InputSection } from "@/components/audit/InputSection";
 import { ConstraintsSection } from "@/components/audit/ConstraintsSection";
+import { Hero } from "@/components/audit/Hero";
 import { PipelineSection } from "@/components/audit/PipelineSection";
 import { VerdictSection } from "@/components/audit/VerdictSection";
 import { LedgerSection } from "@/components/audit/LedgerSection";
@@ -69,7 +70,9 @@ export function AuditWorkspace() {
 
   return (
     <div className="min-h-screen bg-surface">
-      <div className="w-full bg-surface-container-low px-margin-desktop py-space-md shadow-sm">
+      <Hero />
+
+      <div className="w-full border-b-2 border-gold/60 bg-surface-container-low px-margin-desktop py-space-md shadow-sm">
         <div className="mx-auto flex max-w-7xl flex-col justify-between gap-space-md md:flex-row md:items-center">
           <div className="flex items-center gap-space-sm">
             <span className="h-2.5 w-2.5 rounded-full bg-secondary-container" />
@@ -84,10 +87,17 @@ export function AuditWorkspace() {
         <InputSection />
 
         {!revealed && (
-          <div className="rounded-xl border border-dashed border-outline-variant bg-surface-container-lowest p-space-xl">
+          <div className="relative overflow-hidden rounded-xl border-2 border-dashed border-gold/50 bg-surface-container-lowest p-space-xl">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-l from-transparent via-gold to-transparent"
+            />
             <div className="flex items-start gap-space-md">
-              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-xs bg-surface-container text-secondary">
-                <Icon name="lock" className="text-base" />
+              <span className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary-container text-on-primary-container">
+                <Icon name="lock" className="text-lg" />
+                {!audit.isRunning && (
+                  <span className="animate-live-ping absolute inline-flex h-full w-full rounded-lg bg-primary-container" />
+                )}
               </span>
               <div className="flex flex-col gap-space-xs">
                 <h2 className={cx(t.h2, "text-on-surface")}>بقية الأقسام تُفتح بعد التنفيذ</h2>
@@ -124,20 +134,23 @@ export function AuditWorkspace() {
         )}
       </div>
 
-      <footer className="w-full bg-surface-container-low py-space-md">
+      <footer className="w-full bg-night py-space-md text-on-night">
         <div
           className={cx(
             t.code,
-            "w-full flex flex-col items-center justify-between gap-space-sm px-margin-desktop text-on-surface-variant md:flex-row",
+            "w-full flex flex-col items-center justify-between gap-space-sm px-margin-desktop text-on-night/70 md:flex-row",
           )}
         >
           <div className="flex items-center gap-space-md">
+            <span className="flex h-6 w-6 items-center justify-center rounded-md bg-gold/15 text-gold">
+              <Icon name="balance" className="text-sm" />
+            </span>
             <span>مَوْزُون: يقيس أمانة النقل، ولا يفتي ولا يرجّح مذهبًا</span>
-            <span>SHA-256 RECORD</span>
+            <span className="text-gold">SHA-256 RECORD</span>
           </div>
           <div className="flex items-center gap-space-lg">
             <span>المراجع البشري صاحب القرار</span>
-            <span>© 2026 MAWZŪN RESEARCH WORKSPACE</span>
+            <span>© 2026 MAWZŪN · صُنع في السعودية</span>
           </div>
         </div>
       </footer>
