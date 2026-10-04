@@ -21,8 +21,8 @@ import type { CoverageNote, Finding, FindingClass, ConstraintKind } from "./type
 import { findPhrase, normalizeWithMap } from "./normalize";
 import type { LayerContext, LayerOutput } from "./layer-context";
 
-/** The three questions this layer is allowed to ask. */
-export type SemanticQuestion = "condition" | "attribution" | "ruling_force";
+/** The four questions this layer is allowed to ask. */
+export type SemanticQuestion = "condition" | "attribution" | "ruling_force" | "term";
 
 export interface SemanticRawFinding {
   readonly question: SemanticQuestion;
@@ -52,9 +52,10 @@ const QUESTION_TO_KIND: Readonly<Record<SemanticQuestion, ConstraintKind>> = {
   condition: "condition",
   attribution: "isnad",
   ruling_force: "ruling",
+  term: "term",
 };
 
-const QUESTIONS: readonly SemanticQuestion[] = ["condition", "attribution", "ruling_force"];
+const QUESTIONS: readonly SemanticQuestion[] = ["condition", "attribution", "ruling_force", "term"];
 const CLASSES: readonly FindingClass[] = ["preserved", "shifted", "missing"];
 
 /**
@@ -172,12 +173,12 @@ export function buildSemanticPrompt(ctx: LayerContext): string {
   return [
     "أنت مساعد فحص أمانة نقل لنصوص شرعية. مهمتك تسجيل وقائع، لا إصدار حكم.",
     "",
-    "أجب بـ JSON فقط بالشكل: {\"findings\":[{\"question\":\"condition|attribution|ruling_force\",\"cls\":\"preserved|shifted|missing\",\"source_quote\":\"...\",\"derived_quote\":\"...\",\"note\":\"...\"}]}",
+    "أجب بـ JSON فقط بالشكل: {\"findings\":[{\"question\":\"condition|attribution|ruling_force|term\",\"cls\":\"preserved|shifted|missing\",\"source_quote\":\"...\",\"derived_quote\":\"...\",\"note\":\"...\"}]}",
     "",
     "قيود ملزمة:",
     "- source_quote يجب أن يكون نصًا موجودًا حرفيًا في النص الأصلي.",
     "- derived_quote يجب أن يكون نصًا موجودًا حرفيًا في النص المشتق، ويكون فارغًا إذا كان cls = missing.",
-    "- اسأل ثلاثة أسئلة فقط: هل بقي الشرط؟ هل صحت النسبة؟ هل حفظت قوة الحكم؟",
+    "- اسأل أربعة أسئلة فقط: هل بقي الشرط؟ هل صحت النسبة؟ هل حفظت قوة الحكم؟ هل بقي المصطلح بمعناه المعتمد؟",
     "- لا تفتِ، ولا ترجّح مذهبًا، ولا تحكم على صحة رأي، ولا تذكر حلالًا أو حرامًا.",
     "- إن لم تجد ما يخالف، أرجع findings فارغة. الامتناع مقبول وهو أفضل من التخمين.",
     "",

@@ -8,7 +8,7 @@
  * over imported tables and cannot be argued with, the third is a model's
  * structured findings gated on verbatim quotes.
  *
- * The three questions of the semantic layer are answered from the findings
+ * The four questions of the semantic layer are answered from the findings
  * themselves. When the layer did not run, each question says so — an unchecked
  * question must never read as a passed one.
  */
@@ -55,6 +55,7 @@ const QUESTIONS: { kind: Finding["kind"]; text: string }[] = [
   { kind: "condition", text: "هل بقي الشرط؟" },
   { kind: "isnad", text: "هل صحت النسبة؟" },
   { kind: "ruling", text: "هل حُفظت قوة الحكم؟" },
+  { kind: "term", text: "هل بقي المصطلح بمعناه؟" },
 ];
 
 export function PipelineSection() {
