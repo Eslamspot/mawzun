@@ -40,7 +40,7 @@ export function WorkflowCard({
   return (
     <section
       id={id}
-      className="scroll-mt-24 rounded-xl border border-outline-variant bg-surface-container-lowest p-space-xl shadow-sm flex flex-col gap-space-lg"
+      className="scroll-mt-24 rounded-xl border border-outline-variant bg-surface-container-lowest p-space-md shadow-sm flex flex-col gap-space-lg md:p-space-xl"
     >
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-space-sm pb-space-md">
         <div className="flex items-center gap-space-md">
@@ -163,7 +163,7 @@ export const FINDING_TONE: Record<Finding["cls"], SemanticTone> = {
 export function Stepper({ activeId, unlockedIds }: { activeId: string; unlockedIds: readonly string[] }) {
   const { s } = useLang();
   const shape =
-    "flex flex-1 items-center justify-center gap-space-xs px-space-sm py-1.5 whitespace-nowrap";
+    "flex flex-1 items-center justify-center gap-space-xs px-space-sm py-2.5 whitespace-nowrap";
 
   return (
     <nav

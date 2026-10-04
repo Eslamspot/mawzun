@@ -51,7 +51,7 @@ export function SettingsModal({
           <button
             type="button"
             onClick={onClose}
-            className="text-outline hover:text-on-surface p-1 rounded-md"
+            className="text-outline hover:text-on-surface p-2 rounded-md"
             aria-label={s("st.close")}
           >
             <Icon name="close" className="text-base" />
