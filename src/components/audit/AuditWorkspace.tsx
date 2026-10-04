@@ -15,7 +15,8 @@ import { useAudit } from "@/context/AuditContext";
 import { cx } from "@/lib/cx";
 import { t } from "@/lib/typography";
 import { Icon } from "@/components/ui/Icon";
-import { StatusChip, Stepper } from "@/components/audit/parts";
+import { Stepper } from "@/components/audit/parts";
+import { useLang } from "@/context/LanguageContext";
 import { InputSection } from "@/components/audit/InputSection";
 import { ConstraintsSection } from "@/components/audit/ConstraintsSection";
 import { Hero } from "@/components/audit/Hero";
@@ -25,6 +26,7 @@ import { LedgerSection } from "@/components/audit/LedgerSection";
 
 export function AuditWorkspace() {
   const audit = useAudit();
+  const { s } = useLang();
   const [activeId, setActiveId] = useState(STAGES[0].id);
 
   /**
@@ -72,49 +74,14 @@ export function AuditWorkspace() {
     <div className="min-h-screen bg-surface">
       <Hero />
 
-      <div className="w-full border-b-2 border-gold/60 bg-surface-container-low px-margin-desktop py-space-md shadow-sm">
-        <div className="mx-auto flex max-w-7xl flex-col justify-between gap-space-md md:flex-row md:items-center">
-          <div className="flex items-center gap-space-sm">
-            <span className="h-2.5 w-2.5 rounded-full bg-secondary-container" />
-            <span className={cx(t.h4, "text-primary")}>مَوْزُون | MAWZŪN</span>
-            <span className={cx(t.code, "text-on-surface-variant")}>— مقياس أمانة النقل</span>
-          </div>
+      <div className="w-full border-b-2 border-gold/60 bg-surface-container-low px-margin-desktop py-space-sm shadow-sm">
+        <div className="mx-auto flex w-full max-w-7xl flex-col justify-between gap-space-sm md:flex-row md:items-center">
           <Stepper activeId={activeId} unlockedIds={unlockedIds} />
         </div>
       </div>
 
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-space-xl px-margin-desktop py-space-xl">
         <InputSection />
-
-        {!revealed && (
-          <div className="relative overflow-hidden rounded-xl border-2 border-dashed border-gold/50 bg-surface-container-lowest p-space-xl">
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-l from-transparent via-gold to-transparent"
-            />
-            <div className="flex items-start gap-space-md">
-              <span className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary-container text-on-primary-container">
-                <Icon name="lock" className="text-lg" />
-                {!audit.isRunning && (
-                  <span className="animate-live-ping absolute inline-flex h-full w-full rounded-lg bg-primary-container" />
-                )}
-              </span>
-              <div className="flex flex-col gap-space-xs">
-                <h2 className={cx(t.h2, "text-on-surface")}>بقية الأقسام تُفتح بعد التنفيذ</h2>
-                <p className={cx(t.body, "text-on-surface-variant")}>
-                  ضع النص الأصلي والنص المشتق، ثم اضغط «نفّذ الفحص ثلاثي الطبقات». عندها يظهر
-                  القيود المعتمدة، ثم الفحص بطبقاته، ثم الحكم، ثم الشهادة والسجل — بهذا الترتيب،
-                  وكل قسم مبنيّ على نتيجة فحصك أنت لا على مثال جاهز.
-                </p>
-                {audit.isRunning && (
-                  <StatusChip tone="revision" icon="progress_activity">
-                    جارٍ تنفيذ الفحص…
-                  </StatusChip>
-                )}
-              </div>
-            </div>
-          </div>
-        )}
 
         {revealed && (
           <>
@@ -145,12 +112,12 @@ export function AuditWorkspace() {
             <span className="flex h-6 w-6 items-center justify-center rounded-md bg-gold/15 text-gold">
               <Icon name="balance" className="text-sm" />
             </span>
-            <span>مَوْزُون: يقيس أمانة النقل، ولا يفتي ولا يرجّح مذهبًا</span>
+            <span>{s("foot.a")}</span>
             <span className="text-gold">SHA-256 RECORD</span>
           </div>
           <div className="flex items-center gap-space-lg">
-            <span>المراجع البشري صاحب القرار</span>
-            <span>© 2026 MAWZŪN · صُنع في السعودية</span>
+            <span>{s("foot.b")}</span>
+            <span>{s("foot.c")}</span>
           </div>
         </div>
       </footer>

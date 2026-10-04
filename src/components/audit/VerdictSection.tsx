@@ -13,21 +13,29 @@
 import { useMemo } from "react";
 import { Icon } from "@/components/ui/Icon";
 import { useAudit } from "@/context/AuditContext";
+import { useLang } from "@/context/LanguageContext";
 import { buildConstraintBank } from "@/lib/audit";
 import { cx } from "@/lib/cx";
 import { t } from "@/lib/typography";
 import type { AuditResult } from "@/lib/audit/types";
-import { CodeChip, FINDING_LABEL, FINDING_TONE, InsetPanel, StatusChip, WorkflowCard } from "./parts";
+import { CodeChip, FINDING_TONE, InsetPanel, StatusChip, WorkflowCard } from "./parts";
 import { Explainer } from "./Explainer";
 
-const VERDICTS: { id: AuditResult["verdict"]; label: string; latin: string }[] = [
-  { id: "faithful", label: "مطابق", latin: "Matched" },
-  { id: "needs_revision", label: "يحتاج تعديل", latin: "Needs Revision" },
-  { id: "refer", label: "وقف وتحويل", latin: "Stop & Escalate" },
+const VERDICTS: { id: AuditResult["verdict"]; key: string }[] = [
+  { id: "faithful", key: "v.faithful" },
+  { id: "needs_revision", key: "v.needs_revision" },
+  { id: "refer", key: "v.refer" },
 ];
+
+const FINDING_STATE: Record<string, string> = {
+  preserved: "st.preserved",
+  shifted: "st.shifted",
+  missing: "st.missing",
+};
 
 export function VerdictSection() {
   const audit = useAudit();
+  const { s } = useLang();
   const result = audit.result;
   const bank = useMemo(() => buildConstraintBank(), []);
 
@@ -52,13 +60,13 @@ export function VerdictSection() {
     <WorkflowCard
       id="step-4"
       number={4}
-      title="الحكم (The Verdict)"
-      subtitle="قرار واحد بثلاث حالات، ومعه السبب والموضع والدليل"
+      title={s("vd.title")}
+      subtitle={s("vd.sub")}
       aside={
         result ? (
-          <CodeChip>الوقت: {audit.record?.createdAt ?? "—"}</CodeChip>
+          <CodeChip>{audit.record?.createdAt ?? "—"}</CodeChip>
         ) : (
-          <StatusChip tone="neutral">بانتظار الفحص</StatusChip>
+          <StatusChip tone="neutral">{s("vd.wait")}</StatusChip>
         )
       }
     >
@@ -81,12 +89,10 @@ export function VerdictSection() {
                     : "bg-surface-container text-on-surface-variant opacity-60",
               )}
             >
-              <span className={cx(t.h4, "flex items-center gap-space-xs")}>
-                [{verdict.label}] <span className={cx(t.bodySm, "opacity-80")}>{verdict.latin}</span>
-              </span>
+              <span className={cx(t.h4, "flex items-center gap-space-xs")}>{s(verdict.key)}</span>
               {isActive ? (
                 <StatusChip tone="neutral" className="bg-transparent">
-                  الحالة النشطة
+                  {s("vd.active")}
                 </StatusChip>
               ) : (
                 <Icon name="radio_button_unchecked" className="text-[18px] opacity-60" />
@@ -98,22 +104,20 @@ export function VerdictSection() {
 
       {!result ? (
         <InsetPanel>
-          <p className={cx(t.body, "text-on-surface-variant")}>
-            نفّذ الفحص من الخطوة الأولى ليصدر الحكم.
-          </p>
+          <p className={cx(t.body, "text-on-surface-variant")}>{s("vd.pending")}</p>
         </InsetPanel>
       ) : (
         <>
           <div className="rounded-xl border border-outline-variant bg-surface-container-low p-space-lg">
             <div className="grid grid-cols-1 gap-space-md md:grid-cols-3">
               <div className="flex flex-col gap-space-xs rounded-lg border border-outline-variant bg-surface-container-lowest p-space-md shadow-sm">
-                <span className={cx(t.labelSm, "font-semibold text-on-surface-variant")}>الموضع (Location)</span>
+                <span className={cx(t.labelSm, "font-semibold text-on-surface-variant")}>{s("vd.loc")}</span>
                 <span className={cx(t.h4, "text-on-surface")}>
                   {decisive.length > 0
                     ? decisive.filter((f) => f.end > f.start).length > 0
-                      ? `${decisive.filter((f) => f.end > f.start).length} موضع محدد`
-                      : "لا موضع محدد"
-                    : "لا موضع يستدعي التعديل"}
+                      ? `${decisive.filter((f) => f.end > f.start).length} ${s("vd.loc.some")}`
+                      : s("vd.loc.none")
+                    : s("vd.loc.clean")}
                 </span>
                 <span className={cx(t.code, "text-on-surface-variant")}>
                   {decisive
@@ -124,52 +128,44 @@ export function VerdictSection() {
               </div>
 
               <div className="flex flex-col gap-space-xs rounded-lg border border-outline-variant bg-surface-container-lowest p-space-md shadow-sm md:col-span-2">
-                <span className={cx(t.labelSm, "font-semibold text-on-surface-variant")}>السبب (Reason)</span>
+                <span className={cx(t.labelSm, "font-semibold text-on-surface-variant")}>{s("vd.reason")}</span>
                 <p className={cx(t.body, "text-on-surface")}>{result.reason}</p>
               </div>
             </div>
 
             <div className="mt-space-md flex flex-col gap-space-md">
               <div className="flex flex-col gap-space-xs rounded-lg border border-outline-variant bg-surface-container-lowest p-space-md shadow-sm">
-                <span className={cx(t.labelSm, "font-semibold text-on-surface-variant")}>الدليل (Evidence)</span>
+                <span className={cx(t.labelSm, "font-semibold text-on-surface-variant")}>{s("vd.ev")}</span>
                 {first ? (
                   <div className="flex flex-col gap-space-xs">
                     <blockquote className={cx(t.body, "rounded-xs bg-surface-container-low p-space-sm italic text-on-surface")}>
-                      <span className={cx(t.code, "block text-outline")}>من الأصل</span>
+                      <span className={cx(t.code, "block text-outline")}>{s("vd.ev.src")}</span>
                       {first.evidence.source || "—"}
                     </blockquote>
                     <blockquote className={cx(t.body, "rounded-xs bg-surface-container-low p-space-sm italic text-on-surface")}>
-                      <span className={cx(t.code, "block text-outline")}>من المشتق</span>
+                      <span className={cx(t.code, "block text-outline")}>{s("vd.ev.drv")}</span>
                       {first.evidence.derived || "—"}
                     </blockquote>
                     <p className={cx(t.bodySm, "text-on-surface-variant")}>{first.evidence.note}</p>
                   </div>
                 ) : (
-                  <p className={cx(t.bodySm, "text-on-surface-variant")}>
-                    لا واقعة انزياح في هذا التشغيل، فلا دليل مطلوب.
-                  </p>
+                  <p className={cx(t.bodySm, "text-on-surface-variant")}>{s("vd.ev.none")}</p>
                 )}
               </div>
 
               <div className="flex flex-col gap-space-xs rounded-lg border border-outline-variant bg-surface-container-lowest p-space-md shadow-sm">
-                <span className={cx(t.labelSm, "font-semibold text-on-surface-variant")}>
-                  الاقتراح (Suggested Correction)
-                </span>
+                <span className={cx(t.labelSm, "font-semibold text-on-surface-variant")}>{s("vd.sug")}</span>
                 {suggestion ? (
                   <>
                     <div className={cx(t.body, "rounded-lg bg-surface-container-high/60 p-space-md text-on-surface")}>
                       {suggestion.join("  ·  ")}
                     </div>
-                    <p className={cx(t.bodySm, "text-on-surface-variant")}>
-                      الاقتراح مأخوذ من المقابلات المعتمدة في الحزمة العلمية، لا مصوغًا هنا.
-                    </p>
+                    <p className={cx(t.bodySm, "text-on-surface-variant")}>{s("vd.sug.bank")}</p>
                   </>
                 ) : first ? (
-                  <p className={cx(t.bodySm, "text-on-surface-variant")}>
-                    لا اقتراح آلي لهذه الواقعة: لا يحمل القيد قائمة مقابلات معتمدة. القرار للمراجع.
-                  </p>
+                  <p className={cx(t.bodySm, "text-on-surface-variant")}>{s("vd.sug.none")}</p>
                 ) : (
-                  <p className={cx(t.bodySm, "text-on-surface-variant")}>لا شيء يحتاج تعديلًا.</p>
+                  <p className={cx(t.bodySm, "text-on-surface-variant")}>{s("vd.sug.ok")}</p>
                 )}
               </div>
             </div>
@@ -184,7 +180,7 @@ export function VerdictSection() {
                     "flex flex-wrap items-center gap-space-sm rounded-xs border border-outline-variant bg-surface-container-lowest p-space-sm",
                   )}
                 >
-                  <StatusChip tone={FINDING_TONE[finding.cls]}>{FINDING_LABEL[finding.cls]}</StatusChip>
+                  <StatusChip tone={FINDING_TONE[finding.cls]}>{s(FINDING_STATE[finding.cls])}</StatusChip>
                   <CodeChip>{finding.layer}</CodeChip>
                   <CodeChip>{finding.kind}</CodeChip>
                   <span dir="auto" className={cx(t.codeMd, "text-on-surface")}>
@@ -197,25 +193,24 @@ export function VerdictSection() {
 
           <Explainer
             verdict={result.verdict}
-            verdictLabel={VERDICTS.find((v) => v.id === result.verdict)?.label ?? result.verdict}
+            verdictLabel={s(VERDICTS.find((v) => v.id === result.verdict)?.key ?? "vd.title")}
             findings={decisive}
           />
 
           <div className="flex flex-col gap-space-xs rounded-lg border border-outline-variant bg-surface-container-low p-space-md">
-            <span className={cx(t.label, "font-semibold text-on-surface")}>قرار المراجع البشري</span>            <textarea
+            <span className={cx(t.label, "font-semibold text-on-surface")}>{s("vd.dec.t")}</span>
+            <textarea
               dir="rtl"
               rows={3}
               value={audit.reviewerDecision}
               onChange={(event) => audit.setReviewerDecision(event.target.value)}
-              placeholder="اكتب قرارك هنا. القرار جزء من السجل، ويعاد ترميز البصمة عليه."
+              placeholder={s("vd.dec.ph")}
               className={cx(
                 t.body,
                 "w-full resize-y rounded-xs border border-outline-variant bg-surface-container-lowest p-space-sm text-on-surface focus:border-secondary focus:outline-none",
               )}
             />
-            <p className={cx(t.bodySm, "text-on-surface-variant")}>
-              النظام لا يُلغي المراجع: يوجّه نظره إلى الموضع الذي يستحق وقته، ويبقى القرار له.
-            </p>
+            <p className={cx(t.bodySm, "text-on-surface-variant")}>{s("vd.dec.note")}</p>
           </div>
         </>
       )}

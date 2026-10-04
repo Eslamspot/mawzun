@@ -13,6 +13,7 @@ import { useEffect, useRef, useState } from "react";
 import { cx } from "@/lib/cx";
 import { t } from "@/lib/typography";
 import { Icon } from "@/components/ui/Icon";
+import { useLang } from "@/context/LanguageContext";
 
 /** Islamic eight-point star lattice, drawn once and drifted by CSS. */
 function StarLattice({ className }: { className?: string }) {
@@ -53,17 +54,17 @@ function StarLattice({ className }: { className?: string }) {
   );
 }
 
-const STATS: { value: number; suffix: string; label: string; latin: string }[] = [
-  { value: 31, suffix: "", label: "قيداً معتمداً", latin: "Approved constraints" },
-  { value: 3, suffix: "", label: "طبقات فحص", latin: "Audit layers" },
-  { value: 15, suffix: "", label: "حالة ذهبية", latin: "Golden cases" },
-  { value: 256, suffix: "-SHA", label: "سجل مختوم", latin: "Sealed record" },
+const STATS: { value: number; suffix: string; labelKey: string }[] = [
+  { value: 19, suffix: "", labelKey: "hero.s.constraints" },
+  { value: 3, suffix: "", labelKey: "hero.s.layers" },
+  { value: 15, suffix: "", labelKey: "hero.s.cases" },
+  { value: 256, suffix: "-SHA", labelKey: "hero.s.record" },
 ];
 
-const PILLARS: { icon: string; title: string; text: string }[] = [
-  { icon: "fingerprint", title: "طبقة حتمية", text: "أرقام وإحالات تُقارن حرفاً بحرف، بلا ذكاء اصطناعي" },
-  { icon: "dictionary", title: "طبقة معجمية", text: "مصطلح وقوة حكم وشرط، بحثاً في جداول معتمدة" },
-  { icon: "psychology", title: "طبقة دلالية", text: "نموذج يُنتج وقائع لا أحكاماً، وكل اقتباس مُتحقق منه" },
+const PILLARS: { icon: string; titleKey: string; textKey: string }[] = [
+  { icon: "fingerprint", titleKey: "hero.p1.t", textKey: "hero.p1.x" },
+  { icon: "dictionary", titleKey: "hero.p2.t", textKey: "hero.p2.x" },
+  { icon: "psychology", titleKey: "hero.p3.t", textKey: "hero.p3.x" },
 ];
 
 function CountUp({ value, suffix }: { value: number; suffix: string }) {
@@ -108,8 +109,13 @@ function CountUp({ value, suffix }: { value: number; suffix: string }) {
 }
 
 export function Hero() {
+  const { s } = useLang();
+
   return (
-    <section aria-label="مقدمة موزون" className="relative overflow-hidden bg-gradient-to-b from-[#0e5f31] via-primary-container to-[#074a24] text-on-night">
+    <section
+      aria-label="موزون"
+      className="relative overflow-hidden bg-gradient-to-b from-[#0e5f31] via-primary-container to-[#074a24] text-on-night"
+    >
       {/* Drifting geometric lattice + gold radial glows */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
         <StarLattice className="animate-drift absolute -top-40 -left-40 h-[480px] w-[480px] text-on-night opacity-[0.16]" />
@@ -125,20 +131,15 @@ export function Hero() {
               <span className="animate-live-ping absolute inline-flex h-full w-full rounded-full bg-gold" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-gold" />
             </span>
-            <span className={cx(t.labelSm, "font-semibold text-gold")}>
-              هوية سعودية · حيّ الآن · ONLINE
-            </span>
+            <span className={cx(t.labelSm, "font-semibold text-gold")}>{s("hero.badge")}</span>
           </span>
 
           <h1 className={cx(t.hero, "max-w-3xl text-on-night")}>
-            مَوْزُون <span className="text-gold">…</span> حين تخون الترجمة المعنى
-            <span className="text-gold">،</span> نكشف الانزياح
+            {s("hero.title.1")} <span className="text-gold">{s("hero.title.2")}</span>
           </h1>
 
           <p className="max-w-2xl text-base leading-loose text-on-night/70 md:text-lg">
-            مقياس أمانة النقل بين النص الشرعي الأصلي والنص المشتق منه — ثلاث طبقات فحص،
-            وحكم واحد بثلاث حالات، وسجل مختوم يُعيد إنتاج نفسه. صُنع في السعودية، للمراجع
-            العربي أولاً.
+            {s("hero.sub")}
           </p>
 
           <div className="flex flex-wrap items-center gap-space-sm">
@@ -147,14 +148,14 @@ export function Hero() {
               className="inline-flex cursor-pointer items-center gap-space-xs rounded-lg bg-gold px-6 py-3 text-sm font-bold text-on-gold shadow-[0_8px_30px_-6px_rgb(201_162_39/0.55)] transition-all duration-200 hover:brightness-110"
             >
               <Icon name="play_arrow" className="text-lg" />
-              ابدأ الفحص الآن
+              {s("hero.cta.start")}
             </a>
             <a
               href="#step-1"
               className="inline-flex cursor-pointer items-center gap-space-xs rounded-lg border border-on-night/25 px-6 py-3 text-sm font-semibold text-on-night transition-colors duration-200 hover:bg-on-night/10"
             >
               <Icon name="experiment" className="text-lg" />
-              جرّب مثال الانزياح
+              {s("hero.cta.how")}
             </a>
           </div>
         </div>
@@ -163,15 +164,15 @@ export function Hero() {
         <div className="grid grid-cols-1 gap-space-sm md:grid-cols-3">
           {PILLARS.map((pillar, index) => (
             <div
-              key={pillar.title}
+              key={pillar.titleKey}
               className="group flex cursor-default items-start gap-space-md rounded-xl border border-on-night/12 bg-on-night/[0.04] p-space-md backdrop-blur-sm transition-colors duration-200 hover:border-gold/40 hover:bg-on-night/[0.07]"
             >
               <span className="animate-float-y flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-gold/15 text-gold" style={{ animationDelay: `${index * 900}ms` }}>
                 <Icon name={pillar.icon} className="text-xl" />
               </span>
               <span className="flex flex-col gap-1">
-                <span className="text-sm font-bold text-on-night">{pillar.title}</span>
-                <span className="text-xs leading-relaxed text-on-night/60">{pillar.text}</span>
+                <span className="text-sm font-bold text-on-night">{s(pillar.titleKey)}</span>
+                <span className="text-xs leading-relaxed text-on-night/60">{s(pillar.textKey)}</span>
               </span>
             </div>
           ))}
@@ -180,12 +181,11 @@ export function Hero() {
         {/* Live statistics */}
         <dl className="grid grid-cols-2 gap-space-sm border-t border-on-night/12 pt-space-md md:grid-cols-4">
           {STATS.map((stat) => (
-            <div key={stat.label} className="flex flex-col gap-1">
+            <div key={stat.labelKey} className="flex flex-col gap-1">
               <dd className="text-3xl font-bold text-gold">
                 <CountUp value={stat.value} suffix={stat.suffix} />
               </dd>
-              <dt className="text-sm font-semibold text-on-night">{stat.label}</dt>
-              <span className={cx(t.code, "text-on-night/40")}>{stat.latin}</span>
+              <dt className="text-sm font-semibold text-on-night">{s(stat.labelKey)}</dt>
             </div>
           ))}
         </dl>

@@ -11,26 +11,20 @@
 
 import { useMemo, useState } from "react";
 import { buildConstraintBank } from "@/lib/audit";
+import { useLang } from "@/context/LanguageContext";
 import { cx } from "@/lib/cx";
 import { t } from "@/lib/typography";
 import { CodeChip, StatusChip, WorkflowCard } from "./parts";
 
-const KIND_LABEL: Record<string, string> = {
-  term: "المصطلح",
-  ruling: "الحكم",
-  condition: "الشرط",
-  isnad: "السند",
-  number: "الأرقام",
+const KIND_KEYS: Record<string, string> = {
+  term: "f.term",
+  ruling: "f.ruling",
+  condition: "f.condition",
+  isnad: "f.isnad",
+  number: "f.number",
 };
 
-const FILTERS: { id: string; label: string }[] = [
-  { id: "all", label: "الكل" },
-  { id: "term", label: "المصطلح" },
-  { id: "ruling", label: "الحكم" },
-  { id: "condition", label: "الشرط" },
-  { id: "isnad", label: "السند" },
-  { id: "number", label: "الأرقام" },
-];
+const FILTER_IDS = ["all", "term", "ruling", "condition", "isnad", "number"];
 
 function renderings(list: Record<string, readonly string[]>): string {
   return (
@@ -44,51 +38,53 @@ function renderings(list: Record<string, readonly string[]>): string {
 export function ConstraintsSection() {
   const bank = useMemo(() => buildConstraintBank(), []);
   const [kind, setKind] = useState("all");
+  const { s } = useLang();
 
   const rows = kind === "all" ? bank.constraints : bank.constraints.filter((c) => c.kind === kind);
+  const kindLabel = (id: string) => (KIND_KEYS[id] ? s(KIND_KEYS[id]) : id);
 
   return (
     <WorkflowCard
       id="step-2"
       number={2}
-      title="القيود المعتمدة (Approved Constraints)"
-      subtitle="القيود مستوردة من الحزمة العلمية المعتمدة، لا من رأي النظام، ولكل قيد أصله"
+      title={s("cs.title")}
+      subtitle={s("cs.sub")}
       aside={
         <StatusChip tone="verified" icon="verified">
-          الحزمة: {bank.packageName} · v{bank.version}
+          {bank.packageName} · v{bank.version}
         </StatusChip>
       }
     >
       <div className="flex flex-wrap items-center gap-space-xs">
-        {FILTERS.map((filter) => (
+        {FILTER_IDS.map((id) => (
           <button
-            key={filter.id}
+            key={id}
             type="button"
-            onClick={() => setKind(filter.id)}
+            onClick={() => setKind(id)}
             className={cx(
               t.labelSm,
               "rounded-xs px-space-sm py-1 font-medium transition-colors",
-              kind === filter.id
+              kind === id
                 ? "bg-primary text-on-primary"
                 : "bg-surface-container-lowest text-on-surface-variant hover:bg-surface-container",
             )}
           >
-            {filter.label}
+            {id === "all" ? s("f.all") : kindLabel(id)}
           </button>
         ))}
         <span className={cx(t.code, "ms-auto text-on-surface-variant")}>
-          {rows.length} / {bank.constraints.length} قيدًا
+          {rows.length} / {bank.constraints.length} {s("cs.count")}
         </span>
       </div>
 
       <div className="overflow-x-auto">
-        <table className="w-full text-right">
+        <table className="w-full text-end">
           <thead>
             <tr className={cx(t.labelSm, "bg-surface-container-low text-on-surface-variant")}>
-              <th className="rounded-r px-space-md py-2.5">التصنيف</th>
-              <th className="px-space-md py-2.5">القيد المعتمد ونصه</th>
-              <th className="px-space-md py-2.5">المصدر في الحزمة</th>
-              <th className="rounded-l px-space-md py-2.5">المقابلات</th>
+              <th className="rounded-s px-space-md py-2.5">{s("cs.th.kind")}</th>
+              <th className="px-space-md py-2.5">{s("cs.th.rule")}</th>
+              <th className="px-space-md py-2.5">{s("cs.th.origin")}</th>
+              <th className="rounded-e px-space-md py-2.5">{s("cs.th.rend")}</th>
             </tr>
           </thead>
           <tbody>
@@ -104,7 +100,7 @@ export function ConstraintsSection() {
                       "inline-flex rounded-xs bg-surface-container px-space-sm py-0.5 font-medium text-on-surface",
                     )}
                   >
-                    {KIND_LABEL[constraint.kind] ?? constraint.kind}
+                    {kindLabel(constraint.kind)}
                   </span>
                   <div className={cx(t.code, "mt-1 text-outline")}>{constraint.id}</div>
                 </td>
@@ -122,10 +118,10 @@ export function ConstraintsSection() {
                 <td className="px-space-md py-space-md">
                   <div className="flex flex-col gap-1">
                     <span className={cx(t.code, "text-on-tertiary-fixed-variant")}>
-                      معتمد: {renderings(constraint.approved)}
+                      {s("cs.approved")} {renderings(constraint.approved)}
                     </span>
                     <span className={cx(t.code, "text-error")}>
-                      ممنوع: {renderings(constraint.forbidden)}
+                      {s("cs.forbidden")} {renderings(constraint.forbidden)}
                     </span>
                   </div>
                 </td>
@@ -137,7 +133,7 @@ export function ConstraintsSection() {
 
       <div className={cx(t.bodySm, "flex items-center gap-space-xs text-on-surface-variant")}>
         <CodeChip>bank@{bank.version}</CodeChip>
-        <span>السجل يحمل نسخة البنك كاملة وإصداره، فلا يتغيّر قيد دون أن يتغيّر السجل.</span>
+        <span>{s("cs.foot")}</span>
       </div>
     </WorkflowCard>
   );

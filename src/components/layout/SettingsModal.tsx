@@ -6,6 +6,7 @@ import { cx } from "@/lib/cx";
 import { t } from "@/lib/typography";
 import { useToast } from "@/context/ToastContext";
 import { useAudit } from "@/context/AuditContext";
+import { useLang } from "@/context/LanguageContext";
 
 /**
  * Settings.
@@ -27,6 +28,7 @@ export function SettingsModal({
 }) {
   const { toast } = useToast();
   const { reset } = useAudit();
+  const { s } = useLang();
 
   if (!isOpen) return null;
 
@@ -44,13 +46,13 @@ export function SettingsModal({
             <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-surface-container text-primary">
               <Icon name="tune" className="text-base" />
             </span>
-            <span className={cx(t.label, "font-bold text-on-surface")}>أين تُضبط السياسة؟</span>
+            <span className={cx(t.label, "font-bold text-on-surface")}>{s("st.title")}</span>
           </div>
           <button
             type="button"
             onClick={onClose}
             className="text-outline hover:text-on-surface p-1 rounded-md"
-            aria-label="إغلاق الإعدادات"
+            aria-label={s("st.close")}
           >
             <Icon name="close" className="text-base" />
           </button>
@@ -58,25 +60,18 @@ export function SettingsModal({
 
         <div className="flex flex-col gap-3">
           <div className="flex flex-col gap-1">
-            <span className={cx(t.labelSm, "font-semibold text-on-surface")}>بنك القيود</span>
-            <span className={cx(t.bodySm, "leading-relaxed text-on-surface-variant")}>
-              المصطلحات ومقابلاتها المعتمدة والممنوعة، مستوردة من الحزمة العلمية المعتمدة. من هنا يُتحكَّم في
-              صرامة الفحص، لا من مفتاح في الواجهة.
-            </span>
+            <span className={cx(t.labelSm, "font-semibold text-on-surface")}>{s("st.bank.t")}</span>
+            <span className={cx(t.bodySm, "leading-relaxed text-on-surface-variant")}>{s("st.bank.x")}</span>
           </div>
 
           <div className="flex flex-col gap-1">
-            <span className={cx(t.labelSm, "font-semibold text-on-surface")}>جدول قوة الحكم</span>
-            <span className={cx(t.bodySm, "leading-relaxed text-on-surface-variant")}>
-              لكل لفظ حكمي قوته ومقابلاته في كل لغة. الفحص بحث في هذا الجدول، ونتيجته قابلة لإعادة الإنتاج.
-            </span>
+            <span className={cx(t.labelSm, "font-semibold text-on-surface")}>{s("st.force.t")}</span>
+            <span className={cx(t.bodySm, "leading-relaxed text-on-surface-variant")}>{s("st.force.x")}</span>
           </div>
 
           <div className="flex flex-col gap-1">
-            <span className={cx(t.labelSm, "font-semibold text-on-surface")}>نطاق الفحص</span>
-            <span className={cx(t.bodySm, "leading-relaxed text-on-surface-variant")}>
-              ما لم يُفحص يُعلن في الحكم وفي السجل. لا يوجد مفتاح يوسّع النطاق صامتًا.
-            </span>
+            <span className={cx(t.labelSm, "font-semibold text-on-surface")}>{s("st.scope.t")}</span>
+            <span className={cx(t.bodySm, "leading-relaxed text-on-surface-variant")}>{s("st.scope.x")}</span>
           </div>
         </div>
 
@@ -85,13 +80,13 @@ export function SettingsModal({
             type="button"
             onClick={() => {
               reset();
-              toast({ title: "تم مسح تشغيل الفحص الحالي", variant: "info" });
+              toast({ title: s("st.cleared"), variant: "info" });
               onClose();
             }}
             className="flex items-center justify-center gap-1.5 w-full py-2 rounded-lg text-error hover:bg-error-container/40 transition-colors font-label-sm text-xs font-semibold"
           >
             <Icon name="restart_alt" className="text-sm" />
-            مسح المدخلات والسجل الحالي
+            {s("st.clear")}
           </button>
         </div>
       </div>

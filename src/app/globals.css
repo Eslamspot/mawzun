@@ -365,7 +365,10 @@
    Arabic maps to IBM Plex Sans Arabic and expands line-height by 25–30%
    relative to Latin, so diacritics are not clipped. */
 @theme inline {
-  --font-hero: var(--font-amiri), "Amiri", serif;
+  /* Single typeface: IBM Plex Sans Arabic everywhere. Display, body and
+     telemetry all resolve to it (telemetry keeps tabular figures), so the
+     interface never mixes Latin display or mono fonts with Arabic copy. */
+  --font-hero: var(--font-plex-arabic), "IBM Plex Sans Arabic", sans-serif;
   --font-display-lg: var(--font-plex-arabic), "IBM Plex Sans Arabic", sans-serif;
   --font-display-lg-mobile: var(--font-plex-arabic), "IBM Plex Sans Arabic", sans-serif;
   --font-headline-lg: var(--font-plex-arabic), "IBM Plex Sans Arabic", sans-serif;
@@ -376,8 +379,8 @@
   --font-body-sm: var(--font-plex-arabic), "IBM Plex Sans Arabic", sans-serif;
   --font-label-lg: var(--font-plex-arabic), "IBM Plex Sans Arabic", sans-serif;
   --font-label-md: var(--font-plex-arabic), "IBM Plex Sans Arabic", sans-serif;
-  --font-code-md: var(--font-jetbrains), "JetBrains Mono", monospace;
-  --font-code-sm: var(--font-jetbrains), "JetBrains Mono", monospace;
+  --font-code-md: var(--font-plex-arabic), "IBM Plex Sans Arabic", sans-serif;
+  --font-code-sm: var(--font-plex-arabic), "IBM Plex Sans Arabic", sans-serif;
 
   --font-sans: var(--font-plex-arabic), "IBM Plex Sans Arabic", sans-serif;
   --font-mono: var(--font-jetbrains), "JetBrains Mono", monospace;
@@ -419,8 +422,9 @@
 @layer utilities {
   /* Monospace telemetry: hashes, ids, layer codes. */
   .font-mono-telemetry {
-    font-family: var(--font-jetbrains), "JetBrains Mono", monospace;
+    font-family: var(--font-plex-arabic), "IBM Plex Sans Arabic", sans-serif;
     font-variant-numeric: tabular-nums;
+    letter-spacing: 0;
   }
 
   /*

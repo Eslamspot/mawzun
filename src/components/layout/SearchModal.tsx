@@ -6,11 +6,12 @@ import { cx } from "@/lib/cx";
 import { t } from "@/lib/typography";
 import { STAGES, unlockedStageIds } from "@/lib/stages";
 import { useAudit } from "@/context/AuditContext";
+import { useLang } from "@/context/LanguageContext";
 import { buildConstraintBank } from "@/lib/audit";
 
 interface SearchResult {
   id: string;
-  category: "المراحل" | "بنك القيود" | "القواعد والضوابط";
+  category: string;
   title: string;
   subtitle: string;
   icon: string;
@@ -41,6 +42,7 @@ export function SearchModal({
   }, [isOpen, onClose]);
 
   const audit = useAudit();
+  const { s } = useLang();
   const unlocked = unlockedStageIds(audit.result !== null);
 
   const items = useMemo<SearchResult[]>(() => {
@@ -51,9 +53,9 @@ export function SearchModal({
     STAGES.filter((stage) => unlocked.includes(stage.id)).forEach((stage) => {
       list.push({
         id: `stage-${stage.id}`,
-        category: "المراحل",
-        title: `${stage.ordinal}. ${stage.title}`,
-        subtitle: `الانتقال المباشر إلى قسم «${stage.title}»`,
+        category: s("se.cat.stages"),
+        title: `${stage.ordinal}. ${s(`stage.${stage.id}`)}`,
+        subtitle: `${s("se.go")} «${s(`stage.${stage.id}`)}»`,
         icon: stage.icon,
         action: () => {
           document.getElementById(stage.id)?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -68,7 +70,7 @@ export function SearchModal({
       buildConstraintBank().constraints.forEach((constraint) => {
         list.push({
           id: `constraint-${constraint.id}`,
-          category: "بنك القيود",
+          category: s("se.cat.bank"),
           title: constraint.source.join(" · ") || constraint.id,
           subtitle: constraint.rule,
           icon: "rule_folder",
@@ -81,7 +83,7 @@ export function SearchModal({
     }
 
     return list;
-  }, [onClose, unlocked]);
+  }, [onClose, unlocked, s]);
 
   // Filter items by query
   const filtered = useMemo(() => {
@@ -113,7 +115,7 @@ export function SearchModal({
               setQuery(e.target.value);
               setSelectedIndex(0);
             }}
-            placeholder="ابحث في المراحل وبنك القيود..."
+            placeholder={s("se.ph")}
             autoFocus
             className={cx(
               t.body,
@@ -139,11 +141,11 @@ export function SearchModal({
           {filtered.length === 0 ? (
             <div className="py-12 text-center text-on-surface-variant flex flex-col items-center justify-center gap-2">
               <Icon name="search_off" className="text-3xl text-outline" />
-              <p className={t.bodySm}>لم نجد أي نتائج مطابقة لعبارة البحث «{query}»</p>
+              <p className={t.bodySm}>
+                {s("se.empty")} «{query}»
+              </p>
               <span className={cx(t.labelSm, "text-outline")}>
-                {unlocked.length === 1
-                  ? "بنك القيود يُفتح بعد تنفيذ الفحص، فيصبح بحثه متاحًا هنا."
-                  : "جرّب البحث عن «لا يجوز»، «الشرط»، «الشريعة»، أو «الفحص»."}
+                {unlocked.length === 1 ? s("se.empty.open") : s("se.empty.try")}
               </span>
             </div>
           ) : (
@@ -156,7 +158,7 @@ export function SearchModal({
                   onClick={item.action}
                   onMouseEnter={() => setSelectedIndex(idx)}
                   className={cx(
-                    "flex items-center justify-between w-full p-3 rounded-xl text-right transition-colors",
+                    "flex items-center justify-between w-full p-3 rounded-xl text-end transition-colors",
                     isSelected
                       ? "bg-primary-container text-on-primary-container shadow-xs"
                       : "hover:bg-surface-container-low text-on-surface",
@@ -190,7 +192,7 @@ export function SearchModal({
                   <span
                     className={cx(
                       t.code,
-                      "shrink-0 rounded px-2 py-0.5 text-[10px] mr-2",
+                      "shrink-0 rounded px-2 py-0.5 text-[10px] me-2",
                       isSelected
                         ? "bg-primary/20 text-on-primary-container"
                         : "bg-surface-container text-secondary",
@@ -211,7 +213,7 @@ export function SearchModal({
               <kbd className="rounded bg-surface-container-lowest px-1.5 py-0.5 text-on-surface shadow-xs">
                 ↵
               </kbd>{" "}
-              للاختيار
+              {s("se.select")}
             </span>
             <span>
               <kbd className="rounded bg-surface-container-lowest px-1.5 py-0.5 text-on-surface shadow-xs">
@@ -220,10 +222,10 @@ export function SearchModal({
               <kbd className="rounded bg-surface-container-lowest px-1.5 py-0.5 text-on-surface shadow-xs">
                 ↓
               </kbd>{" "}
-              للتنقل
+              {s("se.nav")}
             </span>
           </div>
-          <span>موزون • بحث نصّي في المراحل وبنك القيود</span>
+          <span>{s("se.foot")}</span>
         </div>
       </div>
     </div>

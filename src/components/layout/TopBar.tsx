@@ -5,6 +5,7 @@ import { Icon } from "@/components/ui/Icon";
 import { cx } from "@/lib/cx";
 import { STAGES, unlockedStageIds } from "@/lib/stages";
 import { useAudit } from "@/context/AuditContext";
+import { useLang } from "@/context/LanguageContext";
 import { useTheme } from "@/context/ThemeContext";
 import { t } from "@/lib/typography";
 import { SearchModal } from "@/components/layout/SearchModal";
@@ -36,6 +37,7 @@ export function TopBar() {
 
   const audit = useAudit();
   const { theme, toggle } = useTheme();
+  const { lang, toggle: toggleLang, s } = useLang();
   // Only the sections that exist are offered: before a run that is step one
   // alone, because the rest of the workflow describes an output there isn't one.
   const unlocked = unlockedStageIds(audit.result !== null);
@@ -50,9 +52,7 @@ export function TopBar() {
               <Icon name="balance" className="text-lg" />
             </span>
             <span className={cx(t.h4, "tracking-tight text-primary")}>مَوْزُون | MAWZŪN</span>
-            <span className={cx(t.code, "font-normal text-on-surface-variant")}>
-              (مقياس أمانة النقل)
-            </span>
+            <span className={cx(t.code, "font-normal text-on-surface-variant")}>{s("topbar.sub")}</span>
           </div>
           <span className="flex items-center gap-space-xs rounded-full border border-gold/50 bg-gold-container px-space-sm py-0.5">
             <span className="relative flex h-1.5 w-1.5">
@@ -84,7 +84,7 @@ export function TopBar() {
         <div className="flex items-center gap-space-sm">
           <button
             type="button"
-            aria-label="البحث في القيود والمراحل"
+            aria-label={s("topbar.search.aria")}
             onClick={() => setIsSearchOpen(true)}
             className={cx(
               t.bodySm,
@@ -92,7 +92,7 @@ export function TopBar() {
             )}
           >
             <Icon name="search" className="text-base text-outline" />
-            <span className="text-outline">بحث في القيود...</span>
+            <span className="text-outline">{s("topbar.search.ph")}</span>
             <kbd className={cx(t.code, "rounded bg-surface-container-lowest px-1 text-outline")}>
               ⌘K
             </kbd>
@@ -100,7 +100,20 @@ export function TopBar() {
 
           <button
             type="button"
-            aria-label={theme === "dark" ? "التحويل إلى الوضع الفاتح" : "التحويل إلى الوضع الليلي"}
+            aria-label={lang === "ar" ? "Switch to English" : "التحويل إلى العربية"}
+            onClick={toggleLang}
+            className={cx(
+              t.labelSm,
+              "flex h-9 cursor-pointer items-center gap-space-xs rounded border border-outline-variant px-space-sm font-bold text-on-surface-variant transition-colors hover:bg-surface-container-high",
+            )}
+          >
+            <Icon name="language" className="text-lg" />
+            {lang === "ar" ? "EN" : "عربي"}
+          </button>
+
+          <button
+            type="button"
+            aria-label={theme === "dark" ? s("topbar.theme.toLight") : s("topbar.theme.toDark")}
             onClick={toggle}
             className={cx(
               "flex h-9 w-9 cursor-pointer items-center justify-center rounded border border-outline-variant text-on-surface-variant transition-colors hover:bg-surface-container-high",
@@ -111,7 +124,7 @@ export function TopBar() {
 
           <button
             type="button"
-            aria-label="الإعدادات"
+            aria-label={s("topbar.settings")}
             onClick={() => setIsSettingsOpen((prev) => !prev)}
             className={cx(
               "flex h-9 w-9 cursor-pointer items-center justify-center rounded border transition-colors",

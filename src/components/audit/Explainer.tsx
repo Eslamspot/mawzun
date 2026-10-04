@@ -11,6 +11,7 @@
 
 import { useState } from "react";
 import { Icon } from "@/components/ui/Icon";
+import { useLang } from "@/context/LanguageContext";
 import { cx } from "@/lib/cx";
 import { t } from "@/lib/typography";
 import { CodeChip, StatusChip } from "./parts";
@@ -37,6 +38,7 @@ export function Explainer({
   findings: readonly Finding[];
 }) {
   const [phase, setPhase] = useState<Phase>({ name: "idle" });
+  const { s } = useLang();
 
   async function explain() {
     setPhase({ name: "loading" });
@@ -84,7 +86,7 @@ export function Explainer({
       <div className="flex flex-wrap items-center justify-between gap-space-sm">
         <span className={cx(t.label, "flex items-center gap-space-xs font-semibold text-on-surface")}>
           <Icon name="psychology" className="text-lg text-on-gold-container" />
-          شرح الحكم بلغة مبسطة
+          {s("ex.title")}
         </span>
         <button
           type="button"
@@ -96,7 +98,7 @@ export function Explainer({
           )}
         >
           <Icon name="auto_awesome" className="text-base" />
-          {phase.name === "loading" ? "جارٍ الشرح…" : "اشرح هذا الحكم"}
+          {phase.name === "loading" ? s("ex.loading") : s("ex.btn")}
         </button>
       </div>
 
@@ -106,7 +108,7 @@ export function Explainer({
             aria-hidden="true"
             className="animate-shimmer absolute inset-y-0 w-1/3 bg-gradient-to-l from-transparent via-gold/30 to-transparent"
           />
-          <p className={cx(t.bodySm, "text-on-surface-variant")}>النموذج يقرأ الحكم ووقائعه…</p>
+          <p className={cx(t.bodySm, "text-on-surface-variant")}>{s("ex.wait")}</p>
         </div>
       )}
 
@@ -121,7 +123,7 @@ export function Explainer({
           <p className={cx(t.body, "leading-loose text-on-surface")}>{phase.explanation}</p>
           {phase.citations.length > 0 && (
             <div className="flex flex-wrap items-center gap-space-xs">
-              <span className={cx(t.labelSm, "text-on-surface-variant")}>الاستشهادات:</span>
+              <span className={cx(t.labelSm, "text-on-surface-variant")}>{s("ex.cite")}</span>
               {phase.citations.map((c) => (
                 <CodeChip key={c.id}>
                   {c.id} · {c.label}
@@ -130,15 +132,13 @@ export function Explainer({
             </div>
           )}
           <span className={cx(t.code, "text-on-surface-variant")}>
-            شرح آلي عبر {phase.model} — يفسّر الحكم ولا يغيّره.
+            {s("ex.foot.a")} {phase.model} {s("ex.foot.b")}
           </span>
         </div>
       )}
 
       {phase.name === "idle" && (
-        <p className={cx(t.bodySm, "text-on-surface-variant")}>
-          شرح مبسط للحكم ووقائعه من النموذج، مستشهدًا بقيود هذه الواقعة فقط.
-        </p>
+        <p className={cx(t.bodySm, "text-on-surface-variant")}>{s("ex.idle")}</p>
       )}
     </div>
   );

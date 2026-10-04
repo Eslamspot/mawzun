@@ -1,27 +1,15 @@
 import type { Metadata } from "next";
-import { Amiri, IBM_Plex_Sans_Arabic, JetBrains_Mono } from "next/font/google";
+import { IBM_Plex_Sans_Arabic } from "next/font/google";
 import "./globals.css";
 import { AppShell } from "@/components/layout/AppShell";
 import { AuditProvider } from "@/context/AuditContext";
+import { LanguageProvider } from "@/context/LanguageContext";
 import { ThemeProvider } from "@/context/ThemeContext";
 
 const plexArabic = IBM_Plex_Sans_Arabic({
   variable: "--font-plex-arabic",
   weight: ["400", "500", "600", "700"],
   subsets: ["arabic", "latin"],
-  display: "swap",
-});
-
-const amiri = Amiri({
-  variable: "--font-amiri",
-  weight: ["400", "700"],
-  subsets: ["arabic", "latin"],
-  display: "swap",
-});
-
-const jetBrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains",
-  subsets: ["latin"],
   display: "swap",
 });
 
@@ -36,7 +24,7 @@ export default function RootLayout(props: LayoutProps<"/">) {
     <html
       lang="ar"
       dir="rtl"
-      className={`${plexArabic.variable} ${amiri.variable} ${jetBrainsMono.variable} h-full antialiased`}
+      className={`${plexArabic.variable} h-full antialiased`}
     >
       <head>
         {/*
@@ -60,9 +48,11 @@ export default function RootLayout(props: LayoutProps<"/">) {
       </head>
       <body className="min-h-full">
         <ThemeProvider>
-          <AuditProvider>
-            <AppShell>{props.children}</AppShell>
-          </AuditProvider>
+          <LanguageProvider>
+            <AuditProvider>
+              <AppShell>{props.children}</AppShell>
+            </AuditProvider>
+          </LanguageProvider>
         </ThemeProvider>
       </body>
     </html>
