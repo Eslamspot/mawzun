@@ -124,16 +124,8 @@ export function Hero() {
         <div className="absolute bottom-0 left-1/3 h-56 w-56 rounded-full bg-gold/20 blur-[100px]" />
       </div>
 
-      <div className="relative mx-auto flex w-full max-w-7xl flex-col gap-space-xl px-margin-desktop py-space-xl md:py-16">
+      <div className="relative mx-auto flex w-full max-w-7xl flex-col gap-space-lg px-gutter py-space-xl md:gap-space-xl md:px-margin-desktop md:py-16">
         <div className="flex flex-col items-start gap-space-md">
-          <span className="inline-flex items-center gap-space-xs rounded-full border border-gold/40 bg-gold/10 px-space-md py-1">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-live-ping absolute inline-flex h-full w-full rounded-full bg-gold" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-gold" />
-            </span>
-            <span className={cx(t.labelSm, "font-semibold text-gold")}>{s("hero.badge")}</span>
-          </span>
-
           <h1 className={cx(t.hero, "max-w-3xl text-on-night")}>
             {s("hero.title.1")} <span className="text-gold">{s("hero.title.2")}</span>
           </h1>

@@ -74,13 +74,13 @@ export function AuditWorkspace() {
     <div className="min-h-screen bg-surface">
       <Hero />
 
-      <div className="w-full border-b-2 border-gold/60 bg-surface-container-low px-margin-desktop py-space-sm shadow-sm">
+      <div className="w-full border-b-2 border-gold/60 bg-surface-container-low px-gutter py-space-sm shadow-sm md:px-margin-desktop">
         <div className="mx-auto flex w-full max-w-7xl flex-col justify-between gap-space-sm md:flex-row md:items-center">
           <Stepper activeId={activeId} unlockedIds={unlockedIds} />
         </div>
       </div>
 
-      <div className="mx-auto flex w-full max-w-7xl flex-col gap-space-xl px-margin-desktop py-space-xl">
+      <div className="mx-auto flex w-full max-w-7xl flex-col gap-space-xl px-gutter py-space-xl md:px-margin-desktop">
         <InputSection />
 
         {revealed && (
@@ -105,7 +105,7 @@ export function AuditWorkspace() {
         <div
           className={cx(
             t.code,
-            "w-full flex flex-col items-center justify-between gap-space-sm px-margin-desktop text-on-night/70 md:flex-row",
+            "w-full flex flex-col items-center justify-between gap-space-sm px-gutter text-on-night/70 md:flex-row md:px-margin-desktop",
           )}
         >
           <div className="flex items-center gap-space-md">

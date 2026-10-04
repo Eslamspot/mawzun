@@ -26,7 +26,6 @@ const ar: Record<string, string> = {
   "topbar.theme.toLight": "التحويل إلى الوضع الفاتح",
   "topbar.settings": "الإعدادات",
 
-  "hero.badge": "هوية سعودية · حيّ الآن · ONLINE",
   "hero.title.1": "مَوْزُون … حين تخون الترجمة المعنى،",
   "hero.title.2": "نكشف الانزياح",
   "hero.sub": "الصق النص الأصلي وترجمته — نكشف لك مواضع انزياح المعنى مع السبب والدليل.",
@@ -213,6 +212,7 @@ const ar: Record<string, string> = {
   "lg.save": "الحفظ: SHA-256",
 
   "se.ph": "ابحث في المراحل وبنك القيود...",
+  "se.clear": "مسح البحث",
   "se.empty": "لم نجد أي نتائج مطابقة لعبارة البحث",
   "se.empty.open": "بنك القيود يُفتح بعد تنفيذ الفحص، فيصبح بحثه متاحًا هنا.",
   "se.empty.try": "جرّب البحث عن «لا يجوز»، «الشرط»، «الشريعة»، أو «الفحص».",
@@ -255,7 +255,6 @@ const en: Record<string, string> = {
   "topbar.theme.toLight": "Switch to light mode",
   "topbar.settings": "Settings",
 
-  "hero.badge": "Saudi identity · Live now · ONLINE",
   "hero.title.1": "Mawzun … when translation betrays meaning,",
   "hero.title.2": "we expose the drift",
   "hero.sub": "Paste the source text and its translation — we reveal where meaning drifted, with reason and evidence.",
@@ -442,6 +441,7 @@ const en: Record<string, string> = {
   "lg.save": "Sealed: SHA-256",
 
   "se.ph": "Search stages and the constraint bank...",
+  "se.clear": "Clear search",
   "se.empty": "No matches for",
   "se.empty.open": "The bank opens after a run, enabling search here.",
   "se.empty.try": "Try “لا يجوز”, “الشرط”, “الشريعة”, or “الفحص”.",

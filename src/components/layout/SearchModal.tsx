@@ -126,7 +126,8 @@ export function SearchModal({
             <button
               type="button"
               onClick={() => setQuery("")}
-              className="text-outline hover:text-on-surface p-1"
+              className="text-outline hover:text-on-surface p-2"
+            aria-label={s("se.clear")}
             >
               <Icon name="close" className="text-sm" />
             </button>

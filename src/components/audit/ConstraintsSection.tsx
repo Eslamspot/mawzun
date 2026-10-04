@@ -63,7 +63,7 @@ export function ConstraintsSection() {
             onClick={() => setKind(id)}
             className={cx(
               t.labelSm,
-              "rounded-xs px-space-sm py-1 font-medium transition-colors",
+              "rounded-xs px-space-md py-2 font-medium transition-colors",
               kind === id
                 ? "bg-primary text-on-primary"
                 : "bg-surface-container-lowest text-on-surface-variant hover:bg-surface-container",
