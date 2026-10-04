@@ -14,18 +14,20 @@
 
 import { Icon } from "@/components/ui/Icon";
 import { useAudit } from "@/context/AuditContext";
+import { useLang } from "@/context/LanguageContext";
 import { cx } from "@/lib/cx";
 import { t } from "@/lib/typography";
 import { CodeChip, InsetPanel, KeyValue, StatusChip, WorkflowCard } from "./parts";
 
-const VERDICT_LABEL: Record<string, string> = {
-  faithful: "مطابق",
-  needs_revision: "يحتاج تعديل",
-  refer: "وقف وتحويل",
+const VERDICT_KEYS: Record<string, string> = {
+  faithful: "v.faithful",
+  needs_revision: "v.needs_revision",
+  refer: "v.refer",
 };
 
 export function LedgerSection() {
   const audit = useAudit();
+  const { s } = useLang();
   const record = audit.record;
 
   if (!record) {
@@ -33,50 +35,52 @@ export function LedgerSection() {
       <WorkflowCard
         id="step-5"
         number={5}
-        title="الشهادة والسجل (Certificate & Log)"
-        subtitle="شهادة التدقيق وسجل الإجراءات غير القابل للتعديل"
-        aside={<StatusChip tone="neutral">بانتظار الفحص</StatusChip>}
+        title={s("lg.title")}
+        subtitle={s("lg.sub")}
+        aside={<StatusChip tone="neutral">{s("lg.wait")}</StatusChip>}
       >
         <InsetPanel>
-          <p className={cx(t.body, "text-on-surface-variant")}>
-            نفّذ الفحص ليصدر السجل وبصمته.
-          </p>
+          <p className={cx(t.body, "text-on-surface-variant")}>{s("lg.wait.body")}</p>
         </InsetPanel>
       </WorkflowCard>
     );
   }
 
+  const checks = (n: number) => `${n} ${s("log.checks")}`;
+  const issues = (n: number) => `${n} ${s("log.issues")}`;
+  const findingsCount = (n: number) => `${n} ${s("log.findings")}`;
+
   const log = [
     {
       id: "OP-IN",
-      operation: "استلام المدخلات ومطابقة القيود",
-      result: `${record.findings.length} واقعة مقابل ${Object.values(record.layerSummary).reduce((a, s) => a + s.checked, 0)} فحصًا`,
+      operation: s("log.op.in"),
+      result: `${findingsCount(record.findings.length)} / ${checks(Object.values(record.layerSummary).reduce((a, summ) => a + summ.checked, 0))}`,
       tone: "neutral" as const,
     },
     {
       id: "DET-LAYER-01",
-      operation: "الطبقة الحتمية: الأرقام والإحالات ودرجة الثبوت",
-      result: `${record.layerSummary.L1.checked} فحصًا · ${record.layerSummary.L1.shifted + record.layerSummary.L1.missing} مخالفة`,
+      operation: s("log.op.l1"),
+      result: `${checks(record.layerSummary.L1.checked)} · ${issues(record.layerSummary.L1.shifted + record.layerSummary.L1.missing)}`,
       tone: record.layerSummary.L1.shifted + record.layerSummary.L1.missing > 0 ? ("escalate" as const) : ("verified" as const),
     },
     {
       id: "LEX-LAYER-02",
-      operation: "الطبقة المعجمية: المصطلح وقوة الحكم والشرط",
-      result: `${record.layerSummary.L2.checked} فحصًا · ${record.layerSummary.L2.shifted + record.layerSummary.L2.missing} مخالفة`,
+      operation: s("log.op.l2"),
+      result: `${checks(record.layerSummary.L2.checked)} · ${issues(record.layerSummary.L2.shifted + record.layerSummary.L2.missing)}`,
       tone: record.layerSummary.L2.shifted + record.layerSummary.L2.missing > 0 ? ("escalate" as const) : ("verified" as const),
     },
     {
       id: "SEM-LAYER-03",
-      operation: "الطبقة الدلالية: وقائع النموذج بعد التحقق من الاقتباس",
+      operation: s("log.op.l3"),
       result: record.model.id
-        ? `${record.findings.filter((f) => f.layer === "L3").length} واقعة · ${record.model.id}`
-        : "لم تُشغَّل: لا ربط نموذج في هذا التشغيل",
+        ? `${findingsCount(record.findings.filter((f) => f.layer === "L3").length)} · ${record.model.id}`
+        : s("log.l3off"),
       tone: record.model.id ? ("verified" as const) : ("neutral" as const),
     },
     {
       id: "VRD-RESOLVER",
-      operation: "إصدار الحكم وختم السجل",
-      result: VERDICT_LABEL[record.verdict] ?? record.verdict,
+      operation: s("log.op.vrd"),
+      result: s(VERDICT_KEYS[record.verdict] ?? "lg.title"),
       tone: record.verdict === "faithful" ? ("verified" as const) : record.verdict === "refer" ? ("neutral" as const) : ("revision" as const),
     },
   ];
@@ -85,15 +89,15 @@ export function LedgerSection() {
     <WorkflowCard
       id="step-5"
       number={5}
-      title="الشهادة والسجل (Certificate & Log)"
-      subtitle="شهادة التدقيق وسجل الإجراءات، وكل ما يلزم لإعادة الوصول إلى الحكم نفسه"
-      aside={<CodeChip>الحفظ: SHA-256</CodeChip>}
+      title={s("lg.title")}
+      subtitle={s("lg.sub")}
+      aside={<CodeChip>{s("lg.save")}</CodeChip>}
     >
       <div className="grid grid-cols-1 gap-space-lg lg:grid-cols-3">
         <div className="flex flex-col justify-between gap-space-md rounded-xl border border-outline-variant bg-surface-container-low p-space-lg shadow-sm">
           <div className="flex flex-col gap-space-md">
             <div className="flex items-center justify-between">
-              <span className={cx(t.label, "font-semibold text-on-surface")}>شهادة الفحص</span>
+              <span className={cx(t.label, "font-semibold text-on-surface")}>{s("lg.cert")}</span>
               <StatusChip
                 tone={record.verdict === "faithful" ? "verified" : record.verdict === "refer" ? "neutral" : "revision"}
               >
@@ -102,7 +106,7 @@ export function LedgerSection() {
             </div>
 
             <div className="rounded-xs border border-outline-variant bg-surface-container-lowest p-space-md">
-              <span className={cx(t.code, "block text-on-surface-variant")}>بصمة السجل (SHA-256)</span>
+              <span className={cx(t.code, "block text-on-surface-variant")}>{s("lg.digest")}</span>
               <span
                 dir="ltr"
                 className={cx(t.code, "mt-1 block break-all font-mono-telemetry text-primary select-all")}
@@ -112,23 +116,23 @@ export function LedgerSection() {
             </div>
 
             <div className="font-body-sm">
-              <KeyValue label="إصدار المحرك:" value={record.engineVersion} mono />
-              <KeyValue label="إصدار بنك القيود:" value={record.bank.version} mono />
+              <KeyValue label={s("lg.engine")} value={record.engineVersion} mono />
+              <KeyValue label={s("lg.bank")} value={record.bank.version} mono />
               <KeyValue
-                label="النموذج المستعمل:"
-                value={record.model.id ?? "لم يُستعمل نموذج"}
+                label={s("lg.model")}
+                value={record.model.id ?? s("lg.nomodel")}
                 mono
                 tone={record.model.id ? undefined : "revision"}
               />
               <KeyValue
-                label="بصمة قالب الطلب:"
+                label={s("lg.prompt")}
                 value={record.model.promptHash ? `${record.model.promptHash.slice(0, 12)}…` : "—"}
                 mono
               />
-              <KeyValue label="تاريخ الإصدار:" value={record.createdAt} mono />
+              <KeyValue label={s("lg.issued")} value={record.createdAt} mono />
               <KeyValue
-                label="قرار المراجع:"
-                value={record.reviewerDecision ?? "لم يُسجَّل بعد"}
+                label={s("lg.reviewer")}
+                value={record.reviewerDecision ?? s("lg.noreview")}
                 tone={record.reviewerDecision ? "verified" : "revision"}
               />
             </div>
@@ -146,7 +150,7 @@ export function LedgerSection() {
               )}
             >
               <Icon name="data_object" className="text-[16px]" />
-              نسخ السجل (JSON)
+              {s("lg.copy")}
             </button>
             <button
               type="button"
@@ -157,25 +161,27 @@ export function LedgerSection() {
               )}
             >
               <Icon name="fact_check" className="text-[16px]" />
-              تحقق من السجل
+              {s("lg.verify")}
             </button>
           </div>
         </div>
 
         <div className="flex flex-col gap-space-md rounded-xl border border-outline-variant bg-surface-container-low p-space-lg shadow-sm lg:col-span-2">
           <div className="flex items-center justify-between">
-            <span className={cx(t.label, "font-semibold text-on-surface")}>سجل العملية ومسار التدقيق</span>
-            <span className={cx(t.code, "text-on-surface-variant")}>{log.length} عمليات بالترتيب</span>
+            <span className={cx(t.label, "font-semibold text-on-surface")}>{s("lg.log")}</span>
+            <span className={cx(t.code, "text-on-surface-variant")}>
+              {log.length} {s("lg.ops")}
+            </span>
           </div>
 
           <div className="overflow-x-auto">
-            <table className={cx(t.code, "w-full text-right")}>
+            <table className={cx(t.code, "w-full text-end")}>
               <thead>
                 <tr className="bg-surface-container text-on-surface-variant">
-                  <th className="rounded-r p-space-xs">التسلسل</th>
-                  <th className="p-space-xs">العملية المنجزة</th>
-                  <th className="p-space-xs">المعرف</th>
-                  <th className="rounded-l p-space-xs">النتيجة</th>
+                  <th className="rounded-s p-space-xs">{s("lg.th.seq")}</th>
+                  <th className="p-space-xs">{s("lg.th.op")}</th>
+                  <th className="p-space-xs">{s("lg.th.id")}</th>
+                  <th className="rounded-e p-space-xs">{s("lg.th.res")}</th>
                 </tr>
               </thead>
               <tbody className="text-on-surface">
@@ -203,7 +209,7 @@ export function LedgerSection() {
               )}
             >
               <StatusChip tone={audit.verification.ok ? "verified" : "escalate"}>
-                {audit.verification.ok ? "السجل سليم" : "السجل غير سليم"}
+                {audit.verification.ok ? s("lg.valid") : s("lg.invalid")}
               </StatusChip>
               <ul className="mt-space-xs flex flex-col gap-1">
                 {audit.verification.notes.map((note, index) => (
@@ -218,16 +224,13 @@ export function LedgerSection() {
           <div className="mt-auto rounded-xs border border-outline-variant bg-surface-container-lowest p-space-sm">
             <div className={cx(t.bodySm, "flex items-start gap-space-xs text-on-surface-variant")}>
               <Icon name="info" className="mt-0.5 text-[16px] text-outline" />
-              <span>
-                البصمة تثبت السلامة والنسبة والترتيب، ولا تثبت صحة الحكم الشرعي ولا صحة النص الأصلي؛ وكلاهما
-                مسؤولية المراجع المختص.
-              </span>
+              <span>{s("lg.seal")}</span>
             </div>
           </div>
 
           <details className="rounded-lg border border-outline-variant bg-surface-container-lowest p-space-sm">
             <summary className={cx(t.labelSm, "cursor-pointer font-semibold text-on-surface")}>
-              السجل الكامل (JSON)
+              {s("lg.full")}
             </summary>
             <pre
               dir="ltr"

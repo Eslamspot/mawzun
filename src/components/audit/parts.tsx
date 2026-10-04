@@ -17,6 +17,7 @@ import type { ReactNode } from "react";
 import { cx } from "@/lib/cx";
 import { t } from "@/lib/typography";
 import { Icon } from "@/components/ui/Icon";
+import { useLang } from "@/context/LanguageContext";
 import { STAGES } from "@/lib/stages";
 import type { Finding } from "@/lib/audit/types";
 
@@ -134,7 +135,7 @@ export function KeyValue({
       <span
         className={cx(
           mono ? t.code : t.bodySm,
-          "text-right",
+          "text-end",
           tone === "escalate" ? "text-error" : tone === "revision" ? "text-secondary" : "text-on-surface",
         )}
       >
@@ -150,23 +151,25 @@ export const FINDING_TONE: Record<Finding["cls"], SemanticTone> = {
   missing: "revision",
 };
 
-export const FINDING_LABEL: Record<Finding["cls"], string> = {
-  preserved: "محفوظ",
-  shifted: "منزاح",
-  missing: "مفقود",
-};
-
 /**
- * The stepper: numbered pills joined by direction arrows.
+ * The stepper: one connected strip showing the five stages in order.
  *
  * A stage that has not been reached yet is not a link — the later sections do
  * not exist in the DOM until the audit has run, so offering them as navigation
  * would promise targets that are not there. Locked stages render as plain
- * labels, dimmed, with no href.
+ * labels, dimmed, with no href. Segments join edge-to-edge (no separators)
+ * so the strip reads as one sequence, not five islands.
  */
 export function Stepper({ activeId, unlockedIds }: { activeId: string; unlockedIds: readonly string[] }) {
+  const { s } = useLang();
+  const shape =
+    "flex flex-1 items-center justify-center gap-space-xs px-space-sm py-1.5 whitespace-nowrap";
+
   return (
-    <nav aria-label="مراحل سير العمل" className="flex items-center overflow-x-auto gap-space-xs py-1">
+    <nav
+      aria-label={s("step.aria")}
+      className="flex w-full items-stretch gap-0 overflow-x-auto rounded-lg border border-outline-variant bg-surface-container-lowest py-1"
+    >
       {STAGES.map((stage, index) => {
         const isActive = stage.id === activeId;
         const isDone = index < STAGES.findIndex((s) => s.id === activeId);
@@ -174,52 +177,51 @@ export function Stepper({ activeId, unlockedIds }: { activeId: string; unlockedI
 
         if (!isUnlocked) {
           return (
-            <span key={stage.id} className="flex items-center gap-space-xs">
-              {index > 0 && (
-                <span aria-hidden="true" className={cx(t.code, "select-none text-outline-variant/60")}>
-                  ←
-                </span>
-              )}
+            <span
+              key={stage.id}
+              aria-disabled="true"
+              title={s("locked.hint")}
+              className={cx(shape, "text-on-surface-variant opacity-45")}
+            >
               <span
-                aria-disabled="true"
-                title="يظهر هذا القسم بعد تنفيذ الفحص"
                 className={cx(
-                  "flex items-center gap-space-xs rounded-xs px-space-md py-1.5 whitespace-nowrap opacity-45",
-                  "bg-surface-container text-on-surface-variant",
+                  t.code,
+                  "flex h-5 w-5 items-center justify-center rounded-full bg-surface-container text-on-surface-variant",
                 )}
               >
-                <span className={cx(t.code, "text-on-surface-variant")}>{stage.ordinal}</span>
-                <span className={cx(t.label, "whitespace-nowrap")}>{stage.title}</span>
+                {stage.ordinal}
               </span>
+              <span className={cx(t.label, "hidden whitespace-nowrap lg:inline")}>{s(`stage.${stage.id}`)}</span>
             </span>
           );
         }
 
         return (
-          <span key={stage.id} className="flex items-center gap-space-xs">
-            {index > 0 && (
-              <span aria-hidden="true" className={cx(t.code, "select-none text-outline-variant")}>
-                ←
-              </span>
+          <a
+            key={stage.id}
+            href={`#${stage.id}`}
+            aria-current={isActive ? "true" : undefined}
+            className={cx(
+              shape,
+              "transition-colors",
+              isActive
+                ? "bg-primary text-on-primary"
+                : isDone
+                  ? "bg-tertiary-fixed/30 text-on-tertiary-fixed-variant hover:bg-tertiary-fixed/50"
+                  : "text-on-surface hover:bg-surface-container-high",
             )}
-            <a
-              href={`#${stage.id}`}
-              aria-current={isActive ? "true" : undefined}
+          >
+            <span
               className={cx(
-                "flex items-center gap-space-xs rounded-xs px-space-md py-1.5 transition-colors whitespace-nowrap",
-                isActive
-                  ? "bg-primary text-on-primary"
-                  : isDone
-                    ? "bg-tertiary-fixed/30 text-on-tertiary-fixed-variant hover:bg-tertiary-fixed/50"
-                    : "bg-surface-container text-on-surface hover:bg-surface-container-high",
+                t.code,
+                "flex h-5 w-5 items-center justify-center rounded-full",
+                isActive ? "bg-on-primary/20" : "bg-surface-container text-on-surface-variant",
               )}
             >
-              <span className={cx(t.code, isActive ? "opacity-80" : "text-on-surface-variant")}>
-                {stage.ordinal}
-              </span>
-              <span className={cx(t.label, "whitespace-nowrap")}>{stage.title}</span>
-            </a>
-          </span>
+              {stage.ordinal}
+            </span>
+            <span className={cx(t.label, "hidden whitespace-nowrap lg:inline")}>{s(`stage.${stage.id}`)}</span>
+          </a>
         );
       })}
     </nav>

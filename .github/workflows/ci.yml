@@ -40,6 +40,9 @@ jobs:
       - name: Knowledge check
         run: bun run knowledge:check
 
+      - name: I18n check
+        run: bun run i18n:check
+
       - name: Docs check
         run: bun run docs:check
 

@@ -21,7 +21,7 @@ mawzun-project/
 ├── src/
 │   ├── app/                  # App Router
 │   │   ├── globals.css       # رموز التصميم (@theme) ونمط الجذر
-│   │   ├── layout.tsx        # الجذر: RTL + الخطوط + ThemeProvider + AppShell + AuditProvider
+│   │   ├── layout.tsx        # الجذر: RTL + خط واحد + ThemeProvider + LanguageProvider + AppShell + AuditProvider
 │   │   ├── page.tsx          # الصفحة الوحيدة: AuditWorkspace
 │   │   └── api/audit/
 │   │       └── route.ts      # POST /api/audit (ربط نموذج Workers AI)
@@ -33,7 +33,11 @@ mawzun-project/
 │   │   └── ui/               # Icon (العناصر الأساسية المتبقية)
 │   ├── context/
 │   │   ├── AuditContext.tsx  # حالة الفحص والسجل والتحقق
+│   │   ├── LanguageContext.tsx # لغة الواجهة (عربي/إنجليزي) مع حفظ الاختيار وقلب الاتجاه
+│   │   ├── ThemeContext.tsx  # الوضع الليلي مع حفظ الاختيار
 │   │   └── ToastContext.tsx  # الإشعارات العابرة
+│   └── lib/
+│       ├── i18n.ts           # قاموس الواجهة (عربي/إنجليزي) — بيانات الحزمة والمحرك تبقى عربية
 │   └── lib/
 │       ├── audit/            # محرّك الفحص ثلاثي الطبقات
 │       │   ├── constraint-bank.ts     # القيود الخمس وأصولها

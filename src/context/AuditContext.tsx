@@ -37,6 +37,8 @@ import {
   type AuditResult,
   type VerifyOutcome,
 } from "@/lib/audit";
+import { currentLang } from "@/context/LanguageContext";
+import { STRINGS } from "@/lib/i18n";
 import type { AuditInput, ContentLevel, WorkType } from "@/lib/audit/types";
 
 const STORAGE_KEY = "mawzun_audit_state_v1";
@@ -158,7 +160,7 @@ export function AuditProvider({ children }: { children: ReactNode }) {
     const input = buildInput();
 
     if (!input.sourceText.trim() || !input.derivedText.trim()) {
-      setError("النص الأصلي والنص المشتق مطلوبان معًا.");
+      setError(STRINGS[currentLang()]["audit.required"]);
       return;
     }
 

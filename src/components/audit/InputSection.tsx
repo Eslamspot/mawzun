@@ -12,23 +12,24 @@
 import { useEffect, useState } from "react";
 import { Icon } from "@/components/ui/Icon";
 import { useAudit } from "@/context/AuditContext";
+import { useLang } from "@/context/LanguageContext";
 import { sha256Hex } from "@/lib/audit";
 import { cx } from "@/lib/cx";
 import { t } from "@/lib/typography";
 import type { ContentLevel, WorkType } from "@/lib/audit/types";
 import { CodeChip, StatusChip, WorkflowCard } from "./parts";
 
-const WORK_TYPES: { id: WorkType; label: string; latin: string }[] = [
-  { id: "translate", label: "ترجمة", latin: "Translation" },
-  { id: "summarize", label: "تلخيص", latin: "Summary" },
-  { id: "paraphrase", label: "إعادة صياغة", latin: "Paraphrase" },
+const WORK_TYPES: { id: WorkType; key: string }[] = [
+  { id: "translate", key: "op.translate" },
+  { id: "summarize", key: "op.summarize" },
+  { id: "paraphrase", key: "op.paraphrase" },
 ];
 
-const LEVELS: { id: ContentLevel; label: string; latin: string; hint: string }[] = [
-  { id: "A", label: "المستوى أ", latin: "أصل مستقر", hint: "قرآن وحديث صحيح وأركان — فحص صارم موثق بالمصدر." },
-  { id: "B", label: "المستوى ب", latin: "شرح وتعريف", hint: "شرح المفاهيم والاستدلال من المادة المعتمدة مع إظهار المرجع." },
-  { id: "C", label: "المستوى ج", latin: "خلافي وحساس", hint: "مسائل خلافية أو عالية الحساسية — إجابة مقيدة أو بيان الخلاف أو الإحالة للمختص." },
-  { id: "D", label: "المستوى د", latin: "حالة شخصية", hint: "فتوى أو حالة خاصة — وقف وتحويل دائم، لا حكم مستقل من النظام." },
+const LEVELS: { id: ContentLevel; key: string; hintKey: string }[] = [
+  { id: "A", key: "level.A", hintKey: "level.A.h" },
+  { id: "B", key: "level.B", hintKey: "level.B.h" },
+  { id: "C", key: "level.C", hintKey: "level.C.h" },
+  { id: "D", key: "level.D", hintKey: "level.D.h" },
 ];
 
 const TARGET_LANGUAGES: { id: string; label: string }[] = [
@@ -130,24 +131,20 @@ function useShortHash(text: string): string | null {
 
 function Pills<T extends string>({
   label,
-  latin,
   options,
   value,
   onChange,
   columns,
 }: {
   label: string;
-  latin: string;
-  options: { id: T; label: string; latin: string }[];
+  options: { id: T; label: string }[];
   value: T;
   onChange: (next: T) => void;
   columns: string;
 }) {
   return (
     <div className="flex flex-col gap-space-xs">
-      <span className={cx(t.label, "font-semibold text-on-surface")}>
-        {label} <span className={cx(t.bodySm, "text-on-surface-variant")}>({latin})</span>
-      </span>
+      <span className={cx(t.label, "font-semibold text-on-surface")}>{label}</span>
       <div className={cx("grid gap-space-xs", columns)}>
         {options.map((option) => (
           <label key={option.id} className="cursor-pointer">
@@ -178,6 +175,7 @@ function Pills<T extends string>({
 
 export function InputSection() {
   const audit = useAudit();
+  const { s } = useLang();
   const sourceHash = useShortHash(audit.sourceText);
   const derivedHash = useShortHash(audit.derivedText);
   const words = (value: string) => value.trim().split(/\s+/).filter(Boolean).length;
@@ -201,35 +199,33 @@ export function InputSection() {
     <WorkflowCard
       id="step-1"
       number={1}
-      title="الإدخال والتوصيف (Input & Classification)"
-      subtitle="تغذية النص الأصلي المرجعي والنص المشتق الخاضع للمراجعة الدلالية"
+      title={s("in.title")}
+      subtitle={s("in.sub")}
       aside={
-        <StatusChip tone={ready ? "verified" : "neutral"} icon={ready ? "check" : "pending"}>
-          {ready ? "جاهز للفحص" : "بانتظار المدخلات"}
-        </StatusChip>
+        ready ? (
+          <StatusChip tone="verified" icon="check">
+            {s("in.ready")}
+          </StatusChip>
+        ) : undefined
       }
     >
       <div className="grid grid-cols-1 gap-space-md rounded-lg border border-outline-variant bg-surface-container-low p-space-md md:grid-cols-3">
         <Pills
-          label="نوع العمل"
-          latin="Operation Type"
-          options={WORK_TYPES}
+          label={s("in.op")}
+          options={WORK_TYPES.map((option) => ({ id: option.id, label: s(option.key) }))}
           value={audit.workType}
           onChange={audit.setWorkType}
           columns="grid-cols-3"
         />
         <Pills
-          label="مستوى المحتوى"
-          latin="Content Level"
-          options={LEVELS}
+          label={s("in.level")}
+          options={LEVELS.map((option) => ({ id: option.id, label: s(option.key) }))}
           value={audit.contentLevel}
           onChange={audit.setContentLevel}
           columns="grid-cols-4"
         />
         <div className="flex flex-col gap-space-xs">
-          <span className={cx(t.label, "font-semibold text-on-surface")}>
-            اللغة الهدف <span className={cx(t.bodySm, "text-on-surface-variant")}>(Target)</span>
-          </span>
+          <span className={cx(t.label, "font-semibold text-on-surface")}>{s("in.target")}</span>
           <select
             value={audit.targetLanguage}
             onChange={(event) => audit.setTargetLanguage(event.target.value)}
@@ -244,16 +240,15 @@ export function InputSection() {
               </option>
             ))}
           </select>
-          <span className={cx(t.bodySm, "text-on-surface-variant")}>
-            المقابلات المعتمدة إنجليزية فقط؛ اللغات الأخرى تُفحص حتميًا ودلاليًا،
-            وما لم يُفحص يُعلن في السجل.
-          </span>
+          <span className={cx(t.bodySm, "text-on-surface-variant")}>{s("in.target.hint")}</span>
         </div>
       </div>
 
       <div className={cx(t.bodySm, "rounded-lg border border-gold/40 bg-gold-container/40 p-space-sm leading-relaxed text-on-surface")}>
-        <span className="font-bold">المستوى المختار ({LEVELS.find((level) => level.id === audit.contentLevel)?.label}): </span>
-        {LEVELS.find((level) => level.id === audit.contentLevel)?.hint}
+        <span className="font-bold">
+          {s(LEVELS.find((level) => level.id === audit.contentLevel)?.key ?? "level.B")}:{" "}
+        </span>
+        {s(LEVELS.find((level) => level.id === audit.contentLevel)?.hintKey ?? "level.B.h")}
       </div>
 
       <div className="grid grid-cols-1 gap-space-lg lg:grid-cols-2">
@@ -264,9 +259,9 @@ export function InputSection() {
               className={cx(t.label, "flex items-center gap-space-xs font-semibold text-on-surface")}
             >
               <span className="h-2 w-2 rounded-full bg-secondary" />
-              النص الأصلي (Original Text)
+              {s("in.src")}
             </label>
-            <CodeChip>المرجع: الحزمة العلمية المعتمدة</CodeChip>
+            <CodeChip>{s("in.src.ref")}</CodeChip>
           </div>
           <textarea
             id="original-text"
@@ -274,15 +269,19 @@ export function InputSection() {
             rows={7}
             value={audit.sourceText}
             onChange={(event) => audit.setSourceText(event.target.value)}
-            placeholder="الصق النص الشرعي الأصلي هنا."
+            placeholder={s("in.src.ph")}
             className={cx(
               t.body,
               "w-full resize-y rounded-lg bg-surface-container-low p-space-md leading-relaxed text-on-surface transition-all focus:bg-surface-container-lowest focus:shadow-md focus:outline-none",
             )}
           />
           <div className={cx(t.code, "flex items-center justify-between px-1 text-on-surface-variant")}>
-            <span>عدد الكلمات: {words(audit.sourceText)}</span>
-            <span>بصمة النص: {audit.sourceText.trim() ? (sourceHash ?? "…") : "—"}</span>
+            <span>
+              {s("in.words")} {words(audit.sourceText)}
+            </span>
+            <span>
+              {s("in.fp")} {audit.sourceText.trim() ? (sourceHash ?? "…") : "—"}
+            </span>
           </div>
         </div>
 
@@ -293,9 +292,9 @@ export function InputSection() {
               className={cx(t.label, "flex items-center gap-space-xs font-semibold text-on-surface")}
             >
               <span className="h-2 w-2 rounded-full bg-secondary-container" />
-              النص المشتق (Derived Text)
+              {s("in.drv")}
             </label>
-            <CodeChip>مخرج خاضع للمراجعة</CodeChip>
+            <CodeChip>{s("in.drv.tag")}</CodeChip>
           </div>
           <textarea
             id="derived-text"
@@ -303,15 +302,19 @@ export function InputSection() {
             rows={7}
             value={audit.derivedText}
             onChange={(event) => audit.setDerivedText(event.target.value)}
-            placeholder="Paste the translation / summary / paraphrase here."
+            placeholder={s("in.drv.ph")}
             className={cx(
               t.body,
               "w-full resize-y rounded-lg bg-surface-container-low p-space-md leading-relaxed text-on-surface transition-all focus:bg-surface-container-lowest focus:shadow-md focus:outline-none",
             )}
           />
           <div className={cx(t.code, "flex items-center justify-between px-1 text-on-surface-variant")}>
-            <span>عدد الكلمات: {words(audit.derivedText)}</span>
-            <span>بصمة النص: {audit.derivedText.trim() ? (derivedHash ?? "…") : "—"}</span>
+            <span>
+              {s("in.words")} {words(audit.derivedText)}
+            </span>
+            <span>
+              {s("in.fp")} {audit.derivedText.trim() ? (derivedHash ?? "…") : "—"}
+            </span>
           </div>
         </div>
       </div>
@@ -328,7 +331,7 @@ export function InputSection() {
           )}
         >
           <Icon name="play_arrow" className="text-base" />
-          {audit.isRunning ? "جارٍ الفحص…" : "نفّذ الفحص ثلاثي الطبقات"}
+          {audit.isRunning ? s("in.running") : s("in.run")}
           {audit.isRunning && (
             <span
               aria-hidden="true"
@@ -346,7 +349,7 @@ export function InputSection() {
           title="مثال عشوائي من الحالات الذهبية يوضح درسًا مختلفًا في كل مرة"
         >
           <Icon name="experiment" className="text-base" />
-          حمّل مثالًا عشوائيًا
+          {s("in.example")}
         </button>
         <button
           type="button"
@@ -357,7 +360,7 @@ export function InputSection() {
           )}
         >
           <Icon name="restart_alt" className="text-base" />
-          تهيئة
+          {s("in.reset")}
         </button>
         {audit.error && (
           <StatusChip tone="escalate" icon="error">
@@ -366,7 +369,7 @@ export function InputSection() {
         )}
         {exampleTag && (
           <StatusChip tone="revision" icon="school">
-            درس هذا المثال: {exampleTag}
+            {s("in.extag")} {exampleTag}
           </StatusChip>
         )}
       </div>
