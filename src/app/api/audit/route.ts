@@ -38,7 +38,10 @@ const GENERATION_MODELS = ["@cf/google/gemma-4-26b-a4b-it", "@cf/meta/llama-3.3-
 
 /** Attempts per model, with the backoff between them. */
 const ATTEMPTS_PER_MODEL = 2;
-const BACKOFF_MS = [1500];
+const BACKOFF_MS = [500];
+
+/** A hung model must never hold the whole audit past this ceiling. */
+const MODEL_ATTEMPT_TIMEOUT_MS = 40000;
 
 interface WorkersAiBinding {
   run(model: string, input: Record<string, unknown>): Promise<unknown>;
@@ -94,50 +97,82 @@ export async function POST(req: NextRequest) {
   let semantic: SemanticProvider;
 
   if (binding) {
+    // Narrowed once: the closures below capture `ai`, never the nullable binding.
+    const ai = binding;
     semantic = modelProvider(async (prompt) => {
       const promptHash = await sha256Hex(prompt);
       const attempts: string[] = [];
-      let lastError: unknown = null;
 
-      for (const model of GENERATION_MODELS) {
+      async function callOnce(model: string, input: Record<string, unknown>) {
+        const response = await ai.run(model, input);
+        return extractText(response);
+      }
+
+      function withTimeout(model: string, task: Promise<string>): Promise<string> {
+        let timer: ReturnType<typeof setTimeout> | undefined;
+        const ceiling = new Promise<string>((_, reject) => {
+          timer = setTimeout(
+            () => reject(new Error(`${model}: انتهت المهلة (${MODEL_ATTEMPT_TIMEOUT_MS / 1000} ث)`)),
+            MODEL_ATTEMPT_TIMEOUT_MS,
+          );
+        });
+        return Promise.race([task, ceiling]).finally(() => clearTimeout(timer));
+      }
+
+      // One racer per model: up to ATTEMPTS_PER_MODEL tries (empty replies are
+      // retried, transport errors fail that racer fast). The first valid
+      // non-empty reply wins, so a slow model never blocks a fast one.
+      async function raceModel(
+        model: (typeof GENERATION_MODELS)[number],
+      ): Promise<{ raw: string; model: string; promptHash: string }> {
+        let lastError: unknown = null;
         for (let attempt = 0; attempt < ATTEMPTS_PER_MODEL; attempt++) {
           try {
-            const response = await binding.run(model, {
-              messages: [
-                { role: "system", content: "أجب بـ JSON فقط دون أي نص إضافي." },
-                { role: "user", content: prompt },
-              ],
-              // A reasoning model bills its thinking against this ceiling, so a
-              // tight budget returns finish_reason "length" with empty content.
-              max_tokens: 2048,
-            });
+            const raw = await withTimeout(
+              model,
+              callOnce(model, {
+                messages: [
+                  { role: "system", content: "أجب بـ JSON فقط دون أي نص إضافي." },
+                  { role: "user", content: prompt },
+                ],
+                // A reasoning model bills its thinking against this ceiling, so a
+                // tight budget returns finish_reason "length" with empty content.
+                max_tokens: 2048,
+              }),
+            );
 
-            const raw = extractText(response);
             // HTTP-level success with empty content is a failure, not a result:
             // routing it on would make the operator think the model answered.
             if (raw.trim().length === 0) {
               attempts.push(`${model}: رد فارغ`);
               lastError = new Error(`${model} أعاد ردًا فارغًا`);
+              if (attempt < ATTEMPTS_PER_MODEL - 1) await sleep(BACKOFF_MS[attempt] ?? 500);
               continue;
             }
 
-            attempts.push(`${model}: نجح في المحاولة ${attempt + 1}`);
-            console.log(`audit L3 answered by ${model} — ${attempts.join(" | ")}`);
             return { raw, model, promptHash };
           } catch (error) {
-            lastError = error;
             const detail = error instanceof Error ? error.message : String(error);
             attempts.push(`${model}: ${detail.slice(0, 80)}`);
-            if (attempt < ATTEMPTS_PER_MODEL - 1) await sleep(BACKOFF_MS[attempt] ?? 1500);
+            lastError = error;
+            break;
           }
         }
+        throw lastError instanceof Error ? lastError : new Error(`${model}: فشل غير معروف`);
       }
 
-      // Every candidate and every attempt failed. The engine turns this into a
-      // declared gap, so the verdict states that the semantic layer did not run
-      // rather than presenting a deterministic-only result as complete.
-      const detail = lastError instanceof Error ? lastError.message : String(lastError);
-      throw new Error(`كل النماذج المرشحة فشلت (${GENERATION_MODELS.join(", ")}): ${detail}. المحاولات: ${attempts.join(" | ")}`);
+      try {
+        const winner = await Promise.any(GENERATION_MODELS.map((model) => raceModel(model)));
+        console.log(`audit L3 answered by ${winner.model} — ${attempts.join(" | ")}`);
+        return winner;
+      } catch {
+        // Every candidate failed. The engine turns this into a declared gap,
+        // so the verdict states that the semantic layer did not run rather
+        // than presenting a deterministic-only result as complete.
+        throw new Error(
+          `كل النماذج المرشحة فشلت (${GENERATION_MODELS.join(", ")}). المحاولات: ${attempts.join(" | ")}`,
+        );
+      }
     });
   } else {
     semantic = declaredGapProvider(
