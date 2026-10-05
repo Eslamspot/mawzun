@@ -56,13 +56,6 @@ export function TopBar() {
               {s("topbar.sub")}
             </span>
           </div>
-          <span className="hidden items-center gap-space-xs rounded-full border border-gold/50 bg-gold-container px-space-sm py-0.5 md:flex">
-            <span className="relative flex h-1.5 w-1.5">
-              <span className="animate-live-ping absolute inline-flex h-full w-full rounded-full bg-gold" />
-              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-gold" />
-            </span>
-            <span className={cx(t.code, "text-on-gold-container")}>ONLINE / v1.0</span>
-          </span>
         </div>
 
         <nav className="hidden items-center gap-space-xs md:flex">
