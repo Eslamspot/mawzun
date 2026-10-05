@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>دليل العرض الحي — موزون</title>
+<style>
+  :root { --green: #006c35; --deep: #06301f; --gold: #c9a227; --sand: #faf8f2; --ink: #10231a; --muted: #4a554e; --line: #e3dcc6; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--sand); color: var(--ink); font-family: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif; line-height: 1.9; }
+  header { background: linear-gradient(180deg, #0e5f31, #074a24); color: #fff; padding: 2.5rem 1.5rem; text-align: center; }
+  header h1 { margin: 0 0 .5rem; font-size: 2rem; }
+  header h1 .g { color: var(--gold); }
+  header p { margin: 0; opacity: .8; }
+  main { max-width: 880px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 1.5rem; margin: 1.25rem 0; }
+  .card h2 { margin: 0 0 .75rem; color: var(--deep); font-size: 1.3rem; }
+  .card h2 .n { display: inline-flex; align-items: center; justify-content: center; width: 2rem; height: 2rem; border-radius: 50%; background: var(--green); color: #fff; font-size: 1rem; margin-left: .5rem; }
+  .say { background: #f3efe3; border-right: 4px solid var(--gold); border-radius: 8px; padding: .9rem 1.1rem; margin: .8rem 0; }
+  .say b { color: var(--deep); }
+  .txt { background: #0e2015; color: #e9f2e8; border-radius: 8px; padding: .9rem 1.1rem; margin: .6rem 0; font-size: .95rem; }
+  .txt .k { color: var(--gold); font-size: .8rem; display: block; margin-bottom: .3rem; }
+  .verdict { display: inline-block; background: #ffdad6; color: #93000a; border-radius: 999px; padding: .15rem .9rem; font-weight: 700; font-size: .9rem; }
+  .verdict.ok { background: #85f8c4; color: #002114; }
+  .verdict.stop { background: #1e293b; color: #fff; }
+  .tip { background: #fff8e1; border: 1px dashed var(--gold); border-radius: 8px; padding: .8rem 1rem; margin: .8rem 0; font-size: .95rem; }
+  ul.check { list-style: none; padding: 0; }
+  ul.check li { padding: .35rem 0 .35rem 0; }
+  ul.check li::before { content: "☐ "; color: var(--green); font-weight: 700; }
+  table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+  th, td { border: 1px solid var(--line); padding: .5rem .7rem; text-align: right; }
+  th { background: #f3efe3; }
+  footer { text-align: center; color: var(--muted); font-size: .85rem; padding: 2rem 1rem; }
+  @media print { header { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .card { break-inside: avoid; } }
+  @media (max-width: 600px) { header h1 { font-size: 1.5rem; } main { padding: 1.25rem .9rem 3rem; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>مَوْزُون <span class="g">—</span> دليل العرض الحي</h1>
+  <p>عرض 6 دقائق · 5 خطوات · نصوص جاهزة للنسخ واللصق</p>
+</header>
+<main>
+
+<div class="card">
+  <h2><span class="n">✓</span>قبل العرض — قائمة التجهيز</h2>
+  <ul class="check">
+    <li>انشر من <b>main</b> النظيفة (<code>bun run deploy</code>) وافتح الرابط الحي في تبويب.</li>
+    <li>تأكد أن سرّ <code>META_API_TOKEN</code> مضبوط (زر «اشرح هذا الحكم» يعمل).</li>
+    <li>نفّذ الخطوة 1 مرة قبل دخول الجمهور (تدفئة + تأكيد النتيجة).</li>
+    <li>جهّز المؤقّت: كل فحص يأخذ <b>20–40 ثانية</b> — ستتحدث أثناء الانتظار (نصوص الحديث مرفقة).</li>
+    <li>لا تعرض آيات قرآنية: مطابقة النص القرآني حرفًا بحرف <b>غير مفعّلة ومعلنة</b> (التفصيل في الخطوة 5).</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h2><span class="n">1</span>الخطاف — تخفيف الحكم (60 ثانية)</h2>
+  <p>الصق النصين ثم اضغط «نفّذ الفحص». <b>أثناء الانتظار قل:</b></p>
+  <div class="say"><b>تقول للجمهور:</b> «الترجمة سليمة نحوًا — لكن كلمة واحدة غيّرت قوة الحكم من منعٍ ملزم إلى مجرد نصيحة. موزون يقيس هذا الانزياح.»</div>
+  <div class="txt"><span class="k">النص الأصلي</span>لا يجوز تأجير العقار من الباطن إلا بإذن صريح.</div>
+  <div class="txt"><span class="k">النص المشتق</span>Subleasing the property is not recommended without explicit permission.</div>
+  <p>النتيجة المتوقعة: <span class="verdict">يحتاج تعديل — انزياح في قوة الحكم</span></p>
+  <div class="say"><b>عند ظهور الحكم:</b> «اكتشفها في الطبقة المعجمية (جدول قوة الحكم) وأكّدتها الطبقة الدلالية — لا يجوز ≠ not recommended.»</div>
+</div>
+
+<div class="card">
+  <h2><span class="n">2</span>الدقة — الترجمة السليمة للمقارنة (45 ثانية)</h2>
+  <p>غيّر المشتق فقط إلى:</p>
+  <div class="txt"><span class="k">النص المشتق</span>Subleasing the property is prohibited without explicit permission.</div>
+  <p>النتيجة المتوقعة: <span class="verdict ok">مطابق</span></p>
+  <div class="say"><b>تقول:</b> «النظام نفسه الذي اعترض قبل قليل يمرّر هذه — لأنه يقيس المعنى لا الكلمات. الدقة في الاتجاهين.»</div>
+</div>
+
+<div class="card">
+  <h2><span class="n">3</span>المصطلح — التوحيد (60 ثانية)</h2>
+  <div class="txt"><span class="k">النص الأصلي</span>التوحيد أصل الدين.</div>
+  <div class="txt"><span class="k">النص المشتق</span>Numerical oneness is the foundation of the religion.</div>
+  <p>النتيجة المتوقعة: <span class="verdict">يحتاج تعديل — انزياح في المصطلح</span></p>
+  <div class="say"><b>تقول:</b> «التوحيد (إفراد الله بالربوبية والألوهية) اختُزل إلى وحدانية عددية. التصنيف هنا <b>المصطلح</b> لا الشرط — والشرح التلقائي بزر <b>اشرح هذا الحكم</b> يفسّر ذلك بلغة مبسطة.» ثم اضغط زر الشرح أمامهم.</div>
+</div>
+
+<div class="card">
+  <h2><span class="n">4</span>الحتمية — الخطأ العددي بلا ذكاء اصطناعي (45 ثانية)</h2>
+  <div class="txt"><span class="k">النص الأصلي</span>صام ثلاث ليال متتالية.</div>
+  <div class="txt"><span class="k">النص المشتق</span>He fasted for two consecutive nights.</div>
+  <p>النتيجة المتوقعة: <span class="verdict">يحتاج تعديل — الطبقة الحتمية L1</span></p>
+  <div class="say"><b>تقول:</b> «هذه أمسكتها الطبقة الأولى وحدها — مقارنة حرفية للأرقام، بلا نموذج وبلا انتظار. ثلاث طبقات، ولكل طبقة قوة إثبات.»</div>
+</div>
+
+<div class="card">
+  <h2><span class="n">5</span>الأمان — الحالة الشخصية تتوقف (45 ثانية)</h2>
+  <p>اختر <b>المستوى د</b> ثم الصق:</p>
+  <div class="txt"><span class="k">النص الأصلي</span>أنا في دولة كذا، هل يجوز لي فعل كذا في زواجي؟</div>
+  <div class="txt"><span class="k">النص المشتق</span>Subleasing is not recommended in your case.</div>
+  <p>النتيجة المتوقعة: <span class="verdict stop">وقف وتحويل</span></p>
+  <div class="say"><b>الختام:</b> «موزون ليس مفتيًا — في الحالات الشخصية يتوقف ويحوّل للمختص. وما لا يفحصه يعلنه: مطابقة النص القرآني حرفًا بحرف غير مفعّلة بعد، وتظهر في السجل كفجوة معلنة لا كنجاح صامت.»</div>
+</div>
+
+<div class="card">
+  <h2><span class="n">؟</span>أسئلة متوقعة وإجاباتها</h2>
+  <table>
+    <tr><th>السؤال</th><th>الإجابة</th></tr>
+    <tr><td>أي نموذج يستعمل؟</td><td>الفحص: Gemma عبر Cloudflare (بلا مفاتيح). الشرح: Muse من Meta.</td></tr>
+    <tr><td>لماذا 19 قيدًا لا 31؟</td><td>19 مطبقة في الفحص؛ الـ31 هي كامل الحزمة بما فيها المرجعي.</td></tr>
+    <tr><td>لماذا يستغرق 30 ثانية؟</td><td>زمن استدعاء النموذج للطبقة الدلالية؛ الحتمية والمعجمية فورية. سباق متوازٍ بين نموذجين بمهلة 40 ثانية.</td></tr>
+    <tr><td>هل يدقق القرآن؟</td><td>يعلن فجوة صريحة: يحتاج ربط النص العثماني المعتمد — لم نُخفِ ذلك.</td></tr>
+    <tr><td>هل يفتي؟</td><td>لا — يقيس أمانة النقل فقط، والمراجع البشري صاحب القرار.</td></tr>
+  </table>
+</div>
+
+<div class="card">
+  <h2><span class="n">!</span>خطة الطوارئ</h2>
+  <div class="tip">إن تعثّر الحيّ: اعرض الفيديو <code>submission/video/mawzun-motion.mp4</code> (دقيقة و50 ثانية) ثم افتح السجل المحفوظ. لا تعرض شاشة خطأ أكثر من 10 ثوانٍ.</div>
+</div>
+
+</main>
+<footer>مَوْزُون · صُنع في السعودية · يُفتح هذا الملف مباشرة في المتصفح — لا يحتاج بناءً</footer>
+</body>
+</html>
